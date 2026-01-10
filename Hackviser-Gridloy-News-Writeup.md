@@ -169,37 +169,11 @@ cat /var/www/html/wordpress/my_passwords.txt
 
 <img width="432" height="269" alt="cevap 5" src="https://github.com/user-attachments/assets/06eb69e2-3ee1-4c7f-be4a-05b71eedb264" />
 
-This confirms a critical security misconfiguration, as highly sensitive credentials were stored in plaintext within the web root directory.
-
-### 7.3 Security Impact
-
-Storing credentials in plaintext files accessible from the web directory significantly increases the attack surface and allows attackers to escalate privileges easily once initial access is obtained.
-
-This misconfiguration directly enabled:
-- Unauthorized access to the WordPress admin panel
-- Direct database access as MySQL root
-- Privilege escalation to the system root user
-
-<img width="432" height="269" alt="cevap 5" src="https://github.com/user-attachments/assets/b3b88c62-23b7-48ed-abb0-a34f588f16c8" />
-
-### 7.2 Extracted Credentials
-
-```text
-EMAIL: beth@gridloy.hv
-WORDPRESS USER: admin
-WORDPRESS PASS: b2tGAIvRDpJpNit6q2
-MYSQL USER: root
-MYSQL PASS: LhfJ5DuAYN5nsSvB
-SYSTEM ROOT PASS: aceRyanDI
-```
-
 ✅ **Answer 2:** WordPress password is **b2tGAIvRDpJpNit6q2**
 
 ---
 
-## 8. WordPress Admin & Database Access
-
-### 8.1 WordPress Admin Login
+##  WordPress Admin Login
 
 ```text
 URL: http://gridloy.hv/wp-login.php

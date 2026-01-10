@@ -21,6 +21,7 @@ When visiting the website, I observed a minimalistic blog layout. While browsing
 
 <img width="1913" height="873" alt="cevap 1" src="https://github.com/user-attachments/assets/d39b33b3-e52c-4ac2-b126-802f60447ae0" />
 
+
 ✅ **Answer 1:** The author's pseudonym is **Currol**.
 
 ---

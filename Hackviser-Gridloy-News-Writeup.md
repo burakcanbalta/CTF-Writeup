@@ -207,9 +207,6 @@ To resolve this limitation, I upgraded the reverse shell to a fully interactive 
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 After spawning a proper TTY, shell interaction became stable and privilege escalation attempts could be retried reliably.
-
----
-
 With the upgraded shell in place, I attempted privilege escalation once again:
 
 ```bash
@@ -218,11 +215,6 @@ password: aceRyanDI
 ```
 
 This time, the operation succeeded and I gained full **root** access on the system.
-
----
-
-### 9.4 Final Enumeration – Site Owner Information
-
 After obtaining root privileges, I performed final system enumeration.  
 While inspecting the `/root` directory, I discovered a file containing sensitive site ownership information:
 
@@ -239,10 +231,6 @@ The file revealed the answer to the final challenge question.
 ✅ **Final Answer:** The real name of the author using the pseudonym **Currol** is **Beth Ryan**.
 
 ---
-### 9.5 Conclusion
-
-This final step demonstrates how insecure credential storage combined with insufficient privilege separation can lead to full system compromise.  
-Once root access is achieved, all system data and configurations become fully exposed to an attacker.
 
 
 

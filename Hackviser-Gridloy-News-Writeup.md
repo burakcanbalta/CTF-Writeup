@@ -39,7 +39,7 @@ wpscan --url http://gridloy.hv \
   --api-token "xxxxxxxxxx"
 ```
 
-📸 **Screenshot 3:** WPScan full output
+<img width="825" height="758" alt="cevap 2" src="https://github.com/user-attachments/assets/c62b6a21-f49d-4e34-9672-8b53b3e37cf0" />
 
 ### Key Findings
 
@@ -51,9 +51,8 @@ wpscan --url http://gridloy.hv \
 
 ---
 
-## 4. Vulnerability Research
 
-### 4.1 CVE-2023-5360 Analysis
+### CVE-2023-5360 Analysis
 
 The vulnerability exists due to missing nonce validation in the `wpr_addons_upload_file` AJAX endpoint. This allows unauthenticated users to upload arbitrary files, including PHP web shells.
 

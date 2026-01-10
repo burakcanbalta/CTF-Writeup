@@ -224,7 +224,7 @@ cat /root/site_owner_informations.txt
 
 The file revealed the answer to the final challenge question.
 
-✅ **Final Answer:** The real name of the author using the pseudonym **Currol** is **Beth Ryan**.
+✅ **Final Answer:** The real name of the author using the pseudonym **Currol** is **Beth Reese**.
 
 ------
 

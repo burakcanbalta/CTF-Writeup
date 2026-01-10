@@ -1,1 +1,0 @@
-# Hackviser---Gridloy-News-Writeup

@@ -222,15 +222,21 @@ While inspecting the `/root` directory, I discovered a file containing sensitive
 cat /root/site_owner_informations.txt
 ```
 
-📸 **Screenshot:** Contents of `site_owner_informations.txt`
-
 <img width="769" height="340" alt="cevap 7" src="https://github.com/user-attachments/assets/db03bc0e-a735-4585-911d-e33633301569" />
 
 The file revealed the answer to the final challenge question.
 
 ✅ **Final Answer:** The real name of the author using the pseudonym **Currol** is **Beth Ryan**.
 
----
+------
+
+Thank you for taking the time to read this write-up.
+
+I hope this walkthrough was clear, informative, and helpful in demonstrating the full attack chain — from initial enumeration to privilege escalation and final root access. The goal of this write-up was not only to solve the challenge, but also to clearly explain the thought process and methodology behind each step.
+
+If this write-up helped you learn something new or provided value in any way, I am genuinely glad.  
+Happy hacking, and see you in the next challenge.
+
 
 
 

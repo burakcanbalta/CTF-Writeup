@@ -165,8 +165,6 @@ To inspect the contents of the file, I used the `cat` command:
 cat /var/www/html/wordpress/my_passwords.txt
 ```
 
-📸 **Screenshot:** Contents of `my_passwords.txt`
-
 <img width="432" height="269" alt="cevap 5" src="https://github.com/user-attachments/assets/06eb69e2-3ee1-4c7f-be4a-05b71eedb264" />
 
 ✅ **Answer 2:** WordPress password is **b2tGAIvRDpJpNit6q2**

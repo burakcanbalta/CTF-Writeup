@@ -192,14 +192,7 @@ The unpublished comment revealed the author’s name, which directly answered th
 
 ---
 
-## 9. Privilege Escalation – Root Access
-
-## 9. Privilege Escalation and Final Enumeration
-
 After discovering the root username and password on the system, I attempted to escalate privileges in order to gain full control of the target machine.
-
-### 9.1 Initial Privilege Escalation Attempt
-
 Using the previously obtained credentials, I tried to switch to the root user:
 
 ```bash
@@ -208,13 +201,6 @@ su root
 
 At this stage, the system did not prompt for a password and the shell remained limited.  
 This behavior indicated that I was still restricted to the **www-data** reverse shell environment and did not yet have a fully interactive TTY.
-
-📸 **Screenshot:** Failed privilege escalation attempt
-
----
-
-### 9.2 Upgrading the Reverse Shell (TTY Upgrade)
-
 To resolve this limitation, I upgraded the reverse shell to a fully interactive TTY using Python:
 
 ```bash
@@ -222,17 +208,13 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
 After spawning a proper TTY, shell interaction became stable and privilege escalation attempts could be retried reliably.
-
-📸 **Screenshot:** TTY upgrade using Python
-
 ---
-
-### 9.3 Successful Root Access
 
 With the upgraded shell in place, I attempted privilege escalation once again:
 
 ```bash
 su root
+password: aceRyanDI
 ```
 
 This time, the operation succeeded and I gained full **root** access on the system.

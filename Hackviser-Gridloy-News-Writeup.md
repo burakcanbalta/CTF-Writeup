@@ -26,9 +26,7 @@ When visiting the website, I observed a minimalistic blog layout. While browsing
 
 ---
 
-## 3. WordPress Enumeration with WPScan
-
-### 3.1 Full WPScan Analysis
+###  Full WPScan Analysis
 
 To identify WordPress components and vulnerabilities, I ran WPScan with aggressive detection enabled.
 
@@ -36,12 +34,12 @@ To identify WordPress components and vulnerabilities, I ran WPScan with aggressi
 wpscan --url http://gridloy.hv \
   --enumerate u,p,t,tt,cb,dbe \
   --plugins-detection aggressive \
-  --api-token YOUR_API_TOKEN
+  --api-token "xxxxxxxxxx"
 ```
 
 📸 **Screenshot 3:** WPScan full output
 
-### 3.2 Key Findings
+### Key Findings
 
 * **WordPress Version:** 6.4.2 (outdated)
 * **Active Theme:** Minimal Blogger

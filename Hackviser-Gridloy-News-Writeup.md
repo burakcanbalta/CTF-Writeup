@@ -55,7 +55,6 @@ wpscan --url http://gridloy.hv \
 
 The vulnerability exists due to missing nonce validation in the `wpr_addons_upload_file` AJAX endpoint. This allows unauthenticated users to upload arbitrary files, including PHP web shells.
 Based on the WPScan results, I identified **CVE-2023-5360**, an unauthenticated file upload vulnerability affecting the *Royal Elementor Addons* plugin.  
-To exploit this vulnerability, I developed a custom Python script with the following objectives:
 
 First, I created the exploit script file:
 

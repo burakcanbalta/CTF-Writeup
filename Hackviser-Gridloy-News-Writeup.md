@@ -196,46 +196,20 @@ The unpublished comment revealed the author’s name, which directly answered th
 
 ```bash
 su root
+password: aceRyanDI
 ```
 
-📸 **Screenshot 10:** Root shell
-
----
-
-## 10. Final Flag – Site Owner Information
+## Site Owner Information
 
 ```bash
 cat /root/site_owner_informations.txt
 ```
 
-📸 **Screenshot 11:** Site owner information
+<img width="769" height="340" alt="cevap 7" src="https://github.com/user-attachments/assets/db03bc0e-a735-4585-911d-e33633301569" />
 
-✅ **Answer 4:** The real name of **Currol** is **Beth Ryan**
 
----
-
-## 11. Vulnerability Summary
-
-* CVE-2023-5360 – Unauthenticated File Upload
-* Outdated WordPress Core & Plugins
-* Plaintext password storage
-* Password reuse across services
+✅ **Answer 4:** The real name of **Currol** is **Beth Reese**
 
 ---
 
-## 12. Remediation Recommendations
-
-* Update Royal Elementor Addons (>= 1.3.79)
-* Keep WordPress core, themes, and plugins updated
-* Never store credentials in plaintext files
-* Enforce strong and unique passwords
-* Perform regular security audits
-
----
-
-✅ **CTF Completed Successfully**
-
----
-
-> ✍️ Prepared for **GitHub** and **Medium** publication
 

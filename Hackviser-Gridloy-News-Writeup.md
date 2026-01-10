@@ -56,16 +56,9 @@ wpscan --url http://gridloy.hv \
 
 The vulnerability exists due to missing nonce validation in the `wpr_addons_upload_file` AJAX endpoint. This allows unauthenticated users to upload arbitrary files, including PHP web shells.
 
-Impact:
-
-* Remote Code Execution (RCE)
-* Full server compromise
-
 ---
 
-## 5. Exploitation – Gaining Initial Access
-
-### 5.1 Exploit Script (Python)
+## Exploit Script (Python)
 
 I wrote a Python script to automatically extract the nonce value and upload a PHP web shell.
 

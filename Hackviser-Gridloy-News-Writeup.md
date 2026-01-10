@@ -232,12 +232,7 @@ The file revealed the answer to the final challenge question.
 
 Thank you for taking the time to read this write-up.
 
-I hope this walkthrough was clear, informative, and helpful in demonstrating the full attack chain — from initial enumeration to privilege escalation and final root access. The goal of this write-up was not only to solve the challenge, but also to clearly explain the thought process and methodology behind each step.
+I hope this guide clearly and effectively demonstrated the full CTF process.  
+If it helped you learn something new or added value in any way, I would be very happy.
 
-If this write-up helped you learn something new or provided value in any way, I am genuinely glad.  
-Happy hacking, and see you in the next challenge.
-
-
-
-
-
+Good luck, and see you in the next CTF.

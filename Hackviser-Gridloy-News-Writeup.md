@@ -194,22 +194,76 @@ The unpublished comment revealed the author’s name, which directly answered th
 
 ## 9. Privilege Escalation – Root Access
 
+## 9. Privilege Escalation and Final Enumeration
+
+After discovering the root username and password on the system, I attempted to escalate privileges in order to gain full control of the target machine.
+
+### 9.1 Initial Privilege Escalation Attempt
+
+Using the previously obtained credentials, I tried to switch to the root user:
+
 ```bash
 su root
-password: aceRyanDI
 ```
 
-## Site Owner Information
+At this stage, the system did not prompt for a password and the shell remained limited.  
+This behavior indicated that I was still restricted to the **www-data** reverse shell environment and did not yet have a fully interactive TTY.
+
+📸 **Screenshot:** Failed privilege escalation attempt
+
+---
+
+### 9.2 Upgrading the Reverse Shell (TTY Upgrade)
+
+To resolve this limitation, I upgraded the reverse shell to a fully interactive TTY using Python:
+
+```bash
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+After spawning a proper TTY, shell interaction became stable and privilege escalation attempts could be retried reliably.
+
+📸 **Screenshot:** TTY upgrade using Python
+
+---
+
+### 9.3 Successful Root Access
+
+With the upgraded shell in place, I attempted privilege escalation once again:
+
+```bash
+su root
+```
+
+This time, the operation succeeded and I gained full **root** access on the system.
+
+📸 **Screenshot:** Root shell confirmation
+
+---
+
+### 9.4 Final Enumeration – Site Owner Information
+
+After obtaining root privileges, I performed final system enumeration.  
+While inspecting the `/root` directory, I discovered a file containing sensitive site ownership information:
 
 ```bash
 cat /root/site_owner_informations.txt
 ```
 
+📸 **Screenshot:** Contents of `site_owner_informations.txt`
+
 <img width="769" height="340" alt="cevap 7" src="https://github.com/user-attachments/assets/db03bc0e-a735-4585-911d-e33633301569" />
 
+The file revealed the answer to the final challenge question.
 
-✅ **Answer 4:** The real name of **Currol** is **Beth Reese**
+✅ **Final Answer:** The real name of the author using the pseudonym **Currol** is **Beth Ryan**.
 
 ---
+### 9.5 Conclusion
+
+This final step demonstrates how insecure credential storage combined with insufficient privilege separation can lead to full system compromise.  
+Once root access is achieved, all system data and configurations become fully exposed to an attacker.
+
+
 
 

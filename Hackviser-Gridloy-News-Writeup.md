@@ -181,23 +181,12 @@ Username: admin
 Password: b2tGAIvRDpJpNit6q2
 ```
 
-📸 **Screenshot 8:** WordPress admin panel
+Once logged in, I navigated to the Comments section from the left-side admin menu.
+By scrolling down to the lower section of the page, I identified a comment marked as Pending, indicating that it had not yet been published.
 
-### 8.2 MySQL Access
+<img width="1919" height="704" alt="cevap 6" src="https://github.com/user-attachments/assets/4307ba60-8e01-4612-b979-7124b370ba99" />
 
-```bash
-mysql -u root -p
-```
-
-### 8.3 Unpublished Comment Discovery
-
-```sql
-SELECT comment_author, comment_content
-FROM wp_comments
-WHERE comment_approved = 0;
-```
-
-📸 **Screenshot 9:** Pending comment
+The unpublished comment revealed the author’s name, which directly answered the third challenge question.
 
 ✅ **Answer 3:** Unpublished comment author is **Judson Braun**
 

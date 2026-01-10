@@ -16,10 +16,6 @@ After saving the file, the website was accessible at:
 http://gridloy.hv
 ```
 
-📸 **Screenshot 1:** `/etc/hosts` configuration
-
----
-
 ## 2. Manual Website Enumeration
 
 ### 2.1 Content Review

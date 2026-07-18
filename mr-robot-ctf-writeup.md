@@ -151,7 +151,6 @@ https://10.112.169.2/wp-content/themes/<tema-adi>/404.php
 
 5. Netcat dinleyicisinde bağlantı düştü ve düşük yetkili bir shell elde ettim.
 
-
 ### TTY Upgrade (Shell İyileştirme)
 
 İlk elde edilen shell çoğu zaman "dumb" bir shell'dir — tab completion, ctrl+c, geçmiş komutlar gibi özellikler çalışmaz. Bu yüzden PTY spawn ile tam bir bash shell'e yükselttim:
@@ -160,7 +159,7 @@ https://10.112.169.2/wp-content/themes/<tema-adi>/404.php
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 export TERM=xterm-256color
 ```
-
+<img width="1048" height="623" alt="shell1" src="https://github.com/user-attachments/assets/070b5e59-190e-45dc-9e31-50eecb7dca4a" />
 ---
 
 ## 5️⃣ Yatay Hareket — Kullanıcı Ele Geçirme (robot)
@@ -176,6 +175,7 @@ ls -la
 key-2-of-3.txt
 password.raw-md5
 ```
+<img width="691" height="283" alt="robot" src="https://github.com/user-attachments/assets/586f0377-c326-4871-a8d8-d393f6a4e984" />
 
 `key-2-of-3.txt` dosyasını okumaya çalıştığımda yetki hatası aldım — dosya `robot` kullanıcısına ait olduğu için önce o kullanıcıya geçmem gerekiyordu.
 

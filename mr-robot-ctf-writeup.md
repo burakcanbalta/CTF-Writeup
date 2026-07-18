@@ -2,7 +2,7 @@
 
 ## 🎯 Hedef Bilgisi
 
-- **Hedef IP:** `10.112.169.2` (VPN üzerinden erişildi)
+- **Hedef IP:** `10.112.169.2`
 - **İşletim Sistemi:** Linux
 - **Servisler:** HTTP/HTTPS (WordPress)
 

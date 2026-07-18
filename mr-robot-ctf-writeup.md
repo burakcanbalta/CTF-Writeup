@@ -270,7 +270,7 @@ cat /root/key-3-of-3.txt
 
 ---
 
-## 🛡️ Alınan Dersler & Savunma Önerileri
+## 🛡️ Alınan Dersler
 
 Bu makine, gerçek dünyada sıkça karşılaşılan birkaç kritik güvenlik zafiyetini bir araya getiriyor:
 
@@ -285,16 +285,5 @@ Bu makine, gerçek dünyada sıkça karşılaşılan birkaç kritik güvenlik za
 
 4. **Yanlış yapılandırılmış SUID izinleri:** `nmap` gibi bir aracın SUID biti taşıması, kritik bir privilege escalation vektörü oluşturdu.
    - *Öneri:* SUID biti yalnızca kesinlikle gerekli olan binary'lere verilmeli; düzenli olarak `find / -perm -4000` denetimi yapılmalı.
-
----
-
-## 🧰 Kullanılan Araçlar
-
-- `nmap` — port ve servis taraması
-- `ffuf` — dizin/dosya fuzzing
-- `wpscan` — WordPress enumeration ve brute-force
-- `hashcat` / `john` — hash kırma
-- `netcat` — reverse shell dinleyici
-- `python3 (pty module)` — shell iyileştirme
 
 ---

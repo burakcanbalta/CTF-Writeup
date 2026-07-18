@@ -140,8 +140,7 @@ WordPress admin panelinde **tema dosyası düzenleyicisi (Appearance → Theme E
 ```bash
 nc -lvnp 9001
 ```
-<img width="1843" height="814" alt="payload" src="https://github.com/user-attachments/assets/84d92b8a-2202-410c-bff3-671feb14e2fa" />
-
+<img width="672" height="558" alt="root1" src="https://github.com/user-attachments/assets/a4b5f2ff-0bed-4086-96c0-41a5ca6b2b92" />
 
 
 4. Tarayıcıdan değiştirdiğim `404.php` sayfasını tetikledim (örn. var olmayan bir sayfaya istek atarak):

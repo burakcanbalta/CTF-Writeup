@@ -1,26 +1,5 @@
 # Mr. Robot CTF Writeup — Root'a Giden Yol
 
-**Zorluk:** Kolay-Orta
-**Kategori:** Web Exploitation, WordPress, Password Cracking, Privilege Escalation
-**Yazar:** *Burak BALTA*
-**Tarih:** Temmuz 2026
-
----
-
-## 📋 Özet
-
-Bu yazıda, popüler dizi *Mr. Robot*'tan esinlenerek hazırlanmış bir CTF makinesini baştan sona çözüyoruz. Makine; açık dizin keşfi, WordPress kullanıcı/parola brute-force saldırısı, tema dosyası üzerinden reverse shell alma ve son olarak SUID yetkisi yanlış yapılandırılmış bir `nmap` binary'si üzerinden root'a yükselme adımlarını kapsıyor.
-
-Toplamda **3 flag** bulunuyor ve her biri farklı bir aşamayı temsil ediyor:
-
-| # | Flag Konumu | Zorluk |
-|---|---|---|
-| 1 | Web kök dizini (`robots.txt` üzerinden) | Kolay |
-| 2 | `/home/robot/` (kullanıcı ele geçirme) | Orta |
-| 3 | `/root/` (privilege escalation) | Orta |
-
----
-
 ## 🎯 Hedef Bilgisi
 
 - **Hedef IP:** `10.112.169.2` (VPN üzerinden erişildi)

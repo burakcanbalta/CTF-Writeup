@@ -173,7 +173,6 @@ ls -la
 key-2-of-3.txt
 password.raw-md5
 ```
-<img width="691" height="283" alt="robot" src="https://github.com/user-attachments/assets/586f0377-c326-4871-a8d8-d393f6a4e984" />
 
 `key-2-of-3.txt` dosyasını okumaya çalıştığımda yetki hatası aldım — dosya `robot` kullanıcısına ait olduğu için önce o kullanıcıya geçmem gerekiyordu.
 
@@ -205,6 +204,8 @@ Parolayı girdikten sonra `robot` kullanıcısına geçiş yaptım ve ikinci fla
 cat key-2-of-3.txt
 ```
 ---
+
+<img width="691" height="283" alt="robot" src="https://github.com/user-attachments/assets/586f0377-c326-4871-a8d8-d393f6a4e984" />
 
 ## 6️⃣ Privilege Escalation — Root'a Yükselme
 
@@ -244,7 +245,8 @@ whoami
 
 Artık root yetkisiyle tam bir shell elde etmiştim.
 
-> 📸 *root shell ekran görüntüsü*
+<img width="281" height="150" alt="lastflag" src="https://github.com/user-attachments/assets/66f57842-d47b-4bf7-b5bd-2951219ef497" />
+
 
 ### 🚩 Flag #3 (Root)
 

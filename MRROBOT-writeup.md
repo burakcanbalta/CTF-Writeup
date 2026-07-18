@@ -265,8 +265,8 @@ cat /root/key-3-of-3.txt
 | Flag | Değer |
 |---|---|
 | Key 1 | `073403c8a58a1f80d943455fb30724b9` |
-| Key 2 | *(okundu, `/home/robot/key-2-of-3.txt`)* |
-| Key 3 (Root) | `04787ddef27c3dee1ee161b21670b4e4` |
+| Key 2 | *(`/home/robot/key-2-of-3.txt`)* |
+| Key 3 | `04787ddef27c3dee1ee161b21670b4e4` |
 
 ---
 

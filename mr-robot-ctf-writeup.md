@@ -140,14 +140,13 @@ WordPress admin panelinde **tema dosyası düzenleyicisi (Appearance → Theme E
 ```bash
 nc -lvnp 9001
 ```
-<img width="672" height="558" alt="root1" src="https://github.com/user-attachments/assets/a4b5f2ff-0bed-4086-96c0-41a5ca6b2b92" />
-
 
 4. Tarayıcıdan değiştirdiğim `404.php` sayfasını tetikledim (örn. var olmayan bir sayfaya istek atarak):
 
 ```
 https://10.112.169.2/wp-content/themes/<tema-adi>/404.php
 ```
+<img width="672" height="558" alt="root1" src="https://github.com/user-attachments/assets/a4b5f2ff-0bed-4086-96c0-41a5ca6b2b92" />
 
 5. Netcat dinleyicisinde bağlantı düştü ve düşük yetkili bir shell elde ettim.
 

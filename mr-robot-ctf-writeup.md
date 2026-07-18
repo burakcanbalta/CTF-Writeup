@@ -2,7 +2,7 @@
 
 **Zorluk:** Kolay-Orta
 **Kategori:** Web Exploitation, WordPress, Password Cracking, Privilege Escalation
-**Yazar:** *[isminizi buraya yazın]*
+**Yazar:** *Burak BALTA*
 **Tarih:** Temmuz 2026
 
 ---
@@ -36,6 +36,7 @@ Toplamda **3 flag** bulunuyor ve her biri farklı bir aşamayı temsil ediyor:
 ```bash
 nmap -sS -sC -sV -p- 10.112.169.2
 ```
+<img width="798" height="412" alt="nmap" src="https://github.com/user-attachments/assets/e95defc5-9164-450c-afea-98fb076d3b70" />
 
 **Parametrelerin anlamı:**
 - `-sS` → SYN (stealth) tarama
@@ -139,10 +140,6 @@ Kısa bir süre sonra geçerli kimlik bilgileri elde ettim:
 Username: elliot
 Password: ER28-0652
 ```
-
-> ⚠️ **Not:** Bu adım, CTF senaryosuna özgü bir varsayımla (dizideki karakter ismi) hız kazandırdı. Gerçek bir sızma testinde kullanıcı adı tahmini yerine OSINT (LinkedIn, e-posta formatları, sızıntı veritabanları vb.) yöntemleri tercih edilmelidir.
-
----
 
 ## 4️⃣ Exploitation — WordPress Üzerinden Shell Alma
 
@@ -322,13 +319,3 @@ Bu makine, gerçek dünyada sıkça karşılaşılan birkaç kritik güvenlik za
 - `python3 (pty module)` — shell iyileştirme
 
 ---
-
-## 📝 Kapanış
-
-Bu CTF, klasik bir web uygulaması sızma testi zincirini uçtan uca deneyimlemek için oldukça öğreticiydi: **recon → enumeration → credential attack → exploitation → privilege escalation.** Her adımda küçük ama kritik detaylar (bir `robots.txt` girdisi, bir SUID biti) tüm zincirin anahtarı oldu.
-
-Sorularınız veya geri bildirimleriniz varsa yorumlarda buluşalım. 🚀
-
----
-
-*Bu yazı yalnızca eğitim amaçlıdır ve izin verilen, yasal CTF ortamlarında gerçekleştirilen testleri belgelemektedir.*

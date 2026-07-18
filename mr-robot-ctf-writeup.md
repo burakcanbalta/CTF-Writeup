@@ -1,4 +1,4 @@
-# Mr. Robot CTF Writeup — Root'a Giden Yol
+# Mr. Robot CTF Writeup 
 
 ## 🎯 Hedef Bilgisi
 

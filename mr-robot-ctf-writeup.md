@@ -206,8 +206,6 @@ Parolayı girdikten sonra `robot` kullanıcısına geçiş yaptım ve ikinci fla
 ```bash
 cat key-2-of-3.txt
 ```
-<img width="1048" height="623" alt="shell1" src="https://github.com/user-attachments/assets/bf1fdeb0-2b6d-4008-8000-d881d923c061" />
-
 ---
 
 ## 6️⃣ Privilege Escalation — Root'a Yükselme

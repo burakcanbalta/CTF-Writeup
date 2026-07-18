@@ -54,8 +54,6 @@ Dosya içinde iki önemli referans buldum:
 key-1-of-3.txt
 fsocity.dic
 ```
-<img width="565" height="159" alt="robots txt" src="https://github.com/user-attachments/assets/817dbf8d-55ec-4ae9-a710-8f3d7d2402b6" />
-
 ### 🚩 Flag #1
 
 ```

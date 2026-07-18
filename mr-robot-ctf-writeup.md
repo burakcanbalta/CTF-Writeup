@@ -151,7 +151,6 @@ https://10.112.169.2/wp-content/themes/<tema-adi>/404.php
 
 5. Netcat dinleyicisinde bağlantı düştü ve düşük yetkili bir shell elde ettim.
 
-> 📸 *reverse shell bağlantı ekran görüntüsü*
 
 ### TTY Upgrade (Shell İyileştirme)
 
@@ -207,8 +206,7 @@ Parolayı girdikten sonra `robot` kullanıcısına geçiş yaptım ve ikinci fla
 ```bash
 cat key-2-of-3.txt
 ```
-
-> 📸 *ikinci flag ekran görüntüsü*
+<img width="1048" height="623" alt="shell1" src="https://github.com/user-attachments/assets/bf1fdeb0-2b6d-4008-8000-d881d923c061" />
 
 ---
 
@@ -239,6 +237,7 @@ Nmap interaktif konsoluna girdikten sonra:
 ```
 nmap> !/bin/bash
 ```
+<img width="672" height="558" alt="root1" src="https://github.com/user-attachments/assets/18504749-eb1f-48a6-9eb5-2f2ab8ac2480" />
 
 Komut çalıştıktan sonra kullanıcı kontrolü yaptım:
 

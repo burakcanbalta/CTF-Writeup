@@ -8,7 +8,7 @@
 
 ---
 
-## 1️⃣ Recon (Keşif) — Nmap Taraması
+## 1️⃣ Recon (Keşif)
 
 İlk adım her zaman olduğu gibi VPN bağlantısını kurup hedefe kapsamlı bir Nmap taraması atmak:
 
@@ -27,7 +27,7 @@ Tarama sonucunda hedefte **web servisi (80/443)** açık olduğunu doğruladım.
 
 ---
 
-## 2️⃣ Web Enumeration — Dizin Taraması
+## 2️⃣ Web Enumeration
 
 Web sayfasına manuel olarak göz attığımda dikkat çekici bir şey bulamadım. Bu noktada klasik bir dizin/dosya fuzzing adımına geçtim:
 
@@ -120,7 +120,7 @@ Username: elliot
 Password: ER28-0652
 ```
 
-## 4️⃣ Exploitation — WordPress Üzerinden Shell Alma
+## 4️⃣ Exploitation
 
 Elde edilen kimlik bilgileriyle admin paneline giriş yaptım:
 
@@ -160,7 +160,7 @@ export TERM=xterm-256color
 ```
 ---
 
-## 5️⃣ Yatay Hareket — Kullanıcı Ele Geçirme (robot)
+## 5️⃣ Yatay Hareket
 
 `/home` dizinine geçtiğimde beni şu dosyalar karşıladı:
 
@@ -207,7 +207,7 @@ cat key-2-of-3.txt
 
 <img width="691" height="283" alt="robot" src="https://github.com/user-attachments/assets/586f0377-c326-4871-a8d8-d393f6a4e984" />
 
-## 6️⃣ Privilege Escalation — Root'a Yükselme
+## 6️⃣ Privilege Escalation
 
 `robot` kullanıcısı olarak sistemde ayrıcalık yükseltme (privilege escalation) için klasik bir kontrol yaptım: **SUID bitine sahip dosyaları arama.**
 
@@ -248,7 +248,7 @@ Artık root yetkisiyle tam bir shell elde etmiştim.
 <img width="281" height="150" alt="lastflag" src="https://github.com/user-attachments/assets/66f57842-d47b-4bf7-b5bd-2951219ef497" />
 
 
-### 🚩 Flag #3 (Root)
+### 🚩 Flag #3
 
 ```bash
 cat /root/key-3-of-3.txt
@@ -260,7 +260,7 @@ cat /root/key-3-of-3.txt
 
 ---
 
-## 🔑 Toplanan Flag'ler
+## 🔑 Flag'ler
 
 | Flag | Değer |
 |---|---|
@@ -285,5 +285,4 @@ Bu makine, gerçek dünyada sıkça karşılaşılan birkaç kritik güvenlik za
 
 4. **Yanlış yapılandırılmış SUID izinleri:** `nmap` gibi bir aracın SUID biti taşıması, kritik bir privilege escalation vektörü oluşturdu.
    - *Öneri:* SUID biti yalnızca kesinlikle gerekli olan binary'lere verilmeli; düzenli olarak `find / -perm -4000` denetimi yapılmalı.
-
 ---

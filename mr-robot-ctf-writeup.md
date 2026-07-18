@@ -60,13 +60,16 @@ ffuf -u http://10.112.169.2/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-
 
 Sonuçlar arasında `robots.txt` dosyası dikkatimi çekti — genellikle arama motorlarının taramaması istenen, ama pentester için altın değerinde olan bir dosya.
 
-> 📸 *ffuf sonuç ekran görüntüsü*
+<img width="888" height="761" alt="ffuf" src="https://github.com/user-attachments/assets/64f557ae-a896-4891-891a-b7bef2b934a2" />
+
 
 ### `robots.txt` İçeriği
 
 ```
 https://10.112.169.2/robots.txt
 ```
+<img width="565" height="159" alt="robots txt" src="https://github.com/user-attachments/assets/fa2688b7-502f-47b1-95b7-63de10ffdc04" />
+
 
 Dosya içinde iki önemli referans buldum:
 
@@ -74,6 +77,7 @@ Dosya içinde iki önemli referans buldum:
 key-1-of-3.txt
 fsocity.dic
 ```
+<img width="565" height="159" alt="robots txt" src="https://github.com/user-attachments/assets/817dbf8d-55ec-4ae9-a710-8f3d7d2402b6" />
 
 ### 🚩 Flag #1
 
@@ -113,7 +117,7 @@ Hedefte WordPress tespit ettiğim için `wpscan` ile detaylı tarama yaptım:
 wpscan --url https://10.112.169.2 --disable-tls-checks
 ```
 
-> 📸 *wpscan genel tarama sonucu*
+<img width="990" height="683" alt="wpscan" src="https://github.com/user-attachments/assets/65cef082-fe0e-4f27-9b0b-35cf964adcd6" />
 
 ### Kullanıcı Adı Arama
 
@@ -149,6 +153,7 @@ Elde edilen kimlik bilgileriyle admin paneline giriş yaptım:
 https://10.112.169.2/wp-admin/index.php
 ```
 
+
 WordPress admin panelinde **tema dosyası düzenleyicisi (Appearance → Theme Editor)** genellikle RCE (Remote Code Execution) için en klasik ve güvenilir yöntemlerden biridir. Çünkü tema editörü, PHP dosyalarını doğrudan sunucu üzerinde düzenleyip kaydetmenize izin verir.
 
 ### Adımlar
@@ -158,8 +163,11 @@ WordPress admin panelinde **tema dosyası düzenleyicisi (Appearance → Theme E
 3. Dinleyiciyi ayağa kaldırdım:
 
 ```bash
-nc -lvnp 4444
+nc -lvnp 9001
 ```
+<img width="1843" height="814" alt="payload" src="https://github.com/user-attachments/assets/84d92b8a-2202-410c-bff3-671feb14e2fa" />
+
+
 
 4. Tarayıcıdan değiştirdiğim `404.php` sayfasını tetikledim (örn. var olmayan bir sayfaya istek atarak):
 

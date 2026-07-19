@@ -7,20 +7,11 @@
 ```bash
 nmap -sS -sC -sV -p- 10.113.156.213
 ```
+<img width="1053" height="742" alt="nmap1" src="https://github.com/user-attachments/assets/22e967f7-6618-471e-a90f-46ecb18d9c9d" />
 
-![[Pasted image 20260719161236.png]]
-
-Açık portlar:
-
-| Port | Service | Version |
-|------|----------|---------|
-|21|FTP|ProFTPD 1.3.5|
-|22|SSH|OpenSSH|
-|80|HTTP|Apache 2.4.41|
-|111|rpcbind|RPC|
-|139|SMB|Samba|
-|445|SMB|Samba|
-|2049|NFS|NFS|
+```bash
+nmap -vvv 10.113.156.213
+```
 
 ## Soru
 
@@ -38,7 +29,7 @@ SMB paylaşımlarını listelemek için:
 smbclient -L //10.113.156.213/ -N
 ```
 
-![[Pasted image 20260719161914.png]]
+<img width="1010" height="154" alt="smb1" src="https://github.com/user-attachments/assets/fe3a977d-5294-4f0d-95d7-0eabc2104ea9" />
 
 Bulunan paylaşımlar:
 
@@ -61,8 +52,7 @@ Anonymous paylaşımına bağlanıyoruz.
 ```bash
 smbclient //10.113.156.213/anonymous -N
 ```
-
-![[Pasted image 20260719162033.png]]
+<img width="854" height="210" alt="smb2" src="https://github.com/user-attachments/assets/9f373a11-c02c-4756-9ff7-83fd089b7027" />
 
 Dosyaları listeliyoruz.
 
@@ -135,7 +125,7 @@ Bu nedenle NFS exportlarını kontrol ediyoruz.
 showmount -e 10.113.156.213
 ```
 
-![[showmount.png]]
+<img width="474" height="68" alt="showmount" src="https://github.com/user-attachments/assets/2dfba21e-6464-4109-bd7b-d3ecc6869a1d" />
 
 Çıktı:
 
@@ -176,8 +166,7 @@ ve özellikle:
 ```bash
 ls -la /mnt/kenobi/tmp
 ```
-
-![[idrsakadar.png]]
+<img width="922" height="506" alt="idrsakadar" src="https://github.com/user-attachments/assets/c8d4e84f-5ea7-4791-9d40-74a90769f2f4" />
 
 Burada dikkat çeken dosya:
 
@@ -214,6 +203,7 @@ cat user.txt
 ```
 d0b0f3f53b6caa532a83915e19224899
 ```
+<img width="408" height="93" alt="flag1" src="https://github.com/user-attachments/assets/3311cd53-34be-4b0c-a953-7fe67025b8dc" />
 
 ---
 
@@ -224,8 +214,7 @@ Log dosyasından öğrendiğimiz ProFTPD sürümünü araştırıyoruz.
 ```bash
 searchsploit ProFTPD 1.3.5
 ```
-
-![[Pasted image 20260719165236.png]]
+<img width="1141" height="169" alt="proftpd" src="https://github.com/user-attachments/assets/d0ed2f5e-69aa-479d-be29-4beb80cf0612" />
 
 ## Soru
 
@@ -365,8 +354,7 @@ cat root.txt
 ```
 177b3cd8562289f37382721c28381f02
 ```
-
-![[Pasted image 20260719170010.png]]
+<img width="469" height="154" alt="flagroot" src="https://github.com/user-attachments/assets/35f48164-c15f-4709-affe-0b7210d3135d" />
 
 ---
 
@@ -383,28 +371,3 @@ d0b0f3f53b6caa532a83915e19224899
 ```
 177b3cd8562289f37382721c28381f02
 ```
-
----
-
-# Techniques Used
-
-- Nmap Enumeration
-- SMB Enumeration
-- Anonymous SMB Share
-- NFS Enumeration
-- NFS Mount
-- SSH Private Key Authentication
-- Searchsploit
-- SUID Enumeration
-- PATH Hijacking
-- Privilege Escalation
-
----
-
-# Lessons Learned
-
-- Nmap çıktısındaki servisler birbiriyle ilişkilendirilmelidir.
-- SMB üzerinden elde edilen bilgiler diğer servislerin istismarında kullanılabilir.
-- NFS exportları mutlaka kontrol edilmelidir.
-- SUID binary'lerde tam path kullanılmayan `system()` çağrıları PATH Hijacking zafiyetine yol açabilir.
-- Basit görünen servis konfigürasyon hataları zincirlenerek tam yetkili erişime dönüştürülebilir.

@@ -22,7 +22,7 @@ searchsploit Apache Tomcat 8.5.5
 
 Doğrudan kullanılabilir bir exploit bulamadım. Bunun üzerine açık olan **8009/AJP** portuna odaklandım.
 
-![Nmap Scan](images/nmap.png)
+<img width="898" height="373" alt="nmap1" src="https://github.com/user-attachments/assets/1d9bd011-06e8-40f7-9c70-229c316f12a0" />
 
 ---
 
@@ -56,7 +56,7 @@ cat /root/.msf4/loot/*.txt
 skyfuck:8730281lkjlkjdqlksalks
 ```
 
-![Ghostcat Loot](images/ghostcat.png)
+
 
 ---
 
@@ -79,6 +79,7 @@ gobuster dir \
 -u http://10.112.189.252:8080 \
 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
+<img width="556" height="58" alt="dizin" src="https://github.com/user-attachments/assets/ad948527-be0d-4514-ba61-40fb46ac3078" />
 
 Tarama sonucunda aşağıdaki dizin dikkatimi çekti.
 
@@ -90,7 +91,7 @@ Manager paneline eriştiğimde HTTP Basic Authentication ekranı ile karşılaş
 
 Ghostcat üzerinden elde ettiğim credential bilgilerini kullanarak giriş yapmayı başardım.
 
-![Tomcat Manager](images/manager-login.png)
+<img width="1919" height="446" alt="site+zip" src="https://github.com/user-attachments/assets/e711b2a1-b155-4e9e-8a5d-f0bc1cf602e0" />
 
 ---
 

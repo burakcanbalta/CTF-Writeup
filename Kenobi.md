@@ -342,6 +342,7 @@ seçeneğini giriyoruz.
 Program root yetkisiyle bizim hazırladığımız `curl` dosyasını çalıştırdığı için root shell elde ediyoruz.
 
 ---
+<img width="1023" height="541" alt="privesc" src="https://github.com/user-attachments/assets/848ea956-db47-46ac-bfbf-8559a5e6b9ec" />
 
 # Root Flag
 

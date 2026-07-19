@@ -235,12 +235,14 @@ SUID binarylerini listeliyoruz.
 ```bash
 find / -perm -u=s -type f 2>/dev/null
 ```
+<img width="1023" height="541" alt="privesc" src="https://github.com/user-attachments/assets/848ea956-db47-46ac-bfbf-8559a5e6b9ec" />
 
 Dikkat çeken dosya:
 
 ```
 /usr/bin/menu
 ```
+
 
 ## Soru
 
@@ -342,7 +344,7 @@ seçeneğini giriyoruz.
 Program root yetkisiyle bizim hazırladığımız `curl` dosyasını çalıştırdığı için root shell elde ediyoruz.
 
 ---
-<img width="1023" height="541" alt="privesc" src="https://github.com/user-attachments/assets/848ea956-db47-46ac-bfbf-8559a5e6b9ec" />
+<img width="756" height="427" alt="rootflag" src="https://github.com/user-attachments/assets/05bbcdd1-2d1a-4ab9-9a95-1c6dd7f1284b" />
 
 # Root Flag
 

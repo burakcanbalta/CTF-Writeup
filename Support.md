@@ -34,6 +34,8 @@ Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` ad
 
 Login öncesi erişilebilecek başka bir şey olup olmadığını görmek için `ffuf` ile dizin taraması da yaptım, ancak kimlik doğrulama gerektirmeyen kullanışlı bir dizine rastlamadım. Bu yüzden bu kısmı bırakıp doğrudan brute-force denemesine geçtim.
 
+<img width="798" height="401" alt="login ekranı" src="https://github.com/user-attachments/assets/1d4ec8d6-6d41-4c0a-9189-39bd0f65dae9" />
+
 ---
 
 ## Brute-Force ile Kimlik Bilgilerinin Ele Geçirilmesi

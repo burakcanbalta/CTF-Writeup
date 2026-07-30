@@ -1,5 +1,3 @@
-<img width="300" height="300" alt="support" src="https://github.com/user-attachments/assets/6c07e566-d3c3-4c77-bed5-e3dcdf8a4fe5" />
-
 # TryHackMe — Support Writeup
 
 Support, TryHackMe üzerinde yer alan bir makine. Kurumsal bir helpdesk panelini simüle ediyor ve içerisinde zayıf kimlik doğrulama, LFI, IDOR ve Command Injection zafiyetlerini bir arada barındırıyor. Bu yazıda makineyi baştan sona nasıl ele geçirdiğimi anlatıyorum.

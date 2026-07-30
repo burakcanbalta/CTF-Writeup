@@ -43,14 +43,7 @@ http-post-form \
 
 <img width="1236" height="265" alt="hydra" src="https://github.com/user-attachments/assets/ffb6aeb8-6207-4633-9634-ed067e5f9284" />
 
-
-Kısa sürede sonuç geldi:
-
-```
-[80][http-post-form] host: 10.112.177.56 login: help@support.thm password: snoopy
-```
-
-Bu bilgilerle giriş yaptım.
+Kısa sürede sonuç geldi ver bu bilgilerle giriş yaptım.
 
 ---
 

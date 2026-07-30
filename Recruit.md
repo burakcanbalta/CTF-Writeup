@@ -10,25 +10,6 @@ nmap -sS -sC -sV -p- 10.112.184.173
 
 **Çıktı:**
 
-```
-PORT   STATE SERVICE VERSION
-22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey:
-|   3072 b6:81:d0:60:5b:04:88:9f:f2:b6:e7:b2:08:65:bc:f0 (RSA)
-|   256 d3:e1:54:f7:e7:20:86:2b:fb:9c:2e:f6:14:97:ba:38 (ECDSA)
-|_  256 58:b9:f3:12:6d:1b:ad:a7:15:b3:8e:14:cc:bb:82:a8 (ED25519)
-53/tcp open  domain  ISC BIND 9.16.1 (Ubuntu Linux)
-| dns-nsid:
-|_  bind.version: 9.16.1-Ubuntu
-80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
-|_http-title: Recruit
-| http-cookie-flags:
-|   /:
-|     PHPSESSID:
-|_      httponly flag not set
-|_http-server-header: Apache/2.4.41 (Ubuntu)
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-```
 <img width="804" height="409" alt="nmap tarama" src="https://github.com/user-attachments/assets/be79b3eb-7100-4713-bee8-acb3a4814ce8" />
 
 Taramadan elde ettiğim bilgiler:

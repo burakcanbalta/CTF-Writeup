@@ -21,7 +21,7 @@ Asıl saldırı yüzeyinin **80 numaralı portta çalışan web uygulaması** ol
 
 ## Web Uygulamasının İncelenme
 
-Tarayıcı üzerinden `http://10.112.184.173` adresine gittiğimde bir **giriş (login) sayfası** ile karşılaştım. Sayfanın altında **"Access API"** başlıklı bir bağlantı dikkatimi çekti; bu bağlantı beni `http://10.112.184.173/api.php` sayfasına yönlendirdi.
+Tarayıcı üzerinden `http://10.112.184.173` adresine gittiğimde bir **login sayfası** ile karşılaştım. Sayfanın altında **"Access API"** başlıklı bir bağlantı dikkatimi çekti; bu bağlantı beni `http://10.112.184.173/api.php` sayfasına yönlendirdi.
 
 API dokümantasyon sayfasında şu bilgi yer alıyordu:
 
@@ -51,8 +51,8 @@ javascript              [Status: 301, Size: 321, Words: 20, Lines: 10]
 phpmyadmin              [Status: 301, Size: 321, Words: 20, Lines: 10]
 server-status           [Status: 403, Size: 279, Words: 20, Lines: 10]
 ```
-<img width="1155" height="366" alt="ffuf tarama" src="https://github.com/user-attachments/assets/0ec67b8d-3637-40cb-b125-2c93f1361464" />
 
+<img width="1155" height="366" alt="ffuf tarama" src="https://github.com/user-attachments/assets/0ec67b8d-3637-40cb-b125-2c93f1361464" />
 
 `/mail` dizini özellikle dikkatimi çekti çünkü tarayıcıdan erişilebilir durumdaydı ve normalde bu tür dizinlerin herkese açık olması beklenmez.
 

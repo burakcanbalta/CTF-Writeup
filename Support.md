@@ -72,9 +72,6 @@ http://10.112.177.56/dashboard.php?skin=green
 http://10.112.177.56/dashboard.php?skin=blue
 ```
 
-<img width="1919" height="706" alt="api" src="https://github.com/user-attachments/assets/8820ba19-4b9d-4cb4-b088-1484bbf30c1e" />
-
-
 Sayfada sadece 3-4 tema seçeneği görünmesine rağmen bu isimlerin bir yerden dinamik olarak çekildiğini düşündüm. `skin` parametresinin bir dosya adı/yolu olarak kullanıldığını tahmin ederek LFI ihtimalini test etmeye karar verdim ve `/etc/passwd`, config dosyaları, `.sql` uzantılı dosyalar gibi klasik hedefleri denemeye başladım.
 
 ```

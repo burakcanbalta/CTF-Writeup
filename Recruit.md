@@ -1,6 +1,10 @@
 # TryHackMe — Recruit Writeup
 
- ## Keşif
+Recruit, TryHackMe üzerinde yer alan kolay seviye bir makine. Bir işe alım (recruitment) portalını simüle ediyor ve içerisinde bir dosya okuma (LFI) zafiyeti ile SQL Injection zafiyetini bir arada barındırıyor. Bu yazıda makineyi baştan sona nasıl ele geçirdiğimi, izlediğim yolu ve kullandığım komutları paylaşıyorum.
+
+---
+
+## Keşif
 
 İlk adım olarak hedef üzerinde açık portları ve çalışan servisleri tespit etmek için `nmap` ile tam port taraması gerçekleştirdim.
 
@@ -19,7 +23,7 @@ Asıl saldırı yüzeyinin **80 numaralı portta çalışan web uygulaması** ol
 
 ---
 
-## Web Uygulamasının İncelenme
+## Web Uygulamasının İncelenmesi
 
 Tarayıcı üzerinden `http://10.112.184.173` adresine gittiğimde bir **login sayfası** ile karşılaştım. Sayfanın altında **"Access API"** başlıklı bir bağlantı dikkatimi çekti; bu bağlantı beni `http://10.112.184.173/api.php` sayfasına yönlendirdi.
 
@@ -48,7 +52,7 @@ ffuf -u http://10.112.184.173/FUZZ -w /usr/share/wordlists/seclists/Discovery/We
 
 ---
 
-## Mail Log Dosyasının İncelenme
+## Mail Log Dosyasının İncelenmesi
 
 `/mail` dizinine gittiğimde `mail.log` isimli bir dosyaya erişebildiğimi fark ettim. İçeriğini inceleyince, IT ekibiyle HR ekibi arasında geçen bir sistem yöneticisi mail yazışması ile karşılaştım.
 
@@ -69,9 +73,17 @@ Bu mail, sızma testi açısından oldukça değerli bir bilgi sızıntısıydı
 1. **HR kullanıcısının** parolası uygulama içerisinde, `config.php` dosyasında saklanıyor.
 2. **Admin kullanıcısının** kimlik bilgileri ise veritabanında tutuluyor (bu bilgiyi ileride SQL Injection aşamasında değerlendirdim).
 
+Ayrıca mail başlıklarında (`hr@recruit.thm`, `it-support@recruit.thm`) hedefin `recruit.thm` isimli bir alan adı kullandığını fark ettim. Uygulamanın bazı yönlendirme veya oturum davranışlarının domain adına göre farklılık gösterebileceğini düşünerek, IP adresini bu domaine bağladım:
+
+```bash
+echo "10.112.184.173 recruit.thm" | sudo tee -a /etc/hosts
+```
+
+Bu sayede sonraki adımlarda hedefe hem IP hem de `recruit.thm` üzerinden erişebilir hale geldim.
+
 ---
 
-## LFI ile config.php Dosyasının Okunma
+## LFI ile config.php Dosyasının Okunması
 
 Daha önce `api.php` sayfasında gördüğüm `/file.php?cv=<URL>` endpoint'ini, mail'den öğrendiğim `config.php` dosyasını okumak için kullandım:
 
@@ -90,7 +102,7 @@ Buradan **HR kullanıcısının şifresini** ele geçirmiş oldum:
 
 ---
 
-##  İlk Giriş ve Flag #1
+## İlk Giriş ve Flag #1
 
 Elde ettiğim `hr / hrpassword123` bilgileriyle login sayfasından giriş yaptım ve ilk flag'e ulaştım.
 
@@ -122,7 +134,7 @@ available databases [6]:
 ```
 <img width="1215" height="587" alt="sqlçıktısı" src="https://github.com/user-attachments/assets/216c958c-5b9b-46ac-ac14-0345e144f3ca" />
 
-Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanına odaklanalım.
+Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanına odaklandım.
 
 ### Tabloların Listelenmesi
 
@@ -154,7 +166,7 @@ sqlmap -r req.txt -p search -D recruit_db -T users --columns --batch --fresh-que
 sqlmap -r req.txt -p search -D recruit_db --dump-all --batch --fresh-queries
 ```
 
-**admin tablosu:**
+**users tablosu:**
 
 ```
 +----+----------------+----------+
@@ -179,5 +191,8 @@ Ele geçirdiğim `admin / admin@001admin` bilgileriyle sisteme admin olarak giri
 ```
 FLAG 2: THM{LOGGED_IN_ADM1N1}
 ```
+
+---
+
 **Flag 1:** `THM{LOGGED_IN_USER}`
 **Flag 2:** `THM{LOGGED_IN_ADM1N1}`

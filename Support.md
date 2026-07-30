@@ -116,8 +116,6 @@ md5("true") = b326b5062b2f0e69046810717534cb09
 
 Bu değeri isteğe ekleyip sunucuya yolladığımda admin yetkisiyle panele erişim sağladım.
 
-<img width="1919" height="706" alt="api" src="https://github.com/user-attachments/assets/ab878293-301d-4b04-91ea-6e469571de4c" />
-
 ---
 
 ## IDOR ile Kullanıcı Bilgilerinin Sızdırılması

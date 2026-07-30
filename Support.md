@@ -48,7 +48,8 @@ http-post-form \
 "/:email=^USER^&password=^PASS^:F=Invalid"
 ```
 
-> [SCREENSHOT: hydra çıktısı]
+<img width="1236" height="265" alt="hydra" src="https://github.com/user-attachments/assets/ffb6aeb8-6207-4633-9634-ed067e5f9284" />
+
 
 Kısa sürede sonuç geldi:
 
@@ -71,7 +72,8 @@ http://10.112.177.56/dashboard.php?skin=green
 http://10.112.177.56/dashboard.php?skin=blue
 ```
 
-> [SCREENSHOT: skin değiştirme seçenekleri]
+<img width="1919" height="706" alt="api" src="https://github.com/user-attachments/assets/8820ba19-4b9d-4cb4-b088-1484bbf30c1e" />
+
 
 Sayfada sadece 3-4 tema seçeneği görünmesine rağmen bu isimlerin bir yerden dinamik olarak çekildiğini düşündüm. `skin` parametresinin bir dosya adı/yolu olarak kullanıldığını tahmin ederek LFI ihtimalini test etmeye karar verdim ve `/etc/passwd`, config dosyaları, `.sql` uzantılı dosyalar gibi klasik hedefleri denemeye başladım.
 
@@ -80,8 +82,6 @@ http://10.112.177.56/dashboard.php?skin=../config
 ```
 
 Bu isteği attığımda sayfanın normal görünümünde bir bozulma oldu; içerik doğrudan ekrana basılmadı ama sayfa davranışındaki değişiklik bir şey bulduğumu gösteriyordu. Sayfa kaynağını inceleyince aradığım veriye ulaştım:
-
-> [SCREENSHOT: sayfa kaynağında config içeriği]
 
 ```php
 <?php
@@ -115,8 +115,6 @@ Bu, cookie'nin aslında bir yetki bilgisini hash'lenmiş şekilde tuttuğunu gö
 md5("true") = b326b5062b2f0e69046810717534cb09
 ```
 
-> [SCREENSHOT: Burp'ta cookie değerinin değiştirilmesi]
-
 Bu değeri isteğe ekleyip sunucuya yolladığımda admin yetkisiyle panele erişim sağladım.
 
 ---
@@ -142,7 +140,8 @@ GET /user/3
 }
 ```
 
-> [SCREENSHOT: /user/3 API yanıtı]
+<img width="1919" height="706" alt="api" src="https://github.com/user-attachments/assets/8b9df8c9-c6f4-4886-8372-c4c554e0f7a9" />
+
 
 Endpoint'in `id` parametresine göre çalıştığını görünce, erişim kontrolü olup olmadığını test etmek için `id` değerini manuel olarak değiştirdim. Beklediğim gibi herhangi bir yetki kontrolü yoktu ve diğer kullanıcıların profillerine de erişebildim — klasik bir IDOR zafiyeti.
 
@@ -168,8 +167,6 @@ GET /user/2
 }
 ```
 
-> [SCREENSHOT: /user/1 ve /user/2 API yanıtları]
-
 `specialadmin@support.thm` hesabının `admin: true` olduğunu görünce, daha önce config dosyasından elde ettiğim `support@110` parolasının bu hesaba ait olabileceğini düşündüm.
 
 ---
@@ -178,7 +175,7 @@ GET /user/2
 
 `specialadmin@support.thm` hesabıyla `support@110` parolasını doğrudan denediğimde giriş başarısız oldu. Parolada küçük bir varyasyon deneyerek `@` karakterini kaldırdım ve `support110` şeklinde tekrar denedim. Bu sefer giriş başarılı oldu.
 
-> [SCREENSHOT: specialadmin hesabıyla başarılı giriş]
+<img width="1919" height="783" alt="ilk flag" src="https://github.com/user-attachments/assets/ff8e9556-2510-4050-8cf4-449bd4149f3b" />
 
 ```
 FLAG 1: THM{I_AM_ADMIN999}
@@ -194,7 +191,6 @@ Admin panelinde sistem tanılama amaçlı bir tarih/saat özelliği bulunuyordu.
 Date: Thu Jul 30 18:00:08 UTC 2026
 ```
 
-> [SCREENSHOT: sistem tarihini gösteren panel]
 
 Bu isteği Burp Suite ile yakaladığımda, tarih bilgisinin sunucu tarafında çalıştırılan bir sistem komutu üzerinden üretildiğini gördüm. İstekte kullanılan parametre şu şekildeydi:
 
@@ -208,7 +204,8 @@ URL decode edildiğinde bu parametrenin `date +"%H:%M:%S"` komutuna karşılık 
 sys=date;ls -al;cat /home/ubuntu/user.txt
 ```
 
-> [SCREENSHOT: Burp'ta değiştirilmiş sys parametresi ve komut çıktısı]
+<img width="770" height="353" alt="burprequest" src="https://github.com/user-attachments/assets/8aedb568-7470-4e3b-855e-0e7fd0e20f33" />
+
 
 İstek başarıyla çalıştı ve `/home/ubuntu/user.txt` dosyasının içeriği doğrudan yanıt olarak döndü.
 
@@ -217,6 +214,7 @@ FLAG 2: THM{GOT_THE_FLAG001}
 ```
 
 ---
+<img width="1544" height="677" alt="lastflag" src="https://github.com/user-attachments/assets/a1ae07bf-48f4-4b95-9b2a-034cd1de8fbe" />
 
 **Flag 1:** `THM{I_AM_ADMIN999}`
 **Flag 2:** `THM{GOT_THE_FLAG001}`

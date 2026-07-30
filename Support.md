@@ -104,7 +104,7 @@ Bu değeri isteğe ekleyip sunucuya yolladığımda admin yetkisiyle panele eri�
 
 ## IDOR ile Kullanıcı Bilgilerinin Sızdırılması
 
-Admin panelinde bir "View API" butonu vardı. Tıkladığımda kendi kullanıcı profilimi sorgulayan bir endpoint ile karşılaştım:
+Admin panelinde bir "View API" butonu vardı. Tıkladığımda kendi kullanıcı profilimi sorgulayan bir endpoint görüyoruz:
 
 ```
 Internal User API

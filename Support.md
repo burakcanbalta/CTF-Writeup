@@ -11,8 +11,7 @@ Support, TryHackMe üzerinde yer alan bir makine. Kurumsal bir helpdesk panelini
 ```bash
 nmap -sS -sC -sV -p- 10.112.177.56
 ```
-
-> [SCREENSHOT: nmap tarama çıktısı]
+<img width="1225" height="412" alt="nmap" src="https://github.com/user-attachments/assets/17ff7264-30e4-4029-b15f-2d03dd03b3d4" />
 
 Tarama sonucunda 80 numaralı portta bir web uygulaması çalıştığını gördüm ve incelemeye buradan başladım.
 
@@ -30,8 +29,7 @@ Internal platform for managing support operations, infrastructure access, and in
 - Internal APIs
 - System diagnostics
 ```
-
-> [SCREENSHOT: login ekranı]
+<img width="1919" height="706" alt="api" src="https://github.com/user-attachments/assets/c2593a99-f7a0-4eed-84b1-b7d9f4f55bc3" />
 
 Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresinin bulunduğunu fark ettim. Bu, geçerli bir kullanıcı adı olabileceğine işaret ediyordu ve brute-force denemesi için iyi bir başlangıç noktasıydı.
 

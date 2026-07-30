@@ -103,7 +103,7 @@ FLAG 1: THM{LOGGED_IN_USER}
 
 ## SQL Injection ile Admin Bilgisini Ele Geçirme
 
-Panelde bir **arama ** alanı bulunuyordu ve bu tür kullanıcı girdisi alan alanlar her zaman SQL Injection açısından test edilmeyi hak eder. Manuel testin zaman alacağını düşünerek, ilgili isteği Burp Suite ile yakalayıp `req.txt` dosyasına kaydettim ve `sqlmap` ile otomatik tarama gerçekleştirdim.
+Panelde bir arama alanı bulunuyordu. Ekranda ID, username gibi kolonlarla birlikte kullanıcı verileri gözüktüğü ve bunların büyük ihtimalle bir veritabanından çekildiği aklıma gelince, bu arama alanının arkasında bir SQL sorgusu dönüyor olabileceğini düşündüm ve SQL Injection ihtimalini test etmeye karar verdim. Manuel testin zaman alacağını düşünerek, ilgili isteği Burp Suite ile yakalayıp `req.txt` dosyasına kaydettim ve `sqlmap` ile otomatik tarama gerçekleştirdim.
 
 ### Veritabanlarının Listelenmesi
 

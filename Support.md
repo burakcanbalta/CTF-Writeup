@@ -29,7 +29,6 @@ Internal platform for managing support operations, infrastructure access, and in
 - Internal APIs
 - System diagnostics
 ```
-<img width="1919" height="706" alt="api" src="https://github.com/user-attachments/assets/c2593a99-f7a0-4eed-84b1-b7d9f4f55bc3" />
 
 Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresinin bulunduğunu fark ettim. Bu, geçerli bir kullanıcı adı olabileceğine işaret ediyordu ve brute-force denemesi için iyi bir başlangıç noktasıydı.
 

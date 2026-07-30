@@ -30,7 +30,7 @@ Internal platform for managing support operations, infrastructure access, and in
 - System diagnostics
 ```
 
-Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresinin bulunduğunu fark ettim. Bu, geçerli bir kullanıcı adı olabileceğine işaret ediyordu ve brute-force denemesi için iyi bir başlangıç noktasıydı.
+Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresini gördüm ve brute-force denemesi için iyi bir başlangıç noktasıydı.
 
 Login öncesi erişilebilecek başka bir şey olup olmadığını görmek için `ffuf` ile dizin taraması da yaptım, ancak kimlik doğrulama gerektirmeyen kullanışlı bir dizine rastlamadım. Bu yüzden bu kısmı bırakıp doğrudan brute-force denemesine geçtim.
 

@@ -26,6 +26,7 @@ Tarama sonucunda 80 numaralı portta bir web uygulaması çalıştığını gör
 Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresini gördüm ve brute-force denemesi için iyi bir başlangıç noktasıydı.
 
 Login öncesi erişilebilecek başka bir şey olup olmadığını görmek için `ffuf` ile dizin taraması da yaptım, ancak kimlik doğrulama gerektirmeyen kullanışlı bir dizine rastlamadım. Bu yüzden bu kısmı bırakıp doğrudan brute-force denemesine geçtim.
+
 ---
 
 ## Brute-Force ile Kimlik Bilgilerinin Ele Geçirilmesi

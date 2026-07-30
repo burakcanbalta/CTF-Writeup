@@ -1,4 +1,6 @@
-# TryHackMe — Recruit Writeup
+<img width="720" height="718" alt="recuit" src="https://github.com/user-attachments/assets/3fa090d5-df9c-475b-a509-133060d826be" />
+
+# TryHackMe — Recruit Writeut
 
 Recruit, TryHackMe üzerinde yer alan kolay seviye bir makine. Bir işe alım (recruitment) portalını simüle ediyor ve içerisinde bir dosya okuma (LFI) zafiyeti ile SQL Injection zafiyetini bir arada barındırıyor. Bu yazıda makineyi baştan sona nasıl ele geçirdiğimi, izlediğim yolu ve kullandığım komutları paylaşıyorum.
 

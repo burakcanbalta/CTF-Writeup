@@ -181,11 +181,6 @@ sys=date;ls -al;cat /home/ubuntu/user.txt
 
 İstek başarıyla çalıştı ve `/home/ubuntu/user.txt` dosyasının içeriği doğrudan yanıt olarak döndü.
 
-```
-FLAG 2: THM{GOT_THE_FLAG001}
-```
-
----
 <img width="1544" height="677" alt="lastflag" src="https://github.com/user-attachments/assets/a1ae07bf-48f4-4b95-9b2a-034cd1de8fbe" />
 
 **Flag 1:** `THM{I_AM_ADMIN999}`

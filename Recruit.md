@@ -25,6 +25,14 @@ Asıl saldırı yüzeyinin **80 numaralı portta çalışan web uygulaması** ol
 
 ## Web Uygulamasının İncelenmesi
 
+Siteye gitmeden önce, hedefi IP yerine domain üzerinden de test edebilmek için `/etc/hosts` dosyasına bir kayıt ekledim:
+
+```bash
+echo "10.112.184.173 recruit.thm" | sudo tee -a /etc/hosts
+```
+
+Bu sayede hedefe hem IP hem de `recruit.thm` üzerinden erişebilir hale geldim.
+
 Tarayıcı üzerinden `http://10.112.184.173` adresine gittiğimde bir **login sayfası** ile karşılaştım. Sayfanın altında **"Access API"** başlıklı bir bağlantı dikkatimi çekti; bu bağlantı beni `http://10.112.184.173/api.php` sayfasına yönlendirdi.
 
 API dokümantasyon sayfasında şu bilgi yer alıyordu:
@@ -73,13 +81,7 @@ Bu mail, sızma testi açısından oldukça değerli bir bilgi sızıntısıydı
 1. **HR kullanıcısının** parolası uygulama içerisinde, `config.php` dosyasında saklanıyor.
 2. **Admin kullanıcısının** kimlik bilgileri ise veritabanında tutuluyor (bu bilgiyi ileride SQL Injection aşamasında değerlendirdim).
 
-Ayrıca mail başlıklarında (`hr@recruit.thm`, `it-support@recruit.thm`) hedefin `recruit.thm` isimli bir alan adı kullandığını fark ettim. Uygulamanın bazı yönlendirme veya oturum davranışlarının domain adına göre farklılık gösterebileceğini düşünerek, IP adresini bu domaine bağladım:
-
-```bash
-echo "10.112.184.173 recruit.thm" | sudo tee -a /etc/hosts
-```
-
-Bu sayede sonraki adımlarda hedefe hem IP hem de `recruit.thm` üzerinden erişebilir hale geldim.
+Ayrıca mail başlıklarında (`hr@recruit.thm`, `it-support@recruit.thm`) görülen adresler, hedefin `recruit.thm` domainini kullandığını da doğruladı.
 
 ---
 

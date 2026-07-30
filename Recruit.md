@@ -7,9 +7,6 @@
 ```bash
 nmap -sS -sC -sV -p- 10.112.184.173
 ```
-
-**Çıktı:**
-
 <img width="804" height="409" alt="nmap tarama" src="https://github.com/user-attachments/assets/be79b3eb-7100-4713-bee8-acb3a4814ce8" />
 
 Taramadan elde ettiğim bilgiler:

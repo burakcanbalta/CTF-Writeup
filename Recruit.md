@@ -115,23 +115,6 @@ Sonuç başarılı oldu ve dosya içeriği doğrudan tarayıcıda görüntülend
 
 <img width="948" height="655" alt="config php" src="https://github.com/user-attachments/assets/47eced95-2129-4747-a8d3-32e01d436f80" />
 
-```php
-<?php
-$APP_NAME        = 'Recruit';
-$APP_ENV         = 'production';
-$APP_VERSION     = '1.2.4';
-$APP_DEBUG       = false;
-
-/*
-| HR Credentials (Temporary – Initial Rollout Phase)
-*/
-$HR_PASSWORD = 'hrpassword123';
-
-$API_ENABLED     = true;
-$API_VERSION     = 'v1';
-?>
-```
-
 Buradan **HR kullanıcısının şifresini** ele geçirmiş oldum:
 
 - **Username:** `hr`

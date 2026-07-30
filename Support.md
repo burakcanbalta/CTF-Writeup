@@ -1,6 +1,6 @@
 # TryHackMe — Support Writeup
 
-Support, TryHackMe üzerinde yer alan bir makine. Bir kurum içi destek (helpdesk) panelini simüle ediyor ve içerisinde brute-force ile ele geçirilebilen zayıf bir kimlik doğrulama, LFI zafiyeti, güvensiz bir oturum/yetki kontrolü (IDOR) ve son olarak bir komut enjeksiyonu (command injection) zafiyeti bir arada yer alıyor. Bu yazıda makineyi baştan sona nasıl ele geçirdiğimi anlatıyorum.
+Support, TryHackMe üzerinde yer alan bir makine. Kurumsal bir helpdesk panelini simüle ediyor ve içerisinde zayıf kimlik doğrulama, LFI, IDOR ve Command Injection zafiyetlerini bir arada barındırıyor. Bu yazıda makineyi baştan sona nasıl ele geçirdiğimi anlatıyorum.
 
 ---
 
@@ -20,7 +20,7 @@ Tarama sonucunda 80 numaralı portta bir web uygulaması çalıştığını gör
 
 ## Web Uygulamasının İncelenmesi
 
-`http://10.112.177.56` adresine gittiğimde bir **login ekranı** ile karşılaştım. Sayfada şu açıklama yer alıyordu:
+`http://10.112.177.56` adresine gittiğimde bir login ekranı ile karşılaştım. Sayfada şu açıklama yer alıyordu:
 
 ```
 Support Operations Panel
@@ -33,7 +33,7 @@ Internal platform for managing support operations, infrastructure access, and in
 
 > [SCREENSHOT: login ekranı]
 
-Login formunun e-posta alanı içerisinde örnek/varsayılan olarak `help@support.thm` adresinin bulunduğunu fark ettim. Bu, geçerli bir kullanıcı adı olabileceğine işaret ediyordu ve brute-force denemesi için iyi bir başlangıç noktasıydı.
+Login formunun e-posta alanında örnek/varsayılan olarak `help@support.thm` adresinin bulunduğunu fark ettim. Bu, geçerli bir kullanıcı adı olabileceğine işaret ediyordu ve brute-force denemesi için iyi bir başlangıç noktasıydı.
 
 Login öncesi erişilebilecek başka bir şey olup olmadığını görmek için `ffuf` ile dizin taraması da yaptım, ancak kimlik doğrulama gerektirmeyen kullanışlı bir dizine rastlamadım. Bu yüzden bu kısmı bırakıp doğrudan brute-force denemesine geçtim.
 
@@ -65,7 +65,7 @@ Bu bilgilerle giriş yaptım.
 
 ## LFI ile config Dosyasının Okunması
 
-Giriş yaptıktan sonra panelde bir **tema (skin) değiştirme** özelliği olduğunu fark ettim:
+Giriş yaptıktan sonra panelde bir skin değiştirme özelliği olduğunu fark ettim:
 
 ```
 http://10.112.177.56/dashboard.php?skin=default
@@ -93,7 +93,7 @@ SITE_VER = '1.0';
 $SITE_NAME = 'support_portal';
 ```
 
-Elimde artık bir **master password** vardı (`support@110`) ancak hangi kullanıcıya ait olduğunu bilmiyordum. Araştırmaya devam ettim.
+Elimde artık bir master password vardı (`support@110`) ancak hangi kullanıcıya ait olduğunu bilmiyordum. Araştırmaya devam ettim.
 
 ---
 
@@ -106,13 +106,13 @@ isITUser = 68934a3e9455fa72420237eb05902327
 PHPSESSID = a63hjhr4eanskklcb4eef12o3b
 ```
 
-`isITUser` değeri 32 karakter uzunluğunda, rakam ve küçük harflerden oluşuyordu — klasik bir **MD5 hash** formatına benziyordu. `false` kelimesinin MD5 karşılığını hesapladığımda değerin birebir eşleştiğini gördüm:
+`isITUser` değeri 32 karakter uzunluğunda, rakam ve küçük harflerden oluşuyordu — klasik bir MD5 hash formatına benziyordu. `false` kelimesinin MD5 karşılığını hesapladığımda değerin birebir eşleştiğini gördüm:
 
 ```
 md5("false") = 68934a3e9455fa72420237eb05902327
 ```
 
-Bu, cookie'nin aslında bir yetki (yetkili kullanıcı mı değil mi) bilgisini hash'lenmiş şekilde tuttuğunu gösteriyordu. `true` kelimesinin MD5 karşılığını hesaplayıp bu değeri cookie'ye yerleştirdim:
+Bu, cookie'nin aslında bir yetki bilgisini hash'lenmiş şekilde tuttuğunu gösteriyordu. `true` kelimesinin MD5 karşılığını hesaplayıp bu değeri cookie'ye yerleştirdim:
 
 ```
 md5("true") = b326b5062b2f0e69046810717534cb09
@@ -120,13 +120,13 @@ md5("true") = b326b5062b2f0e69046810717534cb09
 
 > [SCREENSHOT: Burp'ta cookie değerinin değiştirilmesi]
 
-Bu değeri isteğe ekleyip sunucuya yolladığımda **admin yetkisiyle** panele erişim sağladım.
+Bu değeri isteğe ekleyip sunucuya yolladığımda admin yetkisiyle panele erişim sağladım.
 
 ---
 
 ## IDOR ile Kullanıcı Bilgilerinin Sızdırılması
 
-Admin panelinde bir **"View API"** butonu vardı. Tıkladığımda kendi kullanıcı profilimi sorgulayan bir endpoint ile karşılaştım:
+Admin panelinde bir "View API" butonu vardı. Tıkladığımda kendi kullanıcı profilimi sorgulayan bir endpoint ile karşılaştım:
 
 ```
 Internal User API
@@ -147,7 +147,7 @@ GET /user/3
 
 > [SCREENSHOT: /user/3 API yanıtı]
 
-Endpoint'in `id` parametresine göre çalıştığını görünce, erişim kontrolü olup olmadığını test etmek için `id` değerini manuel olarak değiştirdim. Beklediğim gibi herhangi bir yetki kontrolü yoktu ve diğer kullanıcıların profillerine de erişebildim — klasik bir **IDOR (Insecure Direct Object Reference)** zafiyeti.
+Endpoint'in `id` parametresine göre çalıştığını görünce, erişim kontrolü olup olmadığını test etmek için `id` değerini manuel olarak değiştirdim. Beklediğim gibi herhangi bir yetki kontrolü yoktu ve diğer kullanıcıların profillerine de erişebildim — klasik bir IDOR zafiyeti.
 
 ```
 GET /user/1
@@ -189,9 +189,9 @@ FLAG 1: THM{I_AM_ADMIN999}
 
 ---
 
-## Komut Enjeksiyonu (Command Injection) ile Yetkili Erişim
+## Command Injection ile Yetkili Erişim
 
-Admin panelinde sistem tanılama (diagnostics) amaçlı bir **tarih/saat** özelliği bulunuyordu. Bu özelliği tetiklediğimde sayfada şu şekilde bir çıktı görüntüleniyordu:
+Admin panelinde sistem tanılama amaçlı bir tarih/saat özelliği bulunuyordu. Bu özelliği tetiklediğimde sayfada şu şekilde bir çıktı görüntüleniyordu:
 
 ```
 Date: Thu Jul 30 18:00:08 UTC 2026

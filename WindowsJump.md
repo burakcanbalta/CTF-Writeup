@@ -56,7 +56,7 @@ Buradan şunları öğrendim:
 - **SMB Signing:** Kapalı (`signing: False`) → potansiyel olarak relay saldırılarına açık
 - **SMBv1:** Kapalı (`SMBv1: False`)
 
-SMB signing'in kapalı olması ilerideki bir NTLM relay senaryosu için önemli bir detay, not düştüm ama bu odada asıl kapı başka bir yerden açılacaktı.
+SMB signing'in kapalı olması ilerideki bir NTLM relay senaryosu için önemli bir detay, not düştüm.
 
 ### Anonim SMB Erişimi
 

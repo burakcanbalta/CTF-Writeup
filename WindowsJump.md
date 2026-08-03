@@ -30,7 +30,7 @@ Product_Version: 10.0.17763
 445 portu açık olduğu için ilk aklıma gelen SMB üzerinden bilgi toplamak oldu. Bunun için **NetExec (nxc)** kullandım:
 
 ```bash
-nxc smb 10.10.XXX.XXX
+nxc smb 10.113.128.72
 ```
 <img width="1365" height="439" alt="smb" src="https://github.com/user-attachments/assets/7d8cd793-ba38-4f98-8108-b9bdbf8ef76b" />
 

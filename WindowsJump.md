@@ -69,7 +69,7 @@ smb: \> get welcome.txt
 
 Dosyanın içeriği tam bir hazine çıktı:
 
-Yeni işe başlayan personel için bırakılmış varsayılan bir kimlik bilgisi... ve hiç değiştirilmemiş. Klasik ama hâlâ çok yaygın bir hata.
+Yeni işe başlayan personel için bırakılmış varsayılan bir kimlik bilgisi...
 
 <img width="433" height="179" alt="welcome txt" src="https://github.com/user-attachments/assets/f267f099-10a6-4e9e-969f-54d4886a121d" />
 

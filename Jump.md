@@ -167,6 +167,7 @@ Kendi tarafımda ikinci bir dinleyici açtım:
 ```bash
 nc -nlvp 4445
 ```
+<img width="667" height="124" alt="shell2" src="https://github.com/user-attachments/assets/e5fc5246-30f6-49d6-afb0-0363fb5fda29" />
 
 Ve bekledim. Bu sefer biraz daha uzun sürdü, muhtemelen bu script'i tetikleyen zamanlayıcı `incoming` klasörü kadar sık çalışmıyordu. Ama sonunda bağlantı düştü:
 
@@ -179,7 +180,6 @@ uid=1002(dev_user) gid=1002(dev_user) groups=1002(dev_user),1005(devops)
 
 ```
 dev_user@tryhackme-2404:~$ cat flag.txt
-THM{8d2b7a41-3f9c-4e55-b1a2-6c7d9e8f0123}
 ```
 
 **SORU 2: dev_user'ın ana dizininde bulunan bayrak nedir?**
@@ -218,6 +218,7 @@ Dinleyiciyi açtım:
 ```bash
 nc -nlvp 1339
 ```
+<img width="663" height="162" alt="shell3" src="https://github.com/user-attachments/assets/e9cb2ad6-76e1-4ae2-b96f-fd779e26e322" />
 
 Bir süre sonra `monitor_user` yetkisiyle (muhtemelen `monitor_user`'a ait bir cron job periyodik olarak `ps` çağırıyordu, sistemdeki process'leri kontrol etmek için) shell düştü:
 
@@ -230,7 +231,6 @@ Ev dizinindeki flag:
 
 ```
 monitor_user@tryhackme-2404:~$ cat flag.txt
-THM{c1e9a7b3-2d44-4a88-9f7e-3b6c2d5a9f77}
 ```
 
 **SORU 3: monitor_user'ın ana dizininde bulunan bayrak nedir?**
@@ -241,17 +241,7 @@ THM{c1e9a7b3-2d44-4a88-9f7e-3b6c2d5a9f77}
 
 Artık alışkanlık haline geldi: yeni bir kullanıcı olduğumda ilk iş `sudo -l`.
 
-```
-monitor_user@tryhackme-2404:/home$ sudo -l
-sudo -l
-Matching Defaults entries for monitor_user on tryhackme-2404:
-    env_reset, mail_badpass,
-    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
-    use_pty, env_keep+=LESS
-
-User monitor_user may run the following commands on tryhackme-2404:
-    (ops_user) NOPASSWD: /usr/local/bin/deploy.sh
-```
+<img width="840" height="191" alt="shell3densonra" src="https://github.com/user-attachments/assets/ddc97737-1a1d-4eb6-85f0-9b6cfc7b1bcb" />
 
 Burada net bir kural var: `monitor_user`, **şifre girmeden** `ops_user` yetkisiyle `/usr/local/bin/deploy.sh` dosyasını çalıştırabiliyor. İlk düşüncem "deploy script'ini direkt çalıştırıp ne yaptığına bakayım" oldu, ama tabii asıl amacım script'i kullanarak `ops_user` shell'i almak.
 
@@ -277,6 +267,8 @@ sudo -u ops_user /usr/local/bin/deploy.sh
 
 `deploy.sh` çalışınca içeride `deploy_helper.sh`'ı da çağırdı, benim eklediğim satır tetiklendi ve `ops_user` yetkisiyle shell bağlantısı geldi:
 
+<img width="641" height="118" alt="shell4" src="https://github.com/user-attachments/assets/2540f5eb-1326-49db-bdc8-03a2f525f9fb" />
+
 ```
 ops_user@tryhackme-2404:~$ id
 uid=1004(ops_user) gid=1004(ops_user)
@@ -284,7 +276,7 @@ uid=1004(ops_user) gid=1004(ops_user)
 
 ```
 ops_user@tryhackme-2404:~$ cat flag.txt
-THM{f7a2c9d1-6e33-4b55-8d11-9c0a7b2e4d88}
+
 ```
 
 **SORU 4: ops_user'ın ana dizininde bulunan bayrak nedir?**
@@ -308,12 +300,15 @@ Denedim:
 ```bash
 sudo less /etc/hosts
 ```
+<img width="949" height="148" alt="shell4den sonra" src="https://github.com/user-attachments/assets/6b31bc6f-1daf-4f08-8e7d-4c75e75a26c2" />
 
 Ama burada beklenmedik bir sorunla karşılaştım. Ekran normal `cat` çıktısı gibi dosyayı basıp direkt komut satırına geri döndü, **pager moduna hiç girmedi**. `!/bin/bash` yazdığımda da "command not found" tarzı bir hata aldım çünkü satır `less`'e değil, doğrudan normal shell'e komut olarak gitmişti.
 
 Bir süre "GTFOBins yanlış mı, yoksa less burada farklı mı davranıyor" diye düşündüm ama sonra fark ettim: **sorun `less`'te değil, benim shell'imde.** Reverse shell ile aldığım bu bağlantı gerçek bir TTY (terminal) değil, sadece ham bir soket üzerinden text akıtan bir bash. `less` gibi ekranı tam kaplayan, interaktif çalışan (curses tabanlı) programlar gerçek bir terminale ihtiyaç duyar; TTY olmayan bir ortamda `less` kendini "interaktif değilim" moduna alıp direkt dosyayı basıp çıkıyor - tıpkı `cat` gibi davranıyor.
 
-Bunu çözmek için shell'imi gerçek bir PTY'ye yükseltmem gerekti (bu arada bu teknik CTF'lerde neredeyse her reverse shell'de işime yarıyor, artık ezbere biliyorum):
+<img width="901" height="386" alt="shell4densonra1" src="https://github.com/user-attachments/assets/ae9e1a50-e4f6-4bc7-8f0f-d900de9fe549" />
+
+Bunu çözmek için shell'imi gerçek bir PTY'ye yükseltmem gerekti:
 
 Hedef tarafta (ops_user shell'inde):
 

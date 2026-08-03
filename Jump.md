@@ -53,6 +53,7 @@ ftp> get README.txt
 <img width="1275" height="521" alt="ftp" src="https://github.com/user-attachments/assets/6a0ed7ca-3ba6-4261-8796-d6fa09122606" />
 
 İçeriği şuydu:
+
 <img width="519" height="116" alt="Readme" src="https://github.com/user-attachments/assets/ed421b74-c966-4c53-8385-dff727a8424f" />
 
 Bu satırları okuyunca kafamda net bir resim oluştu: **`incoming/` klasörüne bir şey bırakırsam, sunucu tarafında (muhtemelen bir cron job ya da watcher script) bu dosyayı otomatik olarak işliyor.** "Invalid formats are ignored" kısmı da bana şunu söylüyor: format önemli, muhtemelen bir shell script veya belirli bir uzantı bekleniyor. Bu tarz "otomatik işlenen dosya" senaryoları genelde CTF'lerde reverse shell tetiklemek için tasarlanır, ben de direkt o yola gittim.

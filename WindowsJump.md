@@ -7,6 +7,7 @@
 ## Giriş
 
 Bu odada senaryo şöyle: bir zafiyet taramasında ağda unutulmuş bir Windows makinesi tespit edilmiş. Ekip küçülmesi sonrası IT tarafından düzgün temizlenmemiş, sıradan bir workstation gibi görünüyor ama içine girince katman katman kötü konfigürasyon çıkıyor. Amacımız `guest` seviyesinden başlayıp `SYSTEM` yetkisine kadar tırmanmak. Aşağıda attığım her adımı, neden o adımı attığımı ve bulduğum şeyleri elimden geldiğince detaylı anlatmaya çalıştım.
+
 ---
 
 ## 1. Enumeration

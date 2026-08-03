@@ -1,9 +1,7 @@
 # Windows Jump — TryHackMe Writeup
 
 > **Zorluk:** Orta
-
 > **Kategori:** Windows Privilege Escalation
-
 > **Yol:** `guest` → `thmuser` → `notadmin` → `svcadmin` → `SYSTEM`
 
 ## Giriş

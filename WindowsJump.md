@@ -194,7 +194,7 @@ Servisin `svcadmin` context'inde çalıştığını gördükten sonra, servisin 
 icacls C:\Windows\THMSvc
 ```
 
-Sonuç can alıcıydı: dizin normal kullanıcılar tarafından **yazılabilir** durumdaydı. Yani servis binary'sini kendi payload'ımla değiştirip servisi yeniden başlattığımda, kod `svcadmin` yetkisiyle çalışacaktı — klasik bir **binary hijacking / weak service permissions** açığı.
+Dizin normal kullanıcılar tarafından **yazılabilir** durumdaydı. Yani servis binary'sini kendi payload'ımla değiştirip servisi yeniden başlattığımda, kod `svcadmin` yetkisiyle çalışacaktı — klasik bir **binary hijacking / weak service permissions** açığı.
 
 <img width="715" height="224" alt="svcadminhizmeti2" src="https://github.com/user-attachments/assets/0f5ca964-2388-4dc9-a868-063cf536e2d8" />
 

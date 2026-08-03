@@ -102,6 +102,7 @@ shell.sh
 
 ```
 recon_user@tryhackme-2404:~$ cat flag.txt
+
 THM{5a3f1c92-7b4e-4d91-8c2a-1f6e9b2a4c11}
 ```
 

@@ -59,13 +59,13 @@ smbclient //10.113.128.72/Public -N
 ```
 <img width="1307" height="292" alt="smb2" src="https://github.com/user-attachments/assets/df8e0eaa-b652-4e5b-9890-22581ebf9b50" />
 
+<img width="867" height="199" alt="smbget" src="https://github.com/user-attachments/assets/95fd6b01-401f-4b47-90c1-9d4adce7a48e" />
 
 İçeride `welcome.txt` diye bir dosya vardı, `get` komutuyla kendi makineme çektim:
 
 ```
 smb: \> get welcome.txt
 ```
-<img width="867" height="199" alt="smbget" src="https://github.com/user-attachments/assets/95fd6b01-401f-4b47-90c1-9d4adce7a48e" />
 
 Dosyanın içeriği tam bir hazine çıktı:
 

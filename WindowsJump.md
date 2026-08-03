@@ -13,22 +13,11 @@ Bu odada senaryo şöyle: bir zafiyet taramasında ağda unutulmuş bir Windows 
 İlk iş her zaman aynı: portları görmek. Klasik agresif Nmap taraması ile başladım:
 
 ```bash
-nmap -sS -A -p- 10.10.XXX.XXX
+nmap -sS -A -p- 10.113.128.727
 ```
+<img width="979" height="757" alt="nmap1" src="https://github.com/user-attachments/assets/a38c86f0-216a-4f54-8c63-5398aeef2d5b" />
 
 Çıktıda dikkatimi çeken portlar:
-
-```
-PORT      STATE SERVICE       VERSION
-135/tcp   open  msrpc         Microsoft Windows RPC
-139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
-445/tcp   open  microsoft-ds?
-3389/tcp  open  ms-wbt-server Microsoft Terminal Services
-5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
-7680/tcp  open  pando-pub?
-47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
-49664-49672/tcp open msrpc    Microsoft Windows RPC
-```
 
 `rdp-ntlm-info` script çıktısından da makinenin adını ve alan bilgisini öğrendim:
 
@@ -38,8 +27,6 @@ NetBIOS_Domain_Name: PRIVESC
 DNS_Domain_Name: privesc
 Product_Version: 10.0.17763
 ```
-<img width="979" height="757" alt="nmap1" src="https://github.com/user-attachments/assets/a38c86f0-216a-4f54-8c63-5398aeef2d5b" />
-
 445 portu açık olduğu için ilk aklıma gelen SMB üzerinden bilgi toplamak oldu. Bunun için **NetExec (nxc)** kullandım:
 
 ```bash

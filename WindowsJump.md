@@ -185,8 +185,8 @@ wmic service get Name,DisplayName,StartName | findstr /i svcadmin
 ```cmd
 sc qc THMSvc
 ```
+<img width="802" height="63" alt="svcadminhizmet" src="https://github.com/user-attachments/assets/9b0f7ecd-0ff6-4289-b976-5f2ce9cb00c2" />
 
-*(Buraya sc qc çıktısının ss'i eklenecek — servisin çalıştırdığı binary yolu ve BINARY_PATH_NAME görünecek)*
 
 Servisin `svcadmin` context'inde çalıştığını gördükten sonra, servisin kullandığı dizinin izinlerini kontrol ettim:
 
@@ -196,7 +196,10 @@ icacls C:\Windows\THMSvc
 
 Sonuç can alıcıydı: dizin normal kullanıcılar tarafından **yazılabilir** durumdaydı. Yani servis binary'sini kendi payload'ımla değiştirip servisi yeniden başlattığımda, kod `svcadmin` yetkisiyle çalışacaktı — klasik bir **binary hijacking / weak service permissions** açığı.
 
-*(Buraya icacls çıktısının, yazma izninin göründüğü ss'i eklenecek)*
+<img width="715" height="224" alt="svcadminhizmeti2" src="https://github.com/user-attachments/assets/0f5ca964-2388-4dc9-a868-063cf536e2d8" />
+
+<img width="553" height="116" alt="svcadminhizmeti3" src="https://github.com/user-attachments/assets/5856e4bb-e74e-467c-9ca3-e91fbff286fa" />
+
 
 ### Exploit: Reverse Shell ile svcadmin
 

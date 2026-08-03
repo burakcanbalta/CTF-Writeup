@@ -14,7 +14,7 @@ Her zamanki gibi ilk iş kapsamlı bir nmap taraması:
 nmap -sS -A -p- 10.113.131.57
 ```
 
-Bu tarama biraz zaman aldı (full port taramaları hep öyle, sabır işi) ama sonuç net geldi:
+Bu tarama biraz zaman aldı ama sonuç net geldi:
 
 Sadece iki port açık: **21 (FTP)** ve **22 (SSH)**. SSH'da kimlik bilgim olmadığı için şimdilik boş, orası bize sonradan lazım olabilir belki ama şu an için tek somut giriş kapım FTP.
 

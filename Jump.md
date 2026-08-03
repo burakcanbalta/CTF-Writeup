@@ -278,6 +278,7 @@ ops_user@tryhackme-2404:~$ cat flag.txt
 
 **SORU 4: ops_user'ın ana dizininde bulunan bayrak nedir?**
 **FLAG4:** `THM{f7a2c9d1-6e33-4b55-8d11-9c0a7b2e4d88}`
+
 <img width="803" height="362" alt="flag4" src="https://github.com/user-attachments/assets/54a41de7-7190-4b44-bd44-c6a4bb590b98" />
 
 

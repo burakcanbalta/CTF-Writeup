@@ -80,13 +80,13 @@ Yeni işe başlayan personel için bırakılmış varsayılan bir kimlik bilgisi
 Bulduğum kimlik bilgisini önce doğrulamak için NetExec kullandım:
 
 ```bash
-nxc smb 10.10.XXX.XXX -u thmuser -p 'Password1!'
+nxc smb 110.113.128.72 -u thmuser -p 'Password1!'
 ```
 
 Kimlik bilgileri geçerliydi. RDP portu açık olduğu için direkt masaüstüne bağlanmayı denedim:
 
 ```bash
-xfreerdp3 /v:10.10.XXX.XXX /u:thmuser /p:'Password1!' /cert:ignore
+xfreerdp3 /v:10.113.128.72 /u:thmuser /p:'Password1!' /cert:ignore
 ```
 
 

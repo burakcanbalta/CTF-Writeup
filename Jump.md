@@ -6,7 +6,7 @@ Jump makinesine başlarken ismin ("Jump") boşuna olmadığını çok geçmeden 
 
 ---
 
-## 1. Recon
+## Recon
 
 Her zamanki gibi ilk iş kapsamlı bir nmap taraması:
 
@@ -28,7 +28,7 @@ drwxrwxrwx    2 115      123          4096 Apr 30 06:00 incoming [NSE: writeable
 
 <img width="1143" height="702" alt="nmap çıktı" src="https://github.com/user-attachments/assets/6925c96f-1c80-44e0-95d0-4148742aa065" />
 
-## 2. Enumeration - FTP'yi Kurcalamak
+## Enumeration
 
 FTP'ye bağlandım:
 
@@ -59,7 +59,7 @@ ftp> get README.txt
 Bu satırları okuyunca kafamda net bir resim oluştu: **`incoming/` klasörüne bir şey bırakırsam, sunucu tarafında (muhtemelen bir cron job ya da watcher script) bu dosyayı otomatik olarak işliyor.** "Invalid formats are ignored" kısmı da bana şunu söylüyor: format önemli, muhtemelen bir shell script veya belirli bir uzantı bekleniyor. Bu tarz "otomatik işlenen dosya" senaryoları genelde CTF'lerde reverse shell tetiklemek için tasarlanır, ben de direkt o yola gittim.
 
 
-## 3. Exploitation - İlk Foothold'u Almak
+## Exploitation
 
 Mantığım şuydu: eğer bırakılan dosyalar bash ile çalıştırılıyorsa, klasik bir bash reverse shell one-liner'ı işe yarar.
 
@@ -76,14 +76,16 @@ Sonra tekrar FTP'ye bağlanıp bu sefer `incoming` klasörüne girdim ve dosyay�
 ftp> cd incoming
 ftp> put shell.sh
 ```
+<img width="1277" height="209" alt="put" src="https://github.com/user-attachments/assets/1ee7cb29-eeb6-472f-ae50-666518d65071" />
 
 Aynı anda başka bir terminalde dinlemeye geçtim, ne zaman tetiklenir bilmiyordum çünkü ("otomatik işleniyor" yazıyordu ama süresi belirsizdi):
 
 ```bash
 nc -nvlp 4444
 ```
+<img width="811" height="131" alt="shell" src="https://github.com/user-attachments/assets/efb7b760-70e0-406c-a245-2be447b267df" />
 
-Bir süre bekledim (fazla uzun sürmedi, birkaç saniye - bir dakika arası bir yerdeydi), ve gerçekten de arkadaki otomatik işlem `shell.sh`'ı bash ile çalıştırdı. Netcat tarafında bağlantı düştü ve kendimi sistemde buldum:
+Bir süre bekledim, ve gerçekten de arkadaki otomatik işlem `shell.sh`'ı bash ile çalıştırdı. Netcat tarafında bağlantı düştü ve kendimi sistemde buldum:
 
 ```
 recon_user@tryhackme-2404:~$ id
@@ -97,19 +99,13 @@ recon_user@tryhackme-2404:~$ ls
 flag.txt
 shell.sh
 ```
-
-`shell.sh` ilginç, muhtemelen makinenin kendi setup'ında kalan bir dosya, cat ile içine baktım ama şu an için özel bir şey yoktu.
-
-```
-recon_user@tryhackme-2404:~$ cat flag.txt
-THM{5a3f1c92-7b4e-4d91-8c2a-1f6e9b2a4c11}
-```
+<img width="820" height="216" alt="flag1" src="https://github.com/user-attachments/assets/0bbc846a-b7d4-41cc-acc6-d1100f2ea9a3" />
 
 **SORU 1: recon_user'ın ana dizininde bulunan bayrak nedir?**
 
 **FLAG1:** `THM{5a3f1c92-7b4e-4d91-8c2a-1f6e9b2a4c11}`
 
-## 4. Enumeration #2 - Bir Sonraki Halkayı Aramak
+## Enumeration #2
 
 Foothold aldıktan sonra hep aynı rutini izlerim: `id`, `groups`, `sudo -l`, sonra sistemde biraz gezinmek.
 

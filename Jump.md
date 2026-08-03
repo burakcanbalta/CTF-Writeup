@@ -1,5 +1,4 @@
 # Jump | TryHackMe Writeup
-
 ## Giriş
 
 Jump makinesine başlarken ismin ("Jump") boşuna olmadığını çok geçmeden anladım. Klasik "bir foothold al, root ol bitsin" makinelerinden değil bu. Burada tam **5 farklı kullanıcı arasında zıplayarak** ilerliyoruz: recon_user → dev_user → monitor_user → ops_user → root. Her adımda ayrı bir yanlış konfigürasyon, ayrı bir ders var. Bu yüzden writeup da biraz uzun oldu ama elimden geldiğince her adımı, neden o adımı denediğimi ve nerede takıldığımı da yazdım, sadece "şu komutu çalıştır, bu geldi" şeklinde geçmek istemedim.

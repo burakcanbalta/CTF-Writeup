@@ -1,4 +1,4 @@
-# TryHackMe - Jump | Writeup
+# Jump | TryHackMe Writeup
 
 ## Giriş
 

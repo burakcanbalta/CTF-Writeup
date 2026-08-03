@@ -80,7 +80,7 @@ Yeni işe başlayan personel için bırakılmış varsayılan bir kimlik bilgisi
 Bulduğum kimlik bilgisini önce doğrulamak için NetExec kullandım:
 
 ```bash
-nxc smb 110.113.128.72 -u thmuser -p 'Password1!'
+nxc smb 10.113.128.72 -u thmuser -p 'Password1!'
 ```
 
 <img width="1359" height="214" alt="kimlikdoğrulama" src="https://github.com/user-attachments/assets/15e493fd-63c5-4996-894c-e33f3f792002" />

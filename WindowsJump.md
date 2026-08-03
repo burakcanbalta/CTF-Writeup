@@ -194,9 +194,10 @@ Servisin `svcadmin` context'inde çalıştığını gördükten sonra, servisin 
 icacls C:\Windows\THMSvc
 ```
 
+<img width="553" height="116" alt="svcadminhizmeti3" src="https://github.com/user-attachments/assets/5856e4bb-e74e-467c-9ca3-e91fbff286fa" />
+
 Dizin normal kullanıcılar tarafından **yazılabilir** durumdaydı. Yani servis binary'sini kendi payload'ımla değiştirip servisi yeniden başlattığımda, kod `svcadmin` yetkisiyle çalışacaktı — klasik bir **binary hijacking / weak service permissions** açığı.
 
-<img width="553" height="116" alt="svcadminhizmeti3" src="https://github.com/user-attachments/assets/5856e4bb-e74e-467c-9ca3-e91fbff286fa" />
 
 ### Exploit: Reverse Shell ile svcadmin
 

@@ -83,6 +83,10 @@ Bulduğum kimlik bilgisini önce doğrulamak için NetExec kullandım:
 nxc smb 110.113.128.72 -u thmuser -p 'Password1!'
 ```
 
+<img width="1359" height="214" alt="kimlikdoğrulama" src="https://github.com/user-attachments/assets/15e493fd-63c5-4996-894c-e33f3f792002" />
+
+<img width="1292" height="193" alt="kimlikdoğrulama2" src="https://github.com/user-attachments/assets/b8456aad-ec86-4ace-92f2-51f1abb4d389" />
+
 Kimlik bilgileri geçerliydi. RDP portu açık olduğu için direkt masaüstüne bağlanmayı denedim:
 
 ```bash

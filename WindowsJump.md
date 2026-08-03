@@ -49,13 +49,13 @@ SMB signing'in kapalı olması ilerideki bir NTLM relay senaryosu için önemli 
 SMB signing dışında, önce paylaşılan dizinlere bakmak istedim. Guest/null session ile bağlanmayı denedim:
 
 ```bash
-smbclient -L //10.10.XXX.XXX -N
+smbclient -L //10.113.128.72 -N
 ```
 
 Listede `Public` adında bir paylaşım dikkatimi çekti. Hemen içine girdim:
 
 ```bash
-smbclient //10.10.XXX.XXX/Public -N
+smbclient //10.113.128.72/Public -N
 ```
 <img width="1307" height="292" alt="smb2" src="https://github.com/user-attachments/assets/df8e0eaa-b652-4e5b-9890-22581ebf9b50" />
 

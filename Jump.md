@@ -183,6 +183,7 @@ dev_user@tryhackme-2404:~$ cat flag.txt
 ```
 
 **SORU 2: dev_user'ın ana dizininde bulunan bayrak nedir?**
+
 **FLAG2:** `THM{8d2b7a41-3f9c-4e55-b1a2-6c7d9e8f0123}`
 
 <img width="600" height="276" alt="flag2" src="https://github.com/user-attachments/assets/ee26e06a-a440-4308-ae0e-11c3ec3a706c" />
@@ -231,6 +232,7 @@ monitor_user@tryhackme-2404:~$ cat flag.txt
 ```
 
 **SORU 3: monitor_user'ın ana dizininde bulunan bayrak nedir?**
+
 **FLAG3:** `THM{c1e9a7b3-2d44-4a88-9f7e-3b6c2d5a9f77}`
 
 
@@ -277,6 +279,7 @@ ops_user@tryhackme-2404:~$ cat flag.txt
 ```
 
 **SORU 4: ops_user'ın ana dizininde bulunan bayrak nedir?**
+
 **FLAG4:** `THM{f7a2c9d1-6e33-4b55-8d11-9c0a7b2e4d88}`
 
 <img width="803" height="362" alt="flag4" src="https://github.com/user-attachments/assets/54a41de7-7190-4b44-bd44-c6a4bb590b98" />
@@ -319,5 +322,6 @@ THM{2b8e6c4a-1d55-4f90-a3c7-5e9d1b7f6a22}
 ```
 
 **SORU 5: What is the flag found in the root user's home directory?**
+
 **FLAG5:** `THM{2b8e6c4a-1d55-4f90-a3c7-5e9d1b7f6a22}`
 <img width="660" height="357" alt="flag5" src="https://github.com/user-attachments/assets/8c20d84e-0a48-4c0c-9d41-c834a611c399" />

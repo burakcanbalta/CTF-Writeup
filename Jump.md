@@ -61,6 +61,8 @@ Invalid formats are ignored.
 
 Bu satırları okuyunca kafamda net bir resim oluştu: **`incoming/` klasörüne bir şey bırakırsam, sunucu tarafında (muhtemelen bir cron job ya da watcher script) bu dosyayı otomatik olarak işliyor.** "Invalid formats are ignored" kısmı da bana şunu söylüyor: format önemli, muhtemelen bir shell script veya belirli bir uzantı bekleniyor. Bu tarz "otomatik işlenen dosya" senaryoları genelde CTF'lerde reverse shell tetiklemek için tasarlanır, ben de direkt o yola gittim.
 
+<img width="1275" height="521" alt="ftp" src="https://github.com/user-attachments/assets/6a0ed7ca-3ba6-4261-8796-d6fa09122606" />
+
 ## 3. Exploitation - İlk Foothold'u Almak
 
 Mantığım şuydu: eğer bırakılan dosyalar bash ile çalıştırılıyorsa, klasik bir bash reverse shell one-liner'ı işe yarar.

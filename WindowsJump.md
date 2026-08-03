@@ -13,7 +13,7 @@ Bu odada senaryo şöyle: bir zafiyet taramasında ağda unutulmuş bir Windows 
 İlk iş her zaman aynı: portları görmek. Klasik agresif Nmap taraması ile başladım:
 
 ```bash
-nmap -sS -A -p- 10.113.128.727
+nmap -sS -A -p- 10.113.128.72
 ```
 <img width="979" height="757" alt="nmap1" src="https://github.com/user-attachments/assets/a38c86f0-216a-4f54-8c63-5398aeef2d5b" />
 

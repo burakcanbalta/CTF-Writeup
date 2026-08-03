@@ -8,40 +8,13 @@ Jump makinesine başlarken ismin ("Jump") boşuna olmadığını çok geçmeden 
 
 ## 1. Recon
 
-Her zamanki gibi ilk iş kapsamlı bir nmap taraması. Full port + servis tespiti + agresif mod istedim çünkü tek bir portu kaçırmak istemem hiç:
+Her zamanki gibi ilk iş kapsamlı bir nmap taraması:
 
 ```bash
 nmap -sS -A -p- 10.113.131.57
 ```
 
 Bu tarama biraz zaman aldı (full port taramaları hep öyle, sabır işi) ama sonuç net geldi:
-
-```
-PORT   STATE SERVICE VERSION
-21/tcp open  ftp     vsftpd 3.0.5
-| ftp-syst:
-|   STAT:
-| FTP server status:
-|      Connected to ::ffff:192.168.154.242
-|      Logged in as ftp
-|      TYPE: ASCII
-|      No session bandwidth limit
-|      Session timeout in seconds is 300
-|      Control connection is plain text
-|      Data connections will be plain text
-|      At session startup, client count was 1
-|      vsFTPd 3.0.5 - secure, fast, stable
-|_End of status
-| ftp-anon: Anonymous FTP login allowed (FTP code 230)
-| drwxrwxrwx    2 115      123          4096 Apr 30 06:00 incoming [NSE: writeable]
-|_drwxr-xr-x    4 115      123          4096 Jun 09 08:22 pub
-22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.16 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey:
-|   256 08:fa:4e:e7:e8:18:46:3a:ca:e6:ab:6d:12:b4:e4:3d (ECDSA)
-|_  256 f4:f2:8a:f4:6e:3b:56:8c:2a:f8:75:4f:54:8c:98:b1 (ED25519)
-Aggressive OS guesses: Linux 4.15 - 5.19 (96%), Linux 4.15 (96%), Linux 5.4 (96%)...
-Network Distance: 3 hops
-```
 
 Sadece iki port açık: **21 (FTP)** ve **22 (SSH)**. SSH'da kimlik bilgim olmadığı için şimdilik boş, orası bize sonradan lazım olabilir belki ama şu an için tek somut giriş kapım FTP.
 
@@ -52,6 +25,8 @@ drwxrwxrwx    2 115      123          4096 Apr 30 06:00 incoming [NSE: writeable
 ```
 
 `drwxrwxrwx` yani **herkes yazabiliyor**. Bunu görünce içimden "tamam, giriş noktası büyük ihtimalle burası" dedim. Anonymous + herkese açık yazma izni olan bir klasör görünce pentester refleksi hemen "buraya bir şey bırakabilir miyim, biri onu okuyor/çalıştırıyor mu" sorusunu sormak oluyor.
+
+<img width="1143" height="702" alt="nmap çıktı" src="https://github.com/user-attachments/assets/6925c96f-1c80-44e0-95d0-4148742aa065" />
 
 ## 2. Enumeration - FTP'yi Kurcalamak
 

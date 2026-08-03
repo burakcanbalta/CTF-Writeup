@@ -285,21 +285,17 @@ ops_user@tryhackme-2404:~$ cat flag.txt
 
 `ops_user` olarak tekrar `sudo -l` çalıştırdım,:
 
-```
-User ops_user may run the following commands on tryhackme-2404:
-    (root) NOPASSWD: /usr/bin/less
-```
+<img width="949" height="148" alt="shell4den sonra" src="https://github.com/user-attachments/assets/6b31bc6f-1daf-4f08-8e7d-4c75e75a26c2" />
 
 Bunu görünce içim rahatladı çünkü mantık şu: `less` bir pager, dosya görüntülerken içinden `!komut` yazarak shell'e komut geçirebiliyorsun, ve `!/bin/bash` yazarsan direkt bir bash shell'i düşüyor - `less` hangi yetkiyle çalışıyorsa o shell de o yetkiyle açılıyor.
+
+<img width="901" height="386" alt="shell4densonra1" src="https://github.com/user-attachments/assets/ae9e1a50-e4f6-4bc7-8f0f-d900de9fe549" />
 
 Denedim:
 
 ```bash
 sudo less /etc/hosts
 ```
-<img width="949" height="148" alt="shell4den sonra" src="https://github.com/user-attachments/assets/6b31bc6f-1daf-4f08-8e7d-4c75e75a26c2" />
-
-<img width="901" height="386" alt="shell4densonra1" src="https://github.com/user-attachments/assets/ae9e1a50-e4f6-4bc7-8f0f-d900de9fe549" />
 
 O ekrandayken:
 

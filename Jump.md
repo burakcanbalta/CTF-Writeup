@@ -78,14 +78,14 @@ ftp> put shell.sh
 ```
 <img width="1277" height="209" alt="put" src="https://github.com/user-attachments/assets/1ee7cb29-eeb6-472f-ae50-666518d65071" />
 
-Aynı anda başka bir terminalde dinlemeye geçtim, ne zaman tetiklenir bilmiyordum çünkü ("otomatik işleniyor" yazıyordu ama süresi belirsizdi):
+Aynı anda başka bir terminalde dinlemeye geçtim, ne zaman tetiklenir bilmiyordum:
 
 ```bash
 nc -nvlp 4444
 ```
 <img width="811" height="131" alt="shell" src="https://github.com/user-attachments/assets/efb7b760-70e0-406c-a245-2be447b267df" />
 
-Bir süre bekledim, ve gerçekten de arkadaki otomatik işlem `shell.sh`'ı bash ile çalıştırdı. Netcat tarafında bağlantı düştü ve kendimi sistemde buldum:
+Bir süre bekledim ve arkadaki otomatik işlem `shell.sh`'ı bash ile çalıştırdı. Netcat tarafında bağlantı düştü ve kendimi sistemde buldum:
 
 ```
 recon_user@tryhackme-2404:~$ id
@@ -139,7 +139,7 @@ ops_user:x:1004:
 devops:x:1005:recon_user,dev_user
 ```
 
-Bu satır çok değerli: sistemde `recon_user`, `dev_user`, `monitor_user`, `ops_user` diye ayrı kullanıcılar var ve isimlerden de tahmin edebileceğimiz gibi muhtemelen bu makinede zincirleme bir yetki yükseltme senaryosu kurulmuş: recon → dev → monitor → ops → (muhtemelen root).
+Bu satır çok değerli: sistemde `recon_user`, `dev_user`, `monitor_user`, `ops_user` diye ayrı kullanıcılar var ve isimlerden de tahmin edebileceğimiz gibi muhtemelen bu makinede zincirleme bir yetki yükseltme senaryosu kurulmuş: recon → dev → monitor → ops → root.
 
 `/opt` dizinine baktım çünkü genelde "iş" script'leri, deploy araçları buralarda durur:
 
@@ -150,9 +150,9 @@ dev
 recon
 ```
 
-Üç klasör var: `app`, `dev`, `recon`. Sırayla içlerine girip izinlere baktım. `/opt/dev` altında `backup.sh` diye bir dosya vardı ve grup izinleri sayesinde (devops/dev_user üyeliğim sayesinde) bu dosyaya **yazabildiğimi** gördüm. Bu tarz `backup.sh` isimli script'ler genelde cron ile belirli aralıklarla ya da bir servis tarafından tetiklenerek çalıştırılır - yani "bekleyip tetiklenmesini" bekleyebileceğim bir dosya.
+Üç klasör var: `app`, `dev`, `recon`. Sırayla içlerine girip izinlere baktım. `/opt/dev` altında `backup.sh` diye bir dosya vardı ve grup izinleri sayesinde bu dosyaya **yazabildiğimi** gördüm. Bu tarz `backup.sh` isimli script'ler genelde cron ile belirli aralıklarla ya da bir servis tarafından tetiklenerek çalıştırılır - yani tetiklenmesini bekleyebileceğim bir dosya.
 
-## 5. Privesc #1 - recon_user'dan dev_user'a
+## Privesc #1 - recon_user'dan dev_user'a
 
 Plan basitti: `backup.sh` dosyasının sonuna bir reverse shell satırı ekleyeceğim, dosya root ya da dev_user tarafından her ne zaman tetiklenirse tetiklensin, o an bana bir shell dönecek.
 
@@ -185,7 +185,9 @@ THM{8d2b7a41-3f9c-4e55-b1a2-6c7d9e8f0123}
 **SORU 2: dev_user'ın ana dizininde bulunan bayrak nedir?**
 **FLAG2:** `THM{8d2b7a41-3f9c-4e55-b1a2-6c7d9e8f0123}`
 
-## 6. Enumeration #3 - Sıradaki Halka: monitor_user
+<img width="600" height="276" alt="flag2" src="https://github.com/user-attachments/assets/ee26e06a-a440-4308-ae0e-11c3ec3a706c" />
+
+## Enumeration #3 - Sıradaki Halka: monitor_user
 
 `dev_user` olarak tekrar sistemde gezinmeye başladım, özellikle `/opt/recon` ve `/opt/dev` klasörlerine daha dikkatli baktım çünkü artık dev_user olarak bu klasörlerde farklı izinlerim/görüşlerim olabilirdi.
 
@@ -199,7 +201,7 @@ dev_user@tryhackme-2404:/opt/dev/bin$ ls -la
 
 İçeride `ps` diye bir dosya vardı. `ps` normalde `/usr/bin/ps` gibi standart bir yerde bulunması gereken bir sistem komutudur ama burada `/opt/dev/bin` altında ayrı bir kopyası/versiyonu duruyordu. Bunun anlamı şuydu: eğer bu klasör, `monitor_user`'ın (ya da onun adına çalışan bir servisin/cron'un) PATH değişkeninde `/usr/bin`'den **önce** geliyorsa, `ps` komutu çağrıldığında gerçek sistem `ps`'i değil buradaki dosya çalıştırılır. Bu klasik bir **PATH hijack / binary planting** senaryosu.
 
-## 7. Privesc #2 - dev_user'dan monitor_user'a
+## Privesc #2 - dev_user'dan monitor_user'a
 
 Yazma iznim olduğu için `/opt/dev/bin/ps` dosyasının üzerine kendi payload'ımı yazdım (bu sefer `>` kullandım çünkü zaten sahte bir dosya, orijinal `ps` mantığını korumaya gerek yok, doğrudan reverse shell tetiklemek istiyorum):
 
@@ -234,7 +236,8 @@ THM{c1e9a7b3-2d44-4a88-9f7e-3b6c2d5a9f77}
 **SORU 3: monitor_user'ın ana dizininde bulunan bayrak nedir?**
 **FLAG3:** `THM{c1e9a7b3-2d44-4a88-9f7e-3b6c2d5a9f77}`
 
-## 8. Privesc #3 - monitor_user'dan ops_user'a
+
+## Privesc #3 - monitor_user'dan ops_user'a
 
 Artık alışkanlık haline geldi: yeni bir kullanıcı olduğumda ilk iş `sudo -l`.
 
@@ -286,8 +289,10 @@ THM{f7a2c9d1-6e33-4b55-8d11-9c0a7b2e4d88}
 
 **SORU 4: ops_user'ın ana dizininde bulunan bayrak nedir?**
 **FLAG4:** `THM{f7a2c9d1-6e33-4b55-8d11-9c0a7b2e4d88}`
+<img width="803" height="362" alt="flag4" src="https://github.com/user-attachments/assets/54a41de7-7190-4b44-bd44-c6a4bb590b98" />
 
-## 9. Son Halka - Root'a Geçiş
+
+## Root'a Geçiş
 
 `ops_user` olarak tekrar `sudo -l` çalıştırdım, artık bu benim refleksim olmuştu, her yeni kullanıcıda ilk 10 saniyede yapılması gereken şey:
 
@@ -359,44 +364,4 @@ THM{2b8e6c4a-1d55-4f90-a3c7-5e9d1b7f6a22}
 
 **SORU 5: What is the flag found in the root user's home directory?**
 **FLAG5:** `THM{2b8e6c4a-1d55-4f90-a3c7-5e9d1b7f6a22}`
-
-Root aldık. 🚩
-
----
-
-## 10. Genel Özet - Tüm Zincir Bir Arada
-
-```
-Anonymous FTP (incoming/ = drwxrwxrwx, otomatik dosya işleme)
-        │  shell.sh yükle → otomatik çalıştırılıyor
-        ▼
-recon_user  (FLAG1)
-        │  groups: dev_user + devops üyeliği
-        │  → /opt/dev/backup.sh yazılabilir
-        ▼
-dev_user  (FLAG2)
-        │  /opt/recon/process.sh → root, incoming'i işliyor
-        │  /opt/dev/bin/ps → PATH hijack (yazılabilir)
-        ▼
-monitor_user  (FLAG3)
-        │  sudo -l → (ops_user) NOPASSWD: /usr/local/bin/deploy.sh
-        │  → deploy_helper.sh yazılabilir, payload ekle
-        ▼
-ops_user  (FLAG4)
-        │  sudo -l → (root) NOPASSWD: /usr/bin/less
-        │  → GTFOBins: !/bin/bash (TTY upgrade sonrası)
-        ▼
-root  (FLAG5)
-```
-
-## 11. Aldığım Dersler / Notlar
-
-- **Anonymous FTP + herkese yazılabilir klasör** görünce, özellikle bir README ile "dosyalar otomatik işleniyor" gibi bir ipucu varsa, direkt reverse shell denemek makul bir ilk hamle. Bu tür senaryolar genelde bilerek bırakılmış giriş kapıları oluyor.
-- `id` / `groups` komutunu her kullanıcıda tekrar çalıştırmak şart. Bir kullanıcının, kendi ismiyle aynı olmayan fazladan gruplara üye olması (`recon_user`'ın `dev_user` grubunda olması gibi) neredeyse her zaman "başka birinin dosyalarına erişimin var" demek.
-- **Yazılabilir script'ler** (cron ile ya da bir servis tarafından tetiklenen) klasik ama hâlâ en sık karşılaşılan privesc yollarından biri. Önemli olan script'i bulmak değil, **onu neyin/kimin/ne zaman tetiklediğini** anlamak - bazen dakikalar sürebiliyor.
-- **PATH hijack / binary planting** (`ps` örneğinde olduğu gibi) da benzer bir mantık: eğer yazabildiğim bir dizin, bir servisin PATH'inde sistem dizinlerinden önce geliyorsa, standart komut isimleriyle sahte dosyalar bırakarak o servisin yetkisini "ödünç" alabilirim.
-- Her yeni kullanıcı elde ettiğimde ilk 3 komutum: `id`, `sudo -l`, ve mümkünse `find / -writable -not -path "/proc/*" 2>/dev/null` tarzı bir tarama. Bu makinede sudo kuralları zincirin can damarıydı, her adımda farklı bir NOPASSWD kuralı çıktı.
-- **`sudo -l` çıktısında `(kullanıcı) NOPASSWD: script`** gördüğümde önce script'in kendisine mi yoksa çağırdığı alt-dosyalara mı yazma iznim olduğuna bakıyorum. Bazen ana script korumalı olsa da çağırdığı yardımcı dosyalar (helper script) unutulmuş oluyor, `deploy.sh` / `deploy_helper.sh` ikilisinde olduğu gibi.
-- **GTFOBins her zaman ilk bakılacak yer** olmalı, `sudo -l` çıktısında NOPASSWD ile çalıştırılabilen her binary için (buradaki `less` gibi). Ama payload GTFOBins'te yazdığı gibi çalışmıyorsa hemen "bu makinede işe yaramıyor" deyip vazgeçmemek lazım - çoğu zaman sorun payload'da değil, **shell'in TTY olmamasında** oluyor. Reverse shell alır almaz `python3 -c 'import pty; pty.spawn("/bin/bash")'` + `stty raw -echo; fg` + `export TERM=xterm` üçlüsünü neredeyse refleks haline getirdim, özellikle `less`, `vim`, `man`, `top` gibi ekran kaplayan (curses) programlarla uğraşırken bu adım atlanmamalı.
-
-Bu kadar, root aldık ve tüm flag'leri topladık. Jump makinesi özellikle "kullanıcılar arası yatay/dikey geçiş" pratiği için gerçekten güzel bir senaryo kurmuş, tek bir zafiyete değil art arda gelen küçük yanlış konfigürasyonlara odaklanıyor - gerçek dünyadaki privesc zincirlerine de oldukça benziyor.
+<img width="660" height="357" alt="flag5" src="https://github.com/user-attachments/assets/8c20d84e-0a48-4c0c-9d41-c834a611c399" />

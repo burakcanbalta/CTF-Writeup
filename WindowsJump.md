@@ -8,7 +8,7 @@ Bu odada senaryo şöyle: bir zafiyet taramasında ağda unutulmuş bir Windows 
 
 ---
 
-## 1. Enumeration
+##  Enumeration
 
 İlk iş her zaman aynı: portları görmek. Klasik agresif Nmap taraması ile başladım:
 
@@ -168,10 +168,9 @@ type flag2.txt
 
 <img width="958" height="344" alt="flag2" src="https://github.com/user-attachments/assets/0200e894-db6c-4301-a510-e5798c9c551c" />
 
-
 ---
 
-## 4. notadmin → svcadmin
+## notadmin → svcadmin
 
 Odanın adımları zaten en başta `guest → thmuser → notadmin → svcadmin → SYSTEM` şeklinde verilmişti (bunu ilerledikten sonra fark ettim), yani sıradaki hedef `svcadmin` kullanıcısıydı.
 
@@ -243,13 +242,14 @@ type flag3.txt
 ```
 
 **Soru:** What are the contents of `flag3.txt`?
+
 **Cevap:** `THM{s3rv1c3_b1n4ry_h1j4ck3d}`
 
-*(Buraya flag3.txt dosyasının ss'i eklenecek)*
+<img width="414" height="72" alt="FLAG3" src="https://github.com/user-attachments/assets/1dde1e48-87fd-47ba-971a-86fe4326bc42" />
 
 ---
 
-## 5. svcadmin → SYSTEM
+## svcadmin → SYSTEM
 
 Son adım için `svcadmin` yetkisiyle sistemde tekrar gezinmeye başladım. `C:\Windows\Tasks\` dizininde `cleanup.bat` adında bir dosya dikkatimi çekti. İzinlerini kontrol ettiğimde bu dosyanın da yazılabilir olduğunu ve **SYSTEM** yetkisiyle çalışan bir zamanlanmış görev (scheduled task) tarafından tetiklendiğini gördüm. Yani içeriğini değiştirip SYSTEM olarak kod çalıştırabilirdim.
 
@@ -296,29 +296,7 @@ type C:\flag4.txt
 ```
 
 **Soru:** What are the contents of `flag4.txt`?
+
 **Cevap:** `THM{t4sk_wr1t3_t0_SYST3M}`
 
-*(Buraya flag4.txt dosyasının ss'i eklenecek)*
-
----
-
-## Özet: Saldırı Zinciri
-
-| Adım | Kullanıcı | Bulunan Zafiyet | Yöntem |
-|------|-----------|-----------------|--------|
-| 1 | guest → thmuser | Anonim SMB paylaşımında düz metin kimlik bilgisi | `smbclient` ile `Public` paylaşımından `welcome.txt` okuma |
-| 2 | thmuser → notadmin | Registry'de düz metin AutoLogon parolası | winPEAS + `reg query` ile Winlogon anahtarı |
-| 3 | notadmin → svcadmin | Zayıf servis dizini izinleri (binary hijacking) | `THMSvc` dizinine yazılabilir binary bırakma |
-| 4 | svcadmin → SYSTEM | SYSTEM tarafından çalıştırılan zamanlanmış görevde yazılabilir dosya | `cleanup.bat` dosyasının üzerine payload yazma |
-
-## Öğrendiklerim / Notlar
-
-- Anonim SMB paylaşımları hâlâ çok yaygın bir zafiyet kaynağı; her zaman `-N` ile null session denenmeli.
-- AutoLogon, kolaylık sağlasa da parolayı düz metin olarak registry'de bırakıyor — production ortamlarında kesinlikle kapatılmalı ya da Credential Manager / gMSA gibi alternatifler kullanılmalı.
-- Servis binary'lerinin ve script dizinlerinin izinleri düzenli olarak `icacls` ile denetlenmeli; "Everyone: Write" gibi geniş izinler her zaman kırmızı bayrak.
-- Zamanlanmış görevler de aynı şekilde denetlenmeli; SYSTEM tarafından tetiklenen ama düşük yetkili kullanıcıların yazabildiği dosyalar klasik bir privesc vektörü.
-- `winPEAS` bu tür manuel bulmakta zaman kaybettiren AutoLogon/registry zafiyetlerini hızlıca ortaya çıkarmak için gerçekten işe yarıyor, ilk 15-20 dakikayı boşa harcamak yerine erkenden çalıştırılmalı.
-
----
-
-*Bu writeup eğitim amaçlı, izinli bir CTF/lab ortamında (TryHackMe tarzı) yapılan çalışmayı belgelemektedir.*
+<img width="643" height="59" alt="FLAG4" src="https://github.com/user-attachments/assets/6558c9be-a22b-41d3-8fb3-62d953678ef5" />

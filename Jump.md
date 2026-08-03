@@ -317,10 +317,10 @@ Root dizinindeki flag'i aldım:
 
 ```
 root@tryhackme-2404:~# cat root.txt
-THM{2b8e6c4a-1d55-4f90-a3c7-5e9d1b7f6a22}
 ```
 
 **SORU 5: What is the flag found in the root user's home directory?**
 
 **FLAG5:** `THM{2b8e6c4a-1d55-4f90-a3c7-5e9d1b7f6a22}`
+
 <img width="660" height="357" alt="flag5" src="https://github.com/user-attachments/assets/8c20d84e-0a48-4c0c-9d41-c834a611c399" />

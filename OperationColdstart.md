@@ -75,7 +75,7 @@ http://kestrel.thm/admin/notes
 
 <img width="1919" height="503" alt="site2" src="https://github.com/user-attachments/assets/e16385f3-afa6-4158-ab60-621e951c1941" />
 
-Yani `/admin/notes` sayfası doğrudan dışarıdan korunuyor olabilirdi, ama SSRF açığı sayesinde uygulamanın **kendi üzerinden** bu içeriğe ulaşabildim. Not, doğrudan bana **staging ortamı için SSH kimlik bilgilerini** vermişti.
+Yani `/admin/notes` sayfası doğrudan dışarıdan korunuyor olabilirdi, ama SSRF açığı sayesinde uygulamanın **kendi üzerinden** bu içeriğe ulaşabildim.vermişti.
 
 ---
 
@@ -92,6 +92,7 @@ Giriş başarılı oldu ve ilk flag'i ele geçirdim:
 ```
 THM{96dc7bd50d2fb98fcece01560788b5ab}
 ```
+<img width="443" height="100" alt="flag1" src="https://github.com/user-attachments/assets/2ec0c12c-14ab-4397-aa14-65eecabbd0ec" />
 
 ---
 
@@ -102,17 +103,7 @@ Sisteme eriştikten sonra her zaman yaptığım gibi ilginç dosyalara, servisle
 ```bash
 cat /etc/cron.d/voltlabs-backup
 ```
-
-İçeriği şu şekildeydi:
-
-```
-# Volt Labs staging backup - runs as root
-
-SHELL=/bin/bash
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-* * * * * root cd /opt/backups && tar czf /var/backups/uploads.tgz *
-```
+<img width="617" height="213" alt="privesc" src="https://github.com/user-attachments/assets/fb9484f2-85b8-490e-bf9d-5af69a7b5679" />
 
 Bu son derece ilginçti. Root kullanıcısına ait bir cron görevi, her dakika `/opt/backups` dizini içinde şu komutu çalıştırıyordu:
 
@@ -127,8 +118,6 @@ Burada dikkat çeken nokta, `tar` komutunun argüman olarak `*` (wildcard/joker 
 ## Tar Wildcard Injection ile Privilege Escalation
 
 `tar`, joker karakter genişlemesi (wildcard expansion) kötüye kullanıldığında komut satırı argüman enjeksiyonuna karşı savunmasızdır. Konuyla ilgili referans:
-
-> HackTricks - Tar Wildcard Privilege Escalation
 
 Mantık şu: shell, `*` karakterini dizindeki dosya adlarıyla genişletiyor. Eğer dizine `tar`'ın özel argüman olarak yorumlayacağı isimlerde (`--checkpoint=...` gibi) dosyalar koyarsam, `tar` bunları normal dosya değil komut satırı parametresi sanıp çalıştırıyor.
 
@@ -167,6 +156,8 @@ ls -l /tmp/bash
 
 Dosyanın artık root kullanıcısına ait olduğunu ve SUID bitiyle çalıştırılabilir durumda olduğunu gördüm.
 
+<img width="814" height="214" alt="privesc2" src="https://github.com/user-attachments/assets/d638511e-a1e1-4f13-b855-9e79d837be2b" />
+
 ---
 
 ## Root Erişimi ve Root Flag
@@ -175,18 +166,6 @@ SUID bitli bash'i çalıştırdım:
 
 ```bash
 /tmp/bash -p
-```
-
-`-p` bayrağı, ayrıcalıkların (privileges) korunmasını sağlıyor. Doğrulamak için:
-
-```bash
-whoami
-```
-
-Çıktı:
-
-```
-root
 ```
 
 Root kabuğunu elde etmiştim. Ardından flag'i okudum:
@@ -201,24 +180,3 @@ cat flag.txt
 ```
 THM{e6ee84a483d67ade06936fcfd1433e8a}
 ```
-
----
-
-## Özet
-
-| Aşama | Kullanılan Teknik |
-|---|---|
-| Keşif | Nmap full port scan |
-| İlk Erişim | Anonim FTP üzerinden yedek dosyası ele geçirme |
-| Host Tespiti | Kaynak kod analizi ile dahili host (`kestrel.thm`) tespiti |
-| Bilgi Sızıntısı | SSRF (URL Preview Service) ile `/admin/notes` içeriğinin sızdırılması |
-| Kimlik Bilgisi | Sızdırılan dahili nottaki SSH bilgileri |
-| User Flag | SSH ile `webdev` kullanıcısı olarak giriş |
-| Privilege Escalation | Root'un çalıştırdığı cron job üzerinden `tar` wildcard injection |
-| Root Flag | SUID bash ile root shell |
-
-Bu kutu, bir yedekleme arşivinin ne kadar konuşkan olabileceğini, kaynak kodda unutulmuş küçük bir referansın (dahili host adı) nasıl tüm zinciri açtığını ve "sadece dahili kullanım için" diye bırakılan bir SSRF aracının nasıl kimlik bilgisi sızıntısına dönüşebileceğini gösteren güzel bir örnekti. Sonundaki `tar` wildcard injection ise klasik ama hâlâ çok sık karşılaşılan bir misconfiguration.
-
----
-
-*Bu writeup TryHackMe Operation Coldstart odası için hazırlanmıştır.*

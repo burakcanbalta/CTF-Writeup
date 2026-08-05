@@ -32,8 +32,6 @@ Direkt `/internal` dizinine geçiyorum.
 
 <img width="1919" height="920" alt="internal" src="https://github.com/user-attachments/assets/13cb771c-3e3d-469d-9641-4d9cc4913e31" />
 
-`/internal` dizinine gittiğimde karşıma `Sign In NOC Portal` isimli bir login ekranı çıktı.
-
 Burada herhangi bir kullanıcı adı veya parola bilgimiz yok. Normal bir parola brute force saldırısına başlamadan önce login mekanizmasının nasıl çalıştığını kontrol etmek daha mantıklı geldi.
 
 Login formunda SQL injection denemeye karar verdim.
@@ -45,8 +43,6 @@ admin' OR 1=1 -- -
 ```
 
 yazıp password kısmına herhangi bir değer verdiğimde login olabildim.
-
-Yani burada authentication kontrolünü bypass edebildiğimi gördüm.
 
 <img width="1919" height="917" alt="login" src="https://github.com/user-attachments/assets/ef2512c4-ab3b-451c-a931-4f21583fabe3" />
 
@@ -75,9 +71,6 @@ Burada direkt komut çalıştırmayı test etmek için parametrenin sonuna `;` e
 ```text
 target=10.10.0.1;ls
 ```
-
-Response içerisinde `ls` komutunun çıktısını görmeye başladığımda command injection olduğunu doğrulamış oldum.
-
 <img width="1887" height="863" alt="burp1" src="https://github.com/user-attachments/assets/fdcf82b9-15dd-42c3-80f3-e6ece22b71e2" />
 ---
 

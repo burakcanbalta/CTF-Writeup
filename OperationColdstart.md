@@ -92,7 +92,7 @@ ssh webdev@10.114.141.161
 Giriş başarılı olduktan sonra kullanıcı flag'ini okudum:
 
 ```bash
-cat ~/user.txt
+cat /user.txt
 ```
 
 Çıktı:

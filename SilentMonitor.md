@@ -66,15 +66,16 @@ target=10.10.0.1
 
 şeklinde bir parametre olduğunu gördüm.
 
+<img width="1887" height="863" alt="burp1" src="https://github.com/user-attachments/assets/fdcf82b9-15dd-42c3-80f3-e6ece22b71e2" />
+
+---
+## Intruder ile Ayraçları Deneyelim
+
 Burada direkt komut çalıştırmayı test etmek için parametrenin sonuna `;` ekleyip ikinci bir komut göndermeyi denedim:
 
 ```text
 target=10.10.0.1;ls
 ```
-<img width="1887" height="863" alt="burp1" src="https://github.com/user-attachments/assets/fdcf82b9-15dd-42c3-80f3-e6ece22b71e2" />
----
-
-## Intruder ile Ayraçları Deneyelim
 
 Hangi karakterlerin filtreyi geçebildiğini tek tek denemek yerine Burp Intruder kullanmaya karar verdim.
 

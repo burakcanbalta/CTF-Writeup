@@ -32,22 +32,9 @@ Bunun için ffuf kullandım:
 ```bash
 ffuf -u http://10.114.161.206/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt
 ```
-
-Tarama sonucunda birkaç ilginç dizin çıktı:
-
-```text
-/admin
-/api
-/backup
-/javascript
-/static
-/support
-```
-
-Özellikle `backup`, `api` ve `static` dizinlerine bakmaya başladım.
-
 <img width="1045" height="566" alt="FFUF" src="https://github.com/user-attachments/assets/d1910819-07cf-4137-8845-e44102a4e67b" />
 
+Özellikle `backup`, `api` ve `static` dizinlerine bakmaya başladım.
 ---
 
 ## Backup Dizininden Gelen İlk İpucu

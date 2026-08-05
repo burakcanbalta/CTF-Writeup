@@ -55,9 +55,9 @@ Nothing to see here yet.
 - IT
 ```
 
-Yani SMB tarafı şu an için bir çıkmaz sokaktı — içeride kullanılabilir bir şey yoktu. Bunu not aldım ve dikkatimi tamamen web uygulamasına çevirdim.
-
 <img width="1135" height="614" alt="SMB" src="https://github.com/user-attachments/assets/194f90f5-16cf-4f31-b0b5-9b4a6a477018" />
+
+Yani SMB tarafı şu an için bir çıkmaz sokaktı — içeride kullanılabilir bir şey yoktu. Bunu not aldım ve dikkatimi tamamen web uygulamasına çevirdim.
 
 ---
 

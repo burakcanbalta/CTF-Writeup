@@ -1,4 +1,4 @@
-# TryHackMe — DOMINO
+# DOMINO — TryHackMe WriteUp
 
 ## Nmap ile Başlayalım
 

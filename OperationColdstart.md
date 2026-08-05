@@ -63,7 +63,7 @@ Bu bilgileri elde ettikten sonra `kestrel.thm` adresini hosts dosyama ekleyerek 
 
 ## SSRF ile Bilgi Sızıntısı
 
-<img width="1919" height="556" alt="site" src="https://github.com/user-attachments/assets/bd445515-6506-47ff-8a4c-9891afc1" />
+<img width="1919" height="556" alt="site" src="https://github.com/user-attachments/assets/d8c9699f-9ff4-4d85-960f-8b70bbf331b3" />
 
 Karşıma çıkan sayfa, bir URL girildiğinde hedef kaynağın içeriğini sunucu üzerinden getiriyordu. Sayfada yer alan **"internal tool"** ve **"do not expose externally"** ifadeleri, uygulamanın yalnızca dahili kullanım için tasarlandığını gösteriyordu. Ancak dış dünyaya açık olması nedeniyle bu özellik potansiyel bir **Server-Side Request Forgery (SSRF)** zafiyeti oluşturuyordu.
 

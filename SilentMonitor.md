@@ -117,11 +117,9 @@ Bu değeri tek başına tekrar test etmek için Repeater'a gönderip kontrol ett
 
 ## Secret Config
 
-Command injection üzerinden dizin içeriğini görebildiğimiz için biraz enumeration yaptım.
+Çıktıda `secret.config` dosyasını gördüm.
 
-Çıktıda `secret.config` isimli bir dosya dikkatimi çekti.
-
-Dosyanın içeriğini okumayı denedim ve içerisinde sistemde kullanılabilecek credential bilgileri olduğunu gördüm.
+Dosyanın içeriğini okumayup credential bilgilerini aldım.
 
 Burada `sysadmin` kullanıcısına ait bilgiler vardı:
 
@@ -163,19 +161,18 @@ cat user.txt
 
 `THM{sQLi_4nd_cMd_1nj3ct10n_l3D_y0u_h3re!}`
 
-> 📸 **Ekran görüntüsü:** `cat user.txt` çıktısı.
-
 ---
 
 ## Backup Dizinine Bakalım
 
-Sistemde biraz enumeration yaparken `backup` dizinini gördüm.
+Aynı dizinde `backup` dizinini gördüm.
 
 ```bash
 ls -la
 ```
 
 Dizinin içerisinde `README.txt` bulunuyordu.
+
 <img width="706" height="202" alt="backupreadme" src="https://github.com/user-attachments/assets/af6477af-965b-4a36-a3e5-f4900dcb72e0" />
 
 Dosyayı okuduğumda burada `infrastructure.kdbx` isimli bir KeePass veritabanından bahsedildiğini gördüm.
@@ -230,7 +227,7 @@ KDBX dosyasını incelemek için `KeePassXC` kullandım.
 keepassxc
 ```
 
-Program içerisinden `Open Database` seçeneğine girip indirdiğimiz:
+Program içerisinden `Open Database` seçeneğine tıkladıktan sonra:
 
 ```text
 infrastructure.kdbx
@@ -268,7 +265,7 @@ su root
 
 komutunu çalıştırdım.
 
-Parola olarak KeePass'ten bulduğumuz:
+Parola olarak infrastructure.kdbx dosyasından bulduğumuz:
 
 ```text
 S3cur3P4ss0nK33p4ss

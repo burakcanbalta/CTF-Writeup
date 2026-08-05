@@ -15,7 +15,7 @@ SSH'ın açık olması ileride işimize yarayabilir ama şu an elimizde bir kull
 
 ## Web Sitesine Bakalım
 
-80. portu tarayıcıdan açtığımda bir login ekranı karşıma çıktı.
+Siteyi açtığımda bir login ekranı karşıma çıktı.
 
 Burada kullanıcı adı ve parola gerekiyor. Direkt brute force'a başlamadan önce uygulamada login olmadan erişebileceğimiz başka endpointler var mı diye kontrol etmek istedim.
 

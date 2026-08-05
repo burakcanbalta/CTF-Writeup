@@ -10,7 +10,7 @@ nmap -sS -A -p- 10.113.152.118
 
 Tarama sonucunda `5050` portunda çalışan bir HTTP servisi olduğunu görüyorum.
 
-> 📸 **Ekran görüntüsü:** Buraya Nmap çıktısını koy. Özellikle `5050/tcp` satırı görünsün.
+<img width="1919" height="901" alt="site" src="https://github.com/user-attachments/assets/09a701cb-abab-4d7b-9028-4fde70b62288" />
 
 Siteyi elle incelemeye başlamadan önce dizin taramasını da arka planda çalıştırıyorum. Böylece ben siteyi incelerken ffuf da olası endpointleri bulmaya devam etsin.
 
@@ -18,23 +18,19 @@ Siteyi elle incelemeye başlamadan önce dizin taramasını da arka planda çal�
 ffuf -u http://10.113.152.118:5050/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt
 ```
 
-Burada URL'de portun doğru şekilde yazılması önemli. Hedefimiz `5050` portunda çalışan web servisi.
-
 Siteyi biraz incelediğimde herhangi bir button, form veya benim işime yarayacak başka bir request göremedim. Bu yüzden uygulamada elle keşfedebileceğim fazla bir şey yok gibi duruyordu.
 
 Bu sırada ffuf sonucu geldi:
 
-```text
-/internal
-```
+<img width="901" height="411" alt="ffud" src="https://github.com/user-attachments/assets/3537a655-b019-4ff3-9eca-3df899827ce8" />
 
 Direkt `/internal` dizinine geçiyorum.
-
-> 📸 **Ekran görüntüsü:** ffuf çıktısında `/internal` endpointinin göründüğü bölüm.
 
 ---
 
 ## Internal Portal
+
+<img width="1919" height="920" alt="internal" src="https://github.com/user-attachments/assets/13cb771c-3e3d-469d-9641-4d9cc4913e31" />
 
 `/internal` dizinine gittiğimde karşıma `Sign In NOC Portal` isimli bir login ekranı çıktı.
 
@@ -52,7 +48,7 @@ yazıp password kısmına herhangi bir değer verdiğimde login olabildim.
 
 Yani burada authentication kontrolünü bypass edebildiğimi gördüm.
 
-> 📸 **Ekran görüntüsü:** Login ekranında payloadın kullanıldığı ve başarılı login sonrası portalın açıldığı görüntü.
+<img width="1919" height="917" alt="login" src="https://github.com/user-attachments/assets/ef2512c4-ab3b-451c-a931-4f21583fabe3" />
 
 ---
 
@@ -82,8 +78,7 @@ target=10.10.0.1;ls
 
 Response içerisinde `ls` komutunun çıktısını görmeye başladığımda command injection olduğunu doğrulamış oldum.
 
-> 📸 **Ekran görüntüsü:** Burp Repeater içerisinde `target=10.10.0.1;ls` request'i ve response.
-
+<img width="1887" height="863" alt="burp1" src="https://github.com/user-attachments/assets/fdcf82b9-15dd-42c3-80f3-e6ece22b71e2" />
 ---
 
 ## Intruder ile Ayraçları Deneyelim
@@ -110,6 +105,7 @@ Kullandığım liste:
 %0a
 %0d
 ```
+<img width="1853" height="550" alt="intruder" src="https://github.com/user-attachments/assets/161ab971-73bc-40bd-ad1d-e4bd2f24d156" />
 
 Request içerisindeki separator kısmını Intruder payload position olarak seçip saldırıyı başlattım.
 
@@ -119,9 +115,9 @@ Sonuçlarda `%0a` ile farklı bir response aldığımı gördüm.
 
 Bu değeri tek başına tekrar test etmek için Repeater'a gönderip kontrol ettim.
 
-> 📸 **Ekran görüntüsü:** Intruder sonuçlarında response length farkının görüldüğü bölüm.
+<img width="1438" height="685" alt="intruder2" src="https://github.com/user-attachments/assets/4decc5ba-1dc5-4b1a-a6ef-cac0218bb547" />
 
-> 📸 **Ekran görüntüsü:** `%0a` kullanılarak Repeater'da alınan başarılı response.
+<img width="1877" height="884" alt="burp2" src="https://github.com/user-attachments/assets/f58b95dc-919d-4fdf-aba8-0bcec6f59a8d" />
 
 ---
 
@@ -134,6 +130,8 @@ Command injection üzerinden dizin içeriğini görebildiğimiz için biraz enum
 Dosyanın içeriğini okumayı denedim ve içerisinde sistemde kullanılabilecek credential bilgileri olduğunu gördüm.
 
 Burada `sysadmin` kullanıcısına ait bilgiler vardı:
+
+<img width="1533" height="717" alt="secretconfig" src="https://github.com/user-attachments/assets/041ff78b-a822-4b2c-85e9-98c6d75453d8" />
 
 ```text
 username: sysadmin
@@ -154,8 +152,6 @@ S3cur3Backup$Acc3ss!
 
 kullanıyorum ve sisteme giriş yapıyorum.
 
-> 📸 **Ekran görüntüsü:** SSH bağlantısının başarılı olduğu terminal.
-
 ---
 
 ## İlk Flag
@@ -167,12 +163,7 @@ SSH üzerinden giriş yaptıktan sonra kullanıcının home dizinini kontrol edi
 ```bash
 cat user.txt
 ```
-
-İlk flag:
-
-```text
-THM{sQLi_4nd_cMd_1nj3ct10n_l3D_y0u_h3re!}
-```
+<img width="448" height="183" alt="ilkflag" src="https://github.com/user-attachments/assets/74f782e5-e297-4fed-bed9-9a10109bd1ce" />
 
 ### Flag 1
 
@@ -184,13 +175,14 @@ THM{sQLi_4nd_cMd_1nj3ct10n_l3D_y0u_h3re!}
 
 ## Backup Dizinine Bakalım
 
-Sistemde biraz enumeration yaparken `backup` dizinini fark ettim.
+Sistemde biraz enumeration yaparken `backup` dizinini gördüm.
 
 ```bash
 ls -la
 ```
 
 Dizinin içerisinde `README.txt` bulunuyordu.
+<img width="706" height="202" alt="backupreadme" src="https://github.com/user-attachments/assets/af6477af-965b-4a36-a3e5-f4900dcb72e0" />
 
 Dosyayı okuduğumda burada `infrastructure.kdbx` isimli bir KeePass veritabanından bahsedildiğini gördüm.
 
@@ -210,7 +202,7 @@ scp sysadmin@10.113.152.118:~/backups/infrastructure.kdbx .
 
 Dosya artık kendi makinemde.
 
-> 📸 **Ekran görüntüsü:** `scp` ile dosyanın indirildiği terminal.
+<img width="680" height="85" alt="dosyaindirdik" src="https://github.com/user-attachments/assets/8d335db2-5ad4-4405-a4b0-8c501e5d8cb0" />
 
 ---
 
@@ -233,8 +225,6 @@ Bir süre sonra veritabanı parolasını buldu:
 ```text
 spring
 ```
-
-> 📸 **Ekran görüntüsü:** Tool'un `spring` parolasını bulduğu bölüm.
 
 ---
 
@@ -270,7 +260,7 @@ S3cur3P4ss0nK33p4ss
 
 Burada artık root hesabına ait bir parola olduğunu düşündüğüm için bunu doğrudan `su` ile test ettim.
 
-> 📸 **Ekran görüntüsü:** KeePassXC içerisinde bulunan credential kaydı.
+<img width="1210" height="858" alt="springafter" src="https://github.com/user-attachments/assets/f9a0f0f4-15a9-412f-8128-0bf719a24de3" />
 
 ---
 
@@ -299,15 +289,8 @@ Son olarak root flag'ini okuyorum:
 ```bash
 cat /root/root.txt
 ```
-
-Karşıma son flag çıktı:
-
-```text
-THM{KDBx_V4ul7_H4s_b33n_cr4ck3d_0peN}
-```
+<img width="459" height="140" alt="sonflag" src="https://github.com/user-attachments/assets/00407dbf-b50c-4f5b-a2cf-91e5c60b768c" />
 
 ### Root Flag
 
 `THM{KDBx_V4ul7_H4s_b33n_cr4ck3d_0peN}`
-
-> 📸 **Ekran görüntüsü:** `whoami` ile root olduğunun ve root flag'in görüldüğü terminal.

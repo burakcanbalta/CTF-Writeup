@@ -86,14 +86,6 @@ Sunucudan gelen orijinal response şuydu:
 
 <img width="1543" height="396" alt="request2" src="https://github.com/user-attachments/assets/0fc9fea3-8059-4828-ba19-384b186204a2" />
 
-```json
-{
-    "ok": false,
-    "error": "Invalid OTP. Try again.",
-    "is_verified": false
-}
-```
-
 Burada dikkatimi çeken şey, `is_verified` alanının sunucu tarafından response içinde açıkça gönderiliyor olmasıydı. Bu, doğrulamanın bir kısmının **client tarafında** bu alana bakılarak yapıldığına işaret ediyordu — yani sayfa muhtemelen "eğer `is_verified: true` gelirse girişi başarılı say" mantığıyla çalışıyordu.
 
 Bunu test etmek için Burp'te **response interception**'ı da açtım (Proxy → response'u yakalayacak şekilde ayarladım). İsteği gönderdiğimde, sunucudan gelen response tarayıcıya ulaşmadan önce elime düştü; bu sırada `"is_verified":false` değerini `"is_verified":true` olarak değiştirip response'u öyle forward ettim. Sayfa bu alanı kontrol ettiği için, girdiğim OTP hâlâ yanlış olmasına rağmen sistem beni doğrulanmış saydı ve panele erişim sağladım.

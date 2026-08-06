@@ -86,9 +86,9 @@ Sunucudan gelen orijinal response şuydu:
 
 <img width="1543" height="396" alt="request2" src="https://github.com/user-attachments/assets/0fc9fea3-8059-4828-ba19-384b186204a2" />
 
-Burada dikkatimi çeken şey, `is_verified` alanının sunucu tarafından response içinde açıkça gönderiliyor olmasıydı. Bu, doğrulamanın bir kısmının **client tarafında** bu alana bakılarak yapıldığına işaret ediyordu — yani sayfa muhtemelen "eğer `is_verified: true` gelirse girişi başarılı say" mantığıyla çalışıyordu.
+Burada dikkatimi çeken şey, response içinde dönen is_verified alanının aynı zamanda istek (request) tarafında da bir parametre adı olarak kullanılabileceği ihtimaliydi. Yani sunucu, bu alana sadece response'ta bilgi amaçlı yer vermiyordu — muhtemelen OTP doğrulama mantığında is_verified diye bir parametreyi client'tan geliyormuş gibi de kabul ediyordu (klasik bir mass assignment / güvenilmeyen client input sorunu).
 
-Bunu test etmek için Burp'te **response interception**'ı da açtım (Proxy → response'u yakalayacak şekilde ayarladım). İsteği gönderdiğimde, sunucudan gelen response tarayıcıya ulaşmadan önce elime düştü; bu sırada `"is_verified":false` değerini `"is_verified":true` olarak değiştirip response'u öyle forward ettim. Sayfa bu alanı kontrol ettiği için, girdiğim OTP hâlâ yanlış olmasına rağmen sistem beni doğrulanmış saydı ve panele erişim sağladım.
+Bunu test etmek için Burp'te isteği (request'i) yakaladım ve form-data içine, orijinalde olmayan yeni bir alan ekledim:
 
 <img width="1518" height="305" alt="request3" src="https://github.com/user-attachments/assets/ea26fdad-fd9c-4298-8962-9e145afc34e8" />
 

@@ -7,8 +7,9 @@
 ```bash
 nmap -sS -A -p- 10.112.165.37
 ```
+<img width="826" height="610" alt="nmap" src="https://github.com/user-attachments/assets/965f4008-65f8-4b1b-8145-94acbfacbe42" />
 
-Taramada **22, 80, 53** portlarının açık olduğunu gördüm. 22 ve 53 şimdilik ilgi çekici görünmüyordu, o yüzden direkt web tarafına yöneldim. Siteye gittiğimde karşımda sade bir login sayfası vardı, başka bir şey görünmüyordu.
+Taramada **22, 80, 53** portlarının açık olduğunu gördüm. 22 ve 53 şimdilik işe yarar görünmüyordu, o yüzden direkt web tarafına yöneldim. Siteye gittiğimde karşımda sade bir login sayfası vardı, başka bir şey görünmüyordu.
 
 ---
 
@@ -28,12 +29,7 @@ ffuf -u http://10.112.165.37/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web
 
 Bu sefer gerçek sonuçlar geldi:
 
-```
-uploads       [Status: 301, Size: 316, Words: 20, Lines: 10, Duration: 46ms]
-assets        [Status: 301, Size: 315, Words: 20, Lines: 10, Duration: 46ms]
-javascript    [Status: 301, Size: 319, Words: 20, Lines: 10, Duration: 50ms]
-phpmyadmin    [Status: 301, Size: 319, Words: 20, Lines: 10, Duration: 55ms]
-```
+<img width="1122" height="497" alt="ffuf" src="https://github.com/user-attachments/assets/067aaec8-5f0a-4920-aae1-7f0d35d7bc63" />
 
 Ama bir tuhaflık vardı: listede `login.php` yoktu, oysa siteyi ziyaret ettiğimde bir login sayfası görmüştüm. Demek ki normal wordlist bunu yakalayamıyordu. Bunun üzerine taramayı dosya uzantılarına göre genişlettim — belki dosyanın kendisi değil, bir yedeği/eski hali duruyordu:
 
@@ -42,6 +38,8 @@ ffuf -u http://10.112.165.37/FUZZ -w /usr/share/wordlists/seclists/Discovery/Web
 ```
 
 Bu sefer **`login.php.bak`** dosyasını buldum. Bu, geliştiricinin production'a almayı unuttuğu bir yedek dosyaydı.
+
+<img width="774" height="259" alt="ffuf2" src="https://github.com/user-attachments/assets/e1d49275-58fe-406d-8dd8-68f130cd3bda" />
 
 ---
 
@@ -52,25 +50,7 @@ Bu sefer **`login.php.bak`** dosyasını buldum. Bu, geliştiricinin production'
 ```bash
 cat login.php.bak
 ```
-
-İçinde geliştiricinin bıraktığı bir not vardı:
-
-```
-/*
---------------------------------------------------------------------------
-Developer Note (temporary)
---------------------------------------------------------------------------
-Admin test account for staging environment
-Email: admin@mediahub.thm
-
-Password policy reminder:
-Admin password follows company format:
-MediaHub + any year
-
-TODO: remove before production deployment
-*/
-?>
-```
+<img width="785" height="324" alt="loginphpbak" src="https://github.com/user-attachments/assets/aa587298-8285-4008-b0d0-95270dbe416f" />
 
 Bu not bana iki şey verdi: admin hesabının **e-posta adresi** ve şirketin parola formatı hakkında bir ipucu. Parolayı tahmin etmeye çalışmadan önce, elimdeki daha zayıf halkayı denemeye karar verdim.
 

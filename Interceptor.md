@@ -80,11 +80,32 @@ Karşıma **Two Factor Verification** ekranı çıktı, 6 haneli bir kod istiyor
 
 ## OTP Bypass
 
-OTP alanına rastgele bir değer (`111111`) girip isteği yine Burp ile yakaladım. Sunucudan gelen cevap şuydu:
+OTP alanına rastgele bir değer (`111111`) girip isteği Burp Proxy üzerinden yakaladım:
+
+```
+POST /verify_otp.php HTTP/1.1
+Host: 10.112.165.37
+...
+Content-Disposition: form-data; name="otp"
+
+111111
+```
+
+Sunucudan gelen orijinal response şuydu:
 
 <img width="1543" height="396" alt="request2" src="https://github.com/user-attachments/assets/0fc9fea3-8059-4828-ba19-384b186204a2" />
 
-Response içinde `is_verified` diye bir alan dikkatimi çekti. Bu, client tarafına geri dönen ve muhtemelen uygulama mantığında referans alınan bir değerdi. Bu değeri response üzerinde elle `true` yaparak isteği tekrar gönderdim. Birkaç denemeden sonra bu şekilde girişi tamamlamayı başardım ve panele erişim sağladım.
+```json
+{
+    "ok": false,
+    "error": "Invalid OTP. Try again.",
+    "is_verified": false
+}
+```
+
+Burada dikkatimi çeken şey, `is_verified` alanının sunucu tarafından response içinde açıkça gönderiliyor olmasıydı. Bu, doğrulamanın bir kısmının **client tarafında** bu alana bakılarak yapıldığına işaret ediyordu — yani sayfa muhtemelen "eğer `is_verified: true` gelirse girişi başarılı say" mantığıyla çalışıyordu.
+
+Bunu test etmek için Burp'te **response interception**'ı da açtım (Proxy → response'u yakalayacak şekilde ayarladım). İsteği gönderdiğimde, sunucudan gelen response tarayıcıya ulaşmadan önce elime düştü; bu sırada `"is_verified":false` değerini `"is_verified":true` olarak değiştirip response'u öyle forward ettim. Sayfa bu alanı kontrol ettiği için, girdiğim OTP hâlâ yanlış olmasına rağmen sistem beni doğrulanmış saydı ve panele erişim sağladım.
 
 <img width="1518" height="305" alt="request3" src="https://github.com/user-attachments/assets/ea26fdad-fd9c-4298-8962-9e145afc34e8" />
 

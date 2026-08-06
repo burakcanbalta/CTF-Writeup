@@ -62,7 +62,7 @@ Bu not bana iki şey verdi: admin hesabının **e-posta adresi** ve şirketin pa
 
 <img width="752" height="434" alt="request" src="https://github.com/user-attachments/assets/4ba7b1f5-8446-45ab-a63c-9a720ba104de" />
 
-Login sayfasına elimdeki e-posta ile bir istek gönderip Burp Suite ile yakaladım. İsteği incelerken, session/cookie bilgisini isteğin üzerinden silip tekrar gönderdim. Beklenmedik şekilde sunucu şu cevabı döndü:
+Login sayfasına elimdeki e-posta ile bir istek gönderip Burp ile yakaladım. İsteği incelerken, session/cookie bilgisini isteğin üzerinden silip tekrar gönderdim. Beklenmedik şekilde sunucu şu cevabı döndü:
 
 <img width="771" height="400" alt="response" src="https://github.com/user-attachments/assets/a3815cab-55bc-48ae-b281-7c9e2177ad41" />
 
@@ -86,9 +86,9 @@ Sunucudan gelen orijinal response şuydu:
 
 <img width="1543" height="396" alt="request2" src="https://github.com/user-attachments/assets/0fc9fea3-8059-4828-ba19-384b186204a2" />
 
-Burada dikkatimi çeken şey, response içinde dönen is_verified alanının aynı zamanda istek (request) tarafında da bir parametre adı olarak kullanılabileceği ihtimaliydi. Yani sunucu, bu alana sadece response'ta bilgi amaçlı yer vermiyordu — muhtemelen OTP doğrulama mantığında is_verified diye bir parametreyi client'tan geliyormuş gibi de kabul ediyordu (klasik bir mass assignment / güvenilmeyen client input sorunu).
+Burada dikkatimi çeken şey, response içinde dönen is_verified alanının aynı zamanda istek (request) tarafında da bir parametre adı olarak kullanılabileceği ihtimaliydi. Yani sunucu, bu alana sadece response'ta bilgi amaçlı yer vermiyordu — muhtemelen OTP doğrulama mantığında is_verified diye bir parametreyi client'tan geliyormuş gibi de kabul ediyordu.
 
-Bunu test etmek için Burp'te isteği (request'i) yakaladım ve form-data içine, orijinalde olmayan yeni bir alan ekledim:
+Bunu test etmek için Burp'te isteği yakaladım ve form-data içine, orijinalde olmayan yeni bir alan ekledim:
 
 <img width="1518" height="305" alt="request3" src="https://github.com/user-attachments/assets/ea26fdad-fd9c-4298-8962-9e145afc34e8" />
 

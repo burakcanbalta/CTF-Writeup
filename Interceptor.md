@@ -11,6 +11,8 @@ nmap -sS -A -p- 10.112.165.37
 
 Taramada **22, 80, 53** portlarının açık olduğunu gördüm. 22 ve 53 şimdilik işe yarar görünmüyordu, o yüzden direkt web tarafına yöneldim. Siteye gittiğimde karşımda sade bir login sayfası vardı, başka bir şey görünmüyordu.
 
+<img width="1919" height="440" alt="loginsite" src="https://github.com/user-attachments/assets/4d9a8ca2-93e8-4856-8f77-be3c561a2394" />
+
 ---
 
 ## Dizin Taraması

@@ -80,16 +80,7 @@ Karşıma **Two Factor Verification** ekranı çıktı, 6 haneli bir kod istiyor
 
 ## OTP Bypass
 
-OTP alanına rastgele bir değer (`111111`) girip isteği Burp Proxy üzerinden yakaladım:
-
-```
-POST /verify_otp.php HTTP/1.1
-Host: 10.112.165.37
-...
-Content-Disposition: form-data; name="otp"
-
-111111
-```
+OTP alanına rastgele bir değer (`111111`) girip isteği Burp üzerinden yakaladım:
 
 Sunucudan gelen orijinal response şuydu:
 

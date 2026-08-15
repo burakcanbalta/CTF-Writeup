@@ -1,31 +1,5 @@
 # TryHackMe — Alfred Writeup
 
-**Zorluk:** Orta (Medium)
-**Kategori:** Windows Privilege Escalation, Jenkins, Metasploit
-**Yazar:** *(kendi adını/nickini buraya ekle)*
-
----
-
-## 📌 Özet
-
-Alfred, Windows tabanlı bir makine olup üzerinde çalışan bir **Jenkins** servisi üzerinden zayıf/varsayılan kimlik bilgileriyle erişim sağlanmasına ve ardından **Groovy Script Console** aracılığıyla uzaktan kod çalıştırılmasına dayanan bir senaryo sunuyor. İlk erişimin ardından **Meterpreter** ile bağlantı kurulup, token/impersonation kısıtlamaları **process migration** tekniğiyle aşılarak `NT AUTHORITY\SYSTEM` yetkisi elde ediliyor.
-
-> 💡 **Not:** Bu writeup, TryHackMe kural ve etik kurallarına uygun olarak sadece kendi çözüm sürecimi ve öğrenme amaçlı notlarımı paylaşmak için hazırlanmıştır. Flag değerleri kısmen gizlenmiştir.
-
----
-
-## 🧭 İçindekiler
-
-1. [Keşif](#1-keşif)
-2. [Servis Analizi ve İlk Erişim](#2-servis-analizi-ve-i̇lk-erişim)
-3. [Jenkins Üzerinden Uzaktan Kod Çalıştırma](#3-jenkins-üzerinden-uzaktan-kod-çalıştırma)
-4. [User Flag](#4-user-flag)
-5. [Yetki Yükseltme](#5-yetki-yükseltme)
-6. [Root Flag](#6-root-flag)
-7. [Sonuç ve Öğrenilenler](#7-sonuç-ve-öğrenilenler)
-
----
-
 ## 1. Keşif
 
 İlk adım olarak klasik bir Nmap taraması ile hedef üzerinde açık portları ve servis versiyonlarını tespit ettim:

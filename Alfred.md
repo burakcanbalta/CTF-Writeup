@@ -2,6 +2,7 @@
 
 ## 1. Keşif
 
+
 İlk adım olarak klasik bir Nmap taraması ile hedef üzerinde açık portları ve servis versiyonlarını tespit ettim:
 
 ```bash

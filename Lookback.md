@@ -73,7 +73,7 @@ https://10.112.141.99/owa/auth/logon.aspx?... [200 OK] ... Outlook-Web-App ...
 
 ## Gizli bir arayüz buluyorum
 
-OWA tarafında bir şey bulamayınca, hostname üzerinde biraz gezinmeye karar verdim. `https://win-12ouo7a66m7.thm.local/` adresine `/test` yolunu ekleyip denedim (admin::admin) ve karşıma beklenmedik bir panel çıktı:
+OWA tarafında bir şey bulamayınca, hostname üzerinde biraz gezinmeye karar verdim. `https://win-12ouo7a66m7.thm.local/` adresine `/test` yolunu ekleyip denedim (admin::admin) ve karşıma yine panel çıktı:
 
 <img width="498" height="297" alt="adminadmin" src="https://github.com/user-attachments/assets/b375d031-70ac-4947-a698-940b9ab3f8a5" />
 

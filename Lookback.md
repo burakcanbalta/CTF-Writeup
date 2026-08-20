@@ -186,6 +186,9 @@ Tekrar `check` ve `run`:
 
 <img width="1058" height="264" alt="set2" src="https://github.com/user-attachments/assets/656dd24a-b6ff-4f86-9d33-61d805e279ac" />
 
+<img width="873" height="540" alt="set3shell" src="https://github.com/user-attachments/assets/e731eac3-a05d-4cdd-aa89-574197f19b45" />
+
+
 Bu sefer çalıştı ve bir **Meterpreter oturumu** açtım. Exploit arka planda kendi webshell'ini ve mail export request'ini de temizledi.
 
 ---
@@ -215,4 +218,5 @@ meterpreter > ls
 meterpreter > cat flag.txt
 THM{Looking_Back_Is_Not_Always_Bad}
 ```
-<img width="873" height="540" alt="set3shell" src="https://github.com/user-attachments/assets/e731eac3-a05d-4cdd-aa89-574197f19b45" />
+
+<img width="634" height="449" alt="flagson" src="https://github.com/user-attachments/assets/9ff646ab-2f4f-489b-aaa0-31791fdf7622" />

@@ -79,9 +79,8 @@ OWA tarafında bir şey bulamayınca, hostname üzerinde biraz gezinmeye karar v
 
 <img width="696" height="328" alt="test" src="https://github.com/user-attachments/assets/65321ff5-8b55-4a48-b16e-c4efd879a8b6" />
 
-```
-This interface should be removed on production!
 
+```
 THM{Security_Through_Obscurity_Is_Not_A_Defense}
 ```
 

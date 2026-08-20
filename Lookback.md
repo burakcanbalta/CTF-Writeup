@@ -61,7 +61,7 @@ Nikto çıktısında işime yarayan iki şey vardı:
 + /Rpc: Default account found for '' at (ID 'admin', PW 'admin'). Generic account discovered.
 ```
 
-`/Autodiscover` ve `/Rpc` yolları da Exchange varlığını doğruluyordu. Nikto ayrıca `/Rpc` altında `admin:admin` gibi bir default hesap olduğunu iddia etti; bunu OWA login'inde denedim ama sonuç 403 döndü, bu yolda ilerlemedim.
+`/Autodiscover` ve `/Rpc` yolları da Exchange varlığını doğruluyordu. Nikto ayrıca `/Rpc` altında `admin:admin` gibi bir default hesap olduğunu iddia etti; bunu OWA login'inde denedim ama sonuç 403 döndü, bu yolda ilerleyemedim.
 
 whatweb çıktısı da OWA sayfasını ve ASP.NET'i teyit etti:
 

@@ -98,12 +98,6 @@ Amacım, uygulamanın kurduğu orijinal `Get-Content` komutundan "kaçıp" kendi
 '); dir #
 ```
 
-Bunu parça parça açıklayayım:
-
-- `');` → Orijinal komutun açık kalan tek tırnak ve parantezini kapatıyor, komutu sonlandırıyor.
-- `dir` → Benim eklediğim, dizin listelemesi yapan PowerShell komutu.
-- `#` → Orijinal komutun geri kalan kısmını yorum satırına çeviriyor, böylece sözdizimi hatası almıyorum.
-
 Bunu path parametresine ekleyip (`BitlockerActiveMonitoringLogs'); dir #`) denedim ve çalıştı — dizin içeriğini listeleyebildim. `pwd` ile baktığımda `C:\Windows\System32\inetsrv` altında çalıştığımı gördüm.
 
 Buradan sonra hedefim Desktop altındaki `user.txt` dosyasıydı:

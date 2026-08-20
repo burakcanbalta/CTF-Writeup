@@ -127,13 +127,12 @@ Bu not aslında yol haritamı çizdi. İki şey öne çıkıyordu:
 1. **Exchange kurulu ama güvenlik güncellemesi yapılmamış** ("Install the Security Update for MS Exchange [TO BE DONE]")
 2. Kullanabileceğim bir e-posta adresi: `dev-infrastracture-team@thm.local`
 
-Tek başına bu not "kesin ProxyShell var" demek değil elbette, ama üst üste gelen ipuçları güçlüydü:
+ProxyShell olabileceğini düşünmemin birkaç sebebi vardı:
 
-- Recon sırasında zaten `/owa/`, `/owa/auth/logon.aspx`, `/Autodiscover/Autodiscover.xml`, `/Rpc` gibi Exchange'e özgü yolları görmüştüm.
-- `x-feserver: WIN-12OUO7A66M7` header'ı da Exchange front-end server'ını doğruluyordu.
-- Not, güncellemenin yapılmadığını açıkça söylüyordu.
-
-Bu kombinasyon bana **CVE-2021-34473 (ProxyShell)** ihtimalini düşündürdü.
+* Recon'da zaten Exchange'in OWA, Autodiscover ve RPC endpoint'lerini görmüştüm — yani hedefte çalışan bir Exchange Server vardı, bu kesindi.
+* SSL sertifikasının tarihi Ocak 2023'ü gösteriyordu, yani ortam nispeten eski bir Exchange sürümüyle kurulmuştu. TODO notundaki "Security Update [TO BE DONE]" satırı da bunu doğruluyordu — yani sunucu yamalanmamış durumdaydı.
+* Exchange'in yakın tarihli, unauthenticated (kimlik doğrulama gerektirmeyen) ve tam RCE'ye çıkan en bilinen açığı ProxyShell (CVE-2021-34473 / 34523 / 31207). Bu kadar "ünlü" ve etkisi büyük bir zafiyet olduğu için, eski/yamalanmamış bir Exchange gördüğümde ilk aklıma gelen ihtimal bu oldu.
+* Ayrıca makinenin adı bile "Lookback" — yani "geriye bak, eski bir açığı hatırla" göndermesi gibi düşünüp bu yönde ilerledim.
 
 ---
 

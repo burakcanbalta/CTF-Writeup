@@ -90,7 +90,7 @@ THM{Security_Through_Obscurity_Is_Not_A_Defense}
 
 ## Command Injection ile RCE
 
-Panelin `Path` parametresini incelerken, girdinin sanitize edilmeden doğrudan bir PowerShell komutuna (`Get-Content`) enjekte edildiğini fark ettim. Yani klasik bir **komut enjeksiyonu (command injection)** açığıyla karşı karşıyaydım.
+Panelin `Path` parametresini incelerken, girdinin sanitize edilmeden doğrudan bir PowerShell komutuna (`Get-Content`) enjekte edildiğini fark ettim. Yani klasik bir **komut enjeksiyonu** açığıyla karşı karşıyaydım.
 
 Amacım, uygulamanın kurduğu orijinal `Get-Content` komutundan "kaçıp" kendi komutumu çalıştırmaktı. Kullandığım payload şuydu:
 

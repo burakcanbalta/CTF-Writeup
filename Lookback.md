@@ -1,5 +1,7 @@
 # TryHackMe - Lookback Writeup
 
+<img width="256" height="256" alt="lookback" src="https://github.com/user-attachments/assets/f93ff91d-9e38-4732-864f-5b1636e415a4" />
+
 ## Giriş
 
 Bu yazıda TryHackMe üzerindeki **Lookback** makinesinin çözümünü paylaşıyorum. Senaryoya göre Lookback şirketi Active Directory entegrasyonuna yeni başlamış ve yaklaşan bir deadline yüzünden sistem entegratörü ortamı aceleye getirerek kurmuş. Bizden istenen, production ortamında bir vulnerability test çalıştırıp açıkları tespit etmek.
@@ -8,7 +10,7 @@ Makine ICMP'ye cevap vermiyor, o yüzden nmap taramalarında `-Pn` kullanmayı u
 
 ---
 
-## Keşif (Recon)
+## Keşif
 
 İlk iş olarak klasik bir tam port taraması attım:
 
